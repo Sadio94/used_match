@@ -2,7 +2,7 @@
 
 
 # Author: Sadio94
-# Email: Yinjie_Luo@163.com
+# Email: Yinjie_L@163.com
 
 [=] git clone https://github.com/Sadio94/used_match.git
 
