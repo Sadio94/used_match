@@ -18,7 +18,7 @@ import (
 // @Param registerInfo body rest.RegisterInfo true "用户注册基本信息"
 // @Accept json
 // @Produce json
-// @Success 200 {string} json "{"msg": ""}"
+// @Success 200 {object} json "{"msg": ""}"
 // @Router /user/register [post]
 func UserRegister(context *gin.Context) {
 	var registerInfo rest.RegisterInfo

@@ -35,4 +35,5 @@ func main() {
 func addUserRoutes(v1 *gin.RouterGroup) {
 	v1.POST("/user/register", http_server.UserRegister)
 	v1.GET("/users", http_server.UserList)
+	v1.GET("/:id/user", http_server.UserDetail)
 }

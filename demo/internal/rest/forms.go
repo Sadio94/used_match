@@ -202,3 +202,7 @@ type UserList struct {
 	FilterName string `form:"filterName" json:"filterName" binding:"omitempty,min=1,max=30"` // 非必传 但是传了之后需要满足tag对应的规则
 	UserStatus int    `form:"userStatus" json:"userStatus" binding:"required,oneof=1 2"`
 }
+
+type IdRequest struct {
+	Id string `uri:"id" json:"id" binding:"required,len=32" validate:"required,len=32"`
+}

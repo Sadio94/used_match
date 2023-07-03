@@ -39,6 +39,25 @@ func UserList(context *gin.Context) {
 	})
 }
 
-//func UserDetail(context *gin.Context) {
-//
-//}
+func UserDetail(context *gin.Context) {
+	var idReq rest.IdRequest
+	if err := context.ShouldBindUri(&idReq); err != nil{
+		errors, ok := err.(validator.ValidationErrors)
+		if !ok {
+			context.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
+
+		// 表单校验
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": errors.Translate(initialize.Trans),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"msg": rest.UserInfo{},
+	})
+}
