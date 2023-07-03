@@ -5,8 +5,8 @@
 * @Date: 2023/06/30 19:15
  */
 
-package blog
+package main
 
-func main(){
+func main() {
 
 }
