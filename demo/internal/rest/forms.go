@@ -1,7 +1,7 @@
 package rest
 
-//import "gitlab2.aishu.cn/Zeus/service/hypersla/sla-core/types"
-//
+import "time"
+
 //type IdRequest struct {
 //	Id string `uri:"id" json:"id" binding:"required,len=32" validate:"required,len=32"`
 //}
@@ -133,3 +133,72 @@ package rest
 //	Name    string `form:"name"       json:"name"       binding:"omitempty,min=1,max=255"   validate:"omitempty,min=1,max=255"`       // 保护对象名模糊过滤
 //	AppType string `form:"appType"       json:"appType"       binding:"omitempty,min=1,max=255"   validate:"omitempty,min=1,max=255"` // 应有类型筛选
 //}
+
+type Inner struct {
+	EqCSFieldString  string
+	NeCSFieldString  string
+	GtCSFieldString  string
+	GteCSFieldString string
+	LtCSFieldString  string
+	LteCSFieldString string
+}
+
+type KindValid struct {
+	Inner                 Inner
+	RequiredString        string    `form:"requiredString" json:"requiredString" validate:"required"`  // 必传
+	OmitemptyString       string    `form:"omitemptySting" json:"omitemptySting" validate:"omitempty"` // 非必传
+	RequiredNumber        int       `form:"requiredNumber" json:"requiredNumber" validate:"required"`
+	RequiredNumberError   int       `form:"requiredNumberError" json:"requiredNumberError" validate:"required, oneof=0, 30"`  // 如果这里指定`required`, 那这个值就不能是改类型的默认值
+	RequiredMultiple      []string  `form:"requiredMultiple" json:"requiredMultiple" validate:"required,max=7,dive,required"` // 数组长度最大是7, 数组内元素必传    														// RequiredMultiple是nil或是长度大于0的数组且数组中的元素不能是空字符串
+	LenString             string    `form:"lenString" json:"lenString" validate:"len=1"`
+	LenNumber             float64   `form:"lenNumber" json:"lenNumber" validate:"len=1113.00"`
+	EqString              string    `form:"eqString" json:"eqString" validate:"min=1,max=90"`                                  // 字符串长度1<=n<=90								// 字符串长度1<=n<=90
+	NeString              string    `form:"neString" json:"neString" validate:"ne="`                                           // NeString不能等于空字符串
+	LtString              string    `form:"ltString" json:"ltString" validate:"lt=3"`                                          // LtString长度必须小于3个字符
+	LtTime                time.Time `form:"ltTime" json:"ltTime" validate:"lt"`                                                // LtTime必须小于当前日期和时间
+	LteTime               time.Time `form:"lteTime" json:"lteTime" validate:"lte"`                                             // LteTime必须小于或等于当前日期和时间
+	GtTime                time.Time `form:"gtTime" json:"gtTime" validate:"gt"`                                                // GtTime必须大于当前日期和时间
+	GteTime               time.Time `form:"gteTime" json:"gteTime" validate:"gte"`                                             // GteTime必须大于或等于当前日期和时间
+	EqFieldString         string    `form:"eqFieldString" json:"eqFieldString" validate:"eqfield=EqString"`                    // EqFieldString必须等于EqString
+	EqCSFieldString       string    `form:"eqCSFieldString" json:"eqCSFieldString" validate:"eqcsfield=Inner.EqCSFieldString"` // EqCSFieldString必须等于Inner.EqCSFieldString
+	NeCSFieldString       string    `form:"neCSFieldString" json:"neCSFieldString" validate:"necsfield=Inner.NeCSFieldString"` // NeCSFieldString不能等于Inner.NeCSFieldString
+	AlphaString           string    `form:"alphaString" json:"alphaString" validate:"alpha"`                                   // AlphaString只能包含字母
+	AlphanumString        string    `form:"alphanumString" json:"alphanumString" validate:"alphanum"`                          // AlphanumString只能包含字母和数字
+	AlphanumUnicodeString string    `form:"alphanumUnicodeString" json:"alphanumUnicodeString" validate:"alphanumunicode"`     // AlphanumUnicodeString只能包含字母数字和Unicode字符
+	NumberString          string    `form:"numberString" json:"numberString" validate:"number"`                                // NumberString必须是一个有效的数字
+	Email                 string    `form:"email" json:"email" validate:"email"`                                               // Email必须是一个有效的邮箱
+	URL                   string    `form:"url" json:"url" validate:"url"`                                                     // URL必须是一个有效的URL
+	URI                   string    `form:"uri" json:"uri" validate:"uri"`                                                     // URI必须是一个有效的URI
+	Contains              string    `form:"contains" json:"contains" validate:"contains=purpose"`                              // Contains必须包含文本'purpose'
+	ContainsAny           string    `form:"containsAny" json:"containsAny" validate:"containsany=!@#$"`                        // ContainsAny必须包含至少一个以下字符'!@#$'
+	Excludes              string    `form:"excludes" json:"excludes" validate:"excludes=text"`                                 // Excludes不能包含文本'text'
+	EndsWith              string    `form:"endsWith" json:"endsWith" validate:"endswith=end"`                                  // EndsWith必须以文本'end'结尾
+	StartsWith            string    `form:"startsWith" json:"startsWith" validate:"startswith=start"`                          // StartsWith必须以文本'start'开头
+	ASCII                 string    `form:"ascii" json:"ascii" validate:"ascii"`                                               // ASCII必须只包含ascii字符
+	IP                    string    `form:"ip" json:"ip" validate:"ip"`                                                        // IP必须是一个有效的IP地址
+	IPv4                  string    `form:"ipv4" json:"ipv4" validate:"ipv4"`                                                  // IPv4必须是一个有效的IPv4地址
+	IPv6                  string    `form:"ipv6" json:"ipv6" validate:"ipv6"`                                                  // IPv6必须是一个有效的IPv6地址
+	JsonString            string    `form:"jsonString" json:"jsonString" validate:"json"`                                      // 是一个json字符串
+	LowercaseString       string    `form:"lowercaseString" json:"lowercaseString" validate:"lowercase"`                       // LowercaseString必须是小写字母
+	UppercaseString       string    `form:"uppercaseString" json:"uppercaseString" validate:"uppercase"`                       // UppercaseString必须是大写字母
+	Datetime              string    `form:"datetime" json:"datetime" validate:"datetime=2006-01-02"`                           // Datetime的格式必须是2006-01-02
+}
+
+type QueryRequest struct {
+	Index int `form:"index" json:"index" binding:"omitempty,min=0"`         // 分页起始位置(默认0)
+	Count int `form:"count" json:"count" binding:"omitempty,min=1,max=100"` // 分页数量(默认15)
+}
+
+type RegisterInfo struct {
+	NickName       string `form:"nickName" json:"nickName" binding:"required,min=1,max=30"` // 最长不超过30
+	Email          string `form:"email" json:"email" binding:"required,email"`              // 必传 符合邮箱格式
+	Password       string `form:"password" json:"password" binding:"required"`
+	RepeatPassword string `form:"repeatPassword" json:"repeatPassword" binding:"required,eqfield=Password"` // 需要和Password字段一样
+	RegisterType   int    `form:"registerType" json:"registerType" binding:"required,oneof=1 2 3 4"`        // 之一
+}
+
+type UserList struct {
+	QueryRequest
+	FilterName string `form:"filterName" json:"filterName" binding:"omitempty,min=1,max=30"` // 非必传 但是传了之后需要满足tag对应的规则
+	UserStatus int    `form:"userStatus" json:"userStatus" binding:"required,oneof=1 2"`
+}

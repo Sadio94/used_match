@@ -1,4 +1,5 @@
-package init
+package initialize
+
 //
 //import (
 //	"context"
@@ -426,7 +427,7 @@ package init
 //	}
 //}
 //
-////db connect init
+////db connect initialize
 //func (db *DBClient) initDBConn(engine *xorm.Engine) {
 //	db.dbSet(engine)
 //	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(db.Opts.TimeOut)*time.Millisecond)
@@ -441,7 +442,7 @@ package init
 //	db.Opts.DBOrm.Logger.Info("[DB.initConn]Connect Success!")
 //}
 //
-////db connect init no log
+////db connect initialize no log
 //func (db *DBClient) initDBConnNoLog(engine *xorm.Engine) {
 //	db.dbSet(engine)
 //	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(db.Opts.TimeOut)*time.Millisecond)
