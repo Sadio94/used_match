@@ -1,8 +1,8 @@
 package models
 
 //import (
-//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-core/types"
-//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-core/utils"
+//	"github.com/Zeus/service/hypersla/sla-core/types"
+//	"github.com/Zeus/service/hypersla/sla-core/utils"
 //	"time"
 //)
 //

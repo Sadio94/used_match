@@ -1,11 +1,11 @@
 package dao
 
 //import (
-//	errorCode "gitlab2.aishu.cn/Zeus/framework/i18n-sdk-go/errors"
-//	db "gitlab2.aishu.cn/Zeus/service/hypersla/sla-core"
-//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-core/models"
-//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-core/types"
-//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-core/utils"
+//	errorCode "github.com/Zeus/framework/i18n-sdk-go/errors"
+//	db "github.com/Zeus/service/hypersla/sla-core"
+//	"github.com/Zeus/service/hypersla/sla-core/models"
+//	"github.com/Zeus/service/hypersla/sla-core/types"
+//	"github.com/Zeus/service/hypersla/sla-core/utils"
 //	"time"
 //	"xorm.io/builder"
 //	"xorm.io/xorm"
