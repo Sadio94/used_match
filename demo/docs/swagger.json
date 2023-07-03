@@ -1,0 +1,79 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/user/register": {
+            "post": {
+                "description": "用户注册",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "description": "用户注册基本信息",
+                        "name": "registerInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rest.RegisterInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"msg\": \"\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "rest.RegisterInfo": {
+            "type": "object",
+            "required": [
+                "email",
+                "nickName",
+                "password",
+                "registerType",
+                "repeatPassword"
+            ],
+            "properties": {
+                "email": {
+                    "description": "必传 符合邮箱格式",
+                    "type": "string"
+                },
+                "nickName": {
+                    "description": "最长不超过30",
+                    "type": "string",
+                    "maxLength": 30,
+                    "minLength": 1
+                },
+                "password": {
+                    "type": "string"
+                },
+                "registerType": {
+                    "description": "之一",
+                    "type": "integer",
+                    "enum": [
+                        1,
+                        2,
+                        3,
+                        4
+                    ]
+                },
+                "repeatPassword": {
+                    "description": "需要和Password字段一样",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

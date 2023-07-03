@@ -7,10 +7,10 @@ package initialize
 //	swaggerFiles "github.com/swaggo/files"
 //	ginSwagger "github.com/swaggo/gin-swagger"
 //	. "gitlab2.aishu.cn/Zeus/service/hypersla/sla-mgm/internal/initials"
-//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-mgm/service/http/http_handler"
+//	"gitlab2.aishu.cn/Zeus/service/hypersla/sla-mgm/service/http_server/http_handler"
 //	tls2 "gitlab2.aishu.cn/flora/greed/tls"
 //	"net"
-//	"net/http"
+//	"net/http_server"
 //	"time"
 //)
 //
@@ -34,7 +34,7 @@ package initialize
 //	cfg.CipherSuites = CipherSuites
 //	// 设置服务启动参数
 //	addr := fmt.Sprintf("%s:%d", AppCfg.Http.Host, AppCfg.Http.Port)
-//	server := &http.Server{
+//	server := &http_server.Server{
 //		Addr:           addr,
 //		TLSConfig:      cfg,
 //		Handler:        route,

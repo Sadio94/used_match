@@ -1,0 +1,54 @@
+definitions:
+  rest.RegisterInfo:
+    properties:
+      email:
+        description: 必传 符合邮箱格式
+        type: string
+      nickName:
+        description: 最长不超过30
+        maxLength: 30
+        minLength: 1
+        type: string
+      password:
+        type: string
+      registerType:
+        description: 之一
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        type: integer
+      repeatPassword:
+        description: 需要和Password字段一样
+        type: string
+    required:
+    - email
+    - nickName
+    - password
+    - registerType
+    - repeatPassword
+    type: object
+info:
+  contact: {}
+paths:
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册
+      parameters:
+      - description: 用户注册基本信息
+        in: body
+        name: registerInfo
+        required: true
+        schema:
+          $ref: '#/definitions/rest.RegisterInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"msg": ""}'
+          schema:
+            type: string
+swagger: "2.0"
