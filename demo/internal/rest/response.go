@@ -21,3 +21,9 @@ type Paging struct {
 	TotalNum uint64      `json:"totalNum"`
 	MetaInfo []*UserInfo `json:"metaInfo"`
 }
+
+type Result struct {
+	Code int         `json:"code"`
+	Msg  interface{} `json:"msg"`
+	Data interface{} `json:"data"`
+}
