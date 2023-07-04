@@ -15,6 +15,8 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net"
+	"net/http"
 )
 
 func main() {
@@ -25,11 +27,22 @@ func main() {
 	}
 
 	r := gin.Default()
+	// 强制ipv4监听
+	server := &http.Server{Addr: ":8080", Handler: r}
+	ln, err := net.Listen("tcp4", ":8080")
+	if err != nil {
+		panic(err)
+	}
+
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := r.Group("v1/api")
 	addUserRoutes(v1)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-	r.Run(":8080")
+	//r.Run(":8080")
+	type tcpKeepAliveListener struct {
+		*net.TCPListener
+	}
+	server.Serve(tcpKeepAliveListener{ln.(*net.TCPListener)})
 }
 
 func addUserRoutes(v1 *gin.RouterGroup) {
