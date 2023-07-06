@@ -1,9 +1,7 @@
 package models
 
-
-
 /*
-CREATE TABLE `xx_room_goods` (
+CREATE TABLE `room_goods` (
                               `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
                               `create_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                               `create_by` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '创建者',
@@ -21,12 +19,6 @@ CREATE TABLE `xx_room_goods` (
 )ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT = '直播间商品表';
 */
 
-
-
-
 // 直播间商品表
 type RoomGoods struct {
-
 }
-
-

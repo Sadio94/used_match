@@ -1,6 +1,5 @@
 package models
 
-
 /*
 CREATE TABLE `goods` (
                          `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
@@ -30,9 +29,7 @@ CREATE TABLE `goods` (
 )ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT = '商品表';
 */
 
-
 // 商品表
 type Goods struct {
-
+	BaseModel
 }
-
