@@ -29,7 +29,25 @@ CREATE TABLE `goods` (
 )ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT = '商品表';
 */
 
-// 商品表
+// Goods 商品表
 type Goods struct {
 	BaseModel
+
+	GoodsId     int64
+	CategoryId  int64
+	BrandName   string
+	Code        int64
+	Status      int8
+	Title       string
+	MarketPrice int64
+	Price       int64
+	Brief       string
+	HeadImgs    string
+	Videos      string
+	Detail      string
+	ExtJson     string
+}
+
+func (this *Goods) TableName() string {
+	return "goods"
 }

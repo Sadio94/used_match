@@ -19,6 +19,16 @@ CREATE TABLE `room_goods` (
 )ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COMMENT = '直播间商品表';
 */
 
-// 直播间商品表
+// RoomGoods 直播间商品表
 type RoomGoods struct {
+	BaseModel
+
+	RoomId    int64
+	GoodsId   int64
+	Weight    int64
+	IsCurrent int8 `gorm:"is_current"`
+}
+
+func (this *RoomGoods) TableName() string {
+	return "room_goods"
 }

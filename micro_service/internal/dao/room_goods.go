@@ -7,7 +7,7 @@
 
 package dao
 
-import "github.com/Sadio94/go_micro/internal/models"
+import "github.com/Sadio94/micro_service/internal/models"
 
 var RoomGoodsDaoOperate = RoomGoodsDao{}
 
