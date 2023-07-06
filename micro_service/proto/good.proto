@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option go_package = "./proto";
+
+package proto;
+
+
+/*
+
+  protoc --proto_path=. --go_out=./proto --go-grpc_out=./proto proto/good.proto
+  protoc --proto_path=. --go_out=. --go_out=paths=source_relative --go-grpc_out=. --go-grpc_out=paths=source_relative proto/good.proto
+
+ */
+
+service Goods {
+  rpc GetGoodsByRoom(GetGoodsByRoomReq) returns(GetGoodsByRoomResp) {}   // 获取对应直播间商品列表
+  rpc GetGoodDetail(GetGoodDetailReq) returns(GetGoodDetailResp) {}    // 获取商品详情
+}
+
+// 直播间商品列表请求参数
+message GetGoodsByRoomReq {
+  int64 RoomId = 1;
+  int64 UserId = 2;
+}
+
+// 直播间商品列表返回参数
+message GetGoodsByRoomResp {
+  int64 CurrentGoodsId = 1;       // 置顶商品id
+  repeated GoodsInfo Data = 2;
+}
+
+// 列表页的商品数据
+message GoodsInfo {
+  int64 GoodsId = 1;
+  int64 CategoryId = 2;
+  int32 Status = 3;
+  string Title = 4;
+  string MarketPrice = 5;
+  string Price = 6;
+  string Brief = 7;
+  repeated string HeadImgs = 8;
+}
+
+// 商品详情请求参数
+message GetGoodDetailReq {
+  int64 GoodsId = 1;
+  int64 UserId = 2;
+}
+
+// 商品详情返回参数
+message GetGoodDetailResp {
+  int64 GoodsId = 1;
+  int64 CategoryId = 2;
+  int32 Status = 3;
+  string Title = 4;
+  string Code = 5;
+  string BrandName = 6;
+  string MarketPrice = 7;
+  string Price = 8;
+  string Brief = 9;
+  repeated string HeadImgs = 10;
+  repeated string Videos = 11;
+  repeated string Detail = 12;
+}
