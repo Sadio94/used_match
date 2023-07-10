@@ -31,5 +31,19 @@ func InitDb(dbConf *MySQLConfig) error {
 	}
 	DBClient = db
 
+	// 额外的连接配置
+	sqlDB, err := db.DB() // database/sql.DB
+	if err != nil {
+		return err
+	}
+	// SetMaxIdleConns 设置空闲连接池中连接的最大数量
+	sqlDB.SetMaxIdleConns(dbConf.MaxIdleConns)
+
+	// SetMaxOpenConns 设置打开数据库连接的最大数量。
+	sqlDB.SetMaxOpenConns(dbConf.MaxOpenConns)
+
+	// SetConnMaxLifetime 设置了连接可复用的最大时间。
+	sqlDB.SetConnMaxLifetime(time.Hour)
+
 	return nil
 }

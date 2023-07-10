@@ -1,20 +1,32 @@
 syntax = "proto3";
 
-option go_package = "./proto";
+option go_package = ".;proto";
 
 package proto;
 
+import "google/api/annotations.proto";
 
 /*
 
-  protoc --proto_path=. --go_out=./proto --go-grpc_out=./proto proto/good.proto
-  protoc --proto_path=. --go_out=. --go_out=paths=source_relative --go-grpc_out=. --go-grpc_out=paths=source_relative proto/good.proto
+  protoc --proto_path=. --go_out=./proto --go-grpc_out=./proto --grpc-gateway_out=./proto proto/goods.proto
+  protoc --proto_path=. --go_out=. --go_out=paths=source_relative --go-grpc_out=. --go-grpc_out=paths=source_relative --grpc-gateway_out=. --grpc-gateway_opt paths=source_relative proto/goods.proto
 
  */
 
 service Goods {
-  rpc GetGoodsByRoom(GetGoodsByRoomReq) returns(GetGoodsByRoomResp) {}   // 获取对应直播间商品列表
-  rpc GetGoodDetail(GetGoodDetailReq) returns(GetGoodDetailResp) {}    // 获取商品详情
+  rpc GetGoodsByRoom(GetGoodsByRoomReq) returns(GetGoodsByRoomResp) {
+    option (google.api.http) = {
+      get: "/api/v1/goods/"
+      body: "*"
+    };
+  }   // 获取对应直播间商品列表
+
+  rpc GetGoodDetail(GetGoodDetailReq) returns(GetGoodDetailResp) {
+    option (google.api.http) = {
+      get: "/api/v1/good/detail"
+      body: "*"
+    };
+  }    // 获取商品详情
 }
 
 // 直播间商品列表请求参数

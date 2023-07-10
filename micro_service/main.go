@@ -23,12 +23,10 @@ func main() {
 	// init db
 	modelErr := models.InitDb(Conf.MySQLConfig)
 	if modelErr != nil {
-		fmt.Println(modelErr.Error())
+		Logger.Error(modelErr.Error())
 		os.Exit(-1)
 	}
 
 	// gateway start
-
-	// proto micro
 
 }

@@ -1,4 +1,4 @@
-name: "goods_srv"
+name: "micro_srv"
 mode: "dev"
 ip: "127.0.0.1"
 port: 8081
@@ -7,8 +7,8 @@ start_time: "2022-06-01"
 machine_id: 1
 
 log:
-  level: "debug"
-  filename: "goods_srv.log"
+  level: "info"
+  filename: "/var/log/micro_srv.log"
   max_size: 200
   max_age: 30
   max_backups: 7

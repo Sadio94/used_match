@@ -91,5 +91,10 @@ func Init(filePath string) (err error) {
 			fmt.Printf("viper.Unmarshal failed, err:%v\n", err)
 		}
 	})
+
+	err = initLog(Conf.LogConfig, Conf.Mode)
+	if err != nil {
+		fmt.Printf("init log failed, err:%v\n", err)
+	}
 	return
 }
