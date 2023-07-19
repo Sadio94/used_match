@@ -4,116 +4,39 @@
         "contact": {}
     },
     "paths": {
-        "/api/v1/:id/user": {
+        "/edapi/bankbills/analyse/lsyz/authenticity": {
             "get": {
-                "description": "用户详情",
+                "description": "流水验证-数据真实性",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "用户id",
-                        "name": "id",
-                        "in": "path",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "结束时间 时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
                         "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/rest.Result"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/rest.UserInfo"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/register": {
-            "post": {
-                "description": "用户注册",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
+                    },
                     {
-                        "description": "用户注册基本信息",
-                        "name": "registerInfo",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/rest.RegisterInfo"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/rest.Result"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "data": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/users": {
-            "get": {
-                "description": "用户列表",
-                "parameters": [
-                    {
-                        "maximum": 100,
-                        "minimum": 1,
                         "type": "integer",
-                        "description": "分页数量(默认15)",
-                        "name": "count",
+                        "description": "起始时间 时间戳",
+                        "name": "start_time",
                         "in": "query"
                     },
                     {
-                        "maxLength": 30,
-                        "minLength": 1,
                         "type": "string",
-                        "description": "非必传 但是传了之后需要满足tag对应的规则",
-                        "name": "filterName",
-                        "in": "query"
-                    },
-                    {
-                        "minimum": 0,
-                        "type": "integer",
-                        "description": "分页起始位置(默认0)",
-                        "name": "index",
-                        "in": "query"
-                    },
-                    {
-                        "enum": [
-                            1,
-                            2
-                        ],
-                        "type": "integer",
-                        "name": "userStatus",
+                        "description": "用户token",
+                        "name": "token",
                         "in": "query",
                         "required": true
                     }
@@ -124,13 +47,218 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/rest.Result"
+                                    "$ref": "#/definitions/rest.Result1"
                                 },
                                 {
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/rest.Paging"
+                                            "$ref": "#/definitions/rest.LsyzAResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/lsyz/completeness/account": {
+            "get": {
+                "description": "流水验证-数据完整性-账号信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "结束时间 时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "起始时间 时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.LsyzCAccountResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/lsyz/completeness/balance": {
+            "get": {
+                "description": "流水验证-数据完整性-余额完整",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "结束时间 时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "存在异常项 默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "存在异常项 第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "起始时间 时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.LsyzBalanceResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/lsyz/completeness/summary": {
+            "get": {
+                "description": "流水验证-数据完整性-摘要完整",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "结束时间 时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "存在异常项 默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "存在异常项 第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "起始时间 时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.LsyzSummaryResp"
                                         }
                                     }
                                 }
@@ -142,86 +270,276 @@
         }
     },
     "definitions": {
-        "rest.Paging": {
+        "rest.AbnormalTradeI": {
             "type": "object",
             "properties": {
-                "metaInfo": {
+                "account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "ending_balance": {
+                    "description": "期末余额",
+                    "type": "integer"
+                },
+                "initial_balance": {
+                    "description": "初期余额",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "交易摘要",
+                    "type": "string"
+                },
+                "trade_amount": {
+                    "description": "交易金额",
+                    "type": "integer"
+                },
+                "trade_time": {
+                    "description": "交易时间",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.AbnormalTradeI1": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "ending_balance": {
+                    "description": "期末余额",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "交易摘要",
+                    "type": "string"
+                },
+                "trade_amount": {
+                    "description": "交易金额",
+                    "type": "integer"
+                },
+                "trade_time": {
+                    "description": "交易时间",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.AssociateInfoI": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "银行账户",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "隶属银行",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.InterestReportI": {
+            "type": "object",
+            "properties": {
+                "estimate_interest": {
+                    "description": "预估利息 单位元",
+                    "type": "integer"
+                },
+                "interest": {
+                    "description": "利息 单位元",
+                    "type": "integer"
+                },
+                "interest_time": {
+                    "description": "结息日期 后端格式化之后返回",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "交易摘要",
+                    "type": "string"
+                },
+                "trade_time": {
+                    "description": "交易日期 后端格式化之后返回",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.LsyzAResp": {
+            "type": "object",
+            "properties": {
+                "abnormal_times": {
+                    "description": "结息金额异常次数",
+                    "type": "integer"
+                },
+                "actual_interest": {
+                    "description": "实结息",
+                    "type": "integer"
+                },
+                "interest_report": {
+                    "description": "结息报表",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/rest.UserInfo"
+                        "$ref": "#/definitions/rest.InterestReportI"
                     }
                 },
-                "totalNum": {
+                "should_interest": {
+                    "description": "应结息",
+                    "type": "integer"
+                },
+                "total_interest": {
+                    "description": "总结息金额",
                     "type": "integer"
                 }
             }
         },
-        "rest.RegisterInfo": {
+        "rest.LsyzBalanceResp": {
             "type": "object",
-            "required": [
-                "email",
-                "nickName",
-                "password",
-                "registerType",
-                "repeatPassword"
-            ],
             "properties": {
-                "email": {
-                    "description": "必传 符合邮箱格式",
-                    "type": "string"
+                "abnormal_trade": {
+                    "description": "异常记录",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.AbnormalTradeI"
+                    }
                 },
-                "nickName": {
-                    "description": "最长不超过30",
-                    "type": "string",
-                    "maxLength": 30,
-                    "minLength": 1
+                "has_balance_e": {
+                    "description": "哪几个月有余额字段但余额错误 [\"2022/3\", \"2022/4\"]",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
-                "password": {
-                    "type": "string"
+                "has_balance_r": {
+                    "description": "哪几个月有余额字段且余额正确 [\"2022/1\", \"2022/5\"]",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
-                "registerType": {
-                    "description": "之一",
-                    "type": "integer",
-                    "enum": [
-                        1,
-                        2,
-                        3,
-                        4
-                    ]
+                "interval_type": {
+                    "description": "区间类型 0月 1周",
+                    "type": "integer"
                 },
-                "repeatPassword": {
-                    "description": "需要和Password字段一样",
-                    "type": "string"
+                "none_balance": {
+                    "description": "那几个月无流水[\"2022/2\"]",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
-        "rest.Result": {
+        "rest.LsyzCAccountResp": {
             "type": "object",
             "properties": {
-                "code": {
+                "none_same_name_account": {
+                    "description": "非同名账户信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.NSMInfo"
+                    }
+                },
+                "theme_account": {
+                    "description": "主体账户",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.ThemeAccountInfo"
+                    }
+                }
+            }
+        },
+        "rest.LsyzSummaryResp": {
+            "type": "object",
+            "properties": {
+                "abnormal_trade": {
+                    "description": "异常记录",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.AbnormalTradeI1"
+                    }
+                },
+                "has_summary": {
+                    "description": "哪几个月有摘要 [\"2022/1\", \"2022/5\"]",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "interval_type": {
+                    "description": "区间类型 0月 1周",
                     "type": "integer"
                 },
+                "none_summary": {
+                    "description": "哪几个月没有摘要 [\"2022/2\"]",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "rest.NSMInfo": {
+            "type": "object",
+            "properties": {
+                "trade_account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "trade_name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "trade_period": {
+                    "description": "交易时间段",
+                    "type": "string"
+                },
+                "transfer_in": {
+                    "description": "向同名账户转入 单位元",
+                    "type": "integer"
+                },
+                "transfer_in_times": {
+                    "description": "向同名账户转入次数",
+                    "type": "integer"
+                },
+                "transfer_out": {
+                    "description": "向同名账户转出 单位元",
+                    "type": "integer"
+                },
+                "transfer_out_times": {
+                    "description": "向同名账户转出次数",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.Result1": {
+            "type": "object",
+            "properties": {
                 "data": {},
-                "msg": {}
+                "err": {},
+                "ret": {
+                    "type": "integer"
+                }
             }
         },
-        "rest.UserInfo": {
+        "rest.ThemeAccountInfo": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
+                "associate_info": {
+                    "description": "主题账户涉及的银行账户",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.AssociateInfoI"
+                    }
                 },
-                "nickName": {
+                "theme_name": {
+                    "description": "主体账户名",
                     "type": "string"
-                },
-                "registerTime": {
-                    "type": "string"
-                },
-                "updateTime": {
-                    "type": "string"
-                },
-                "userStatus": {
-                    "type": "integer"
                 }
             }
         }

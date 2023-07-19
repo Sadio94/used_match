@@ -206,3 +206,21 @@ type UserList struct {
 type IdRequest struct {
 	Id string `uri:"id" json:"id" binding:"required,len=32" validate:"required,len=32"`
 }
+
+type Lsyz struct {
+	StartTime int64  `uri:"start_time" json:"start_time" binding:"omitempty" validate:"omitempty"` // 起始时间 时间戳
+	EndTime   int64  `uri:"end_time" json:"end_time" binding:"omitempty" validate:"omitempty"`     // 结束时间 时间戳
+	DocIds    string `uri:"doc_ids" json:"doc_ids" binding:"omitempty" validate:"omitempty"`       // 当前项目下筛选的文档 多个以英文逗号','拼接
+	ProjectId string `uri:"project_id" json:"project_id" binding:"required" validate:"required"`   // 项目id
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`             // 用户token
+}
+
+type PageRequest struct {
+	Page  int `form:"page" json:"page" binding:"omitempty,min=1"`   // 存在异常项 第一页开始
+	Limit int `form:"limit" json:"limit" binding:"omitempty,min=5"` // 存在异常项 默认5条/页
+}
+
+type LsyzC struct {
+	PageRequest
+	Lsyz
+}

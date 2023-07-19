@@ -1,73 +1,225 @@
 definitions:
-  rest.Paging:
+  rest.AbnormalTradeI:
     properties:
-      metaInfo:
+      account:
+        description: 交易账号
+        type: string
+      ending_balance:
+        description: 期末余额
+        type: integer
+      initial_balance:
+        description: 初期余额
+        type: integer
+      name:
+        description: 交易户名
+        type: string
+      summary:
+        description: 交易摘要
+        type: string
+      trade_amount:
+        description: 交易金额
+        type: integer
+      trade_time:
+        description: 交易时间
+        type: string
+    type: object
+  rest.AbnormalTradeI1:
+    properties:
+      account:
+        description: 交易账号
+        type: string
+      ending_balance:
+        description: 期末余额
+        type: integer
+      name:
+        description: 交易户名
+        type: string
+      summary:
+        description: 交易摘要
+        type: string
+      trade_amount:
+        description: 交易金额
+        type: integer
+      trade_time:
+        description: 交易时间
+        type: string
+    type: object
+  rest.AssociateInfoI:
+    properties:
+      account:
+        description: 银行账户
+        type: string
+      name:
+        description: 隶属银行
+        type: string
+    type: object
+  rest.InterestReportI:
+    properties:
+      estimate_interest:
+        description: 预估利息 单位元
+        type: integer
+      interest:
+        description: 利息 单位元
+        type: integer
+      interest_time:
+        description: 结息日期 后端格式化之后返回
+        type: string
+      summary:
+        description: 交易摘要
+        type: string
+      trade_time:
+        description: 交易日期 后端格式化之后返回
+        type: string
+    type: object
+  rest.LsyzAResp:
+    properties:
+      abnormal_times:
+        description: 结息金额异常次数
+        type: integer
+      actual_interest:
+        description: 实结息
+        type: integer
+      interest_report:
+        description: 结息报表
         items:
-          $ref: '#/definitions/rest.UserInfo'
+          $ref: '#/definitions/rest.InterestReportI'
         type: array
-      totalNum:
+      should_interest:
+        description: 应结息
+        type: integer
+      total_interest:
+        description: 总结息金额
         type: integer
     type: object
-  rest.RegisterInfo:
+  rest.LsyzBalanceResp:
     properties:
-      email:
-        description: 必传 符合邮箱格式
-        type: string
-      nickName:
-        description: 最长不超过30
-        maxLength: 30
-        minLength: 1
-        type: string
-      password:
-        type: string
-      registerType:
-        description: 之一
-        enum:
-        - 1
-        - 2
-        - 3
-        - 4
+      abnormal_trade:
+        description: 异常记录
+        items:
+          $ref: '#/definitions/rest.AbnormalTradeI'
+        type: array
+      has_balance_e:
+        description: 哪几个月有余额字段但余额错误 ["2022/3", "2022/4"]
+        items:
+          type: string
+        type: array
+      has_balance_r:
+        description: 哪几个月有余额字段且余额正确 ["2022/1", "2022/5"]
+        items:
+          type: string
+        type: array
+      interval_type:
+        description: 区间类型 0月 1周
         type: integer
-      repeatPassword:
-        description: 需要和Password字段一样
-        type: string
-    required:
-    - email
-    - nickName
-    - password
-    - registerType
-    - repeatPassword
+      none_balance:
+        description: 那几个月无流水["2022/2"]
+        items:
+          type: string
+        type: array
     type: object
-  rest.Result:
+  rest.LsyzCAccountResp:
     properties:
-      code:
+      none_same_name_account:
+        description: 非同名账户信息
+        items:
+          $ref: '#/definitions/rest.NSMInfo'
+        type: array
+      theme_account:
+        description: 主体账户
+        items:
+          $ref: '#/definitions/rest.ThemeAccountInfo'
+        type: array
+    type: object
+  rest.LsyzSummaryResp:
+    properties:
+      abnormal_trade:
+        description: 异常记录
+        items:
+          $ref: '#/definitions/rest.AbnormalTradeI1'
+        type: array
+      has_summary:
+        description: 哪几个月有摘要 ["2022/1", "2022/5"]
+        items:
+          type: string
+        type: array
+      interval_type:
+        description: 区间类型 0月 1周
         type: integer
+      none_summary:
+        description: 哪几个月没有摘要 ["2022/2"]
+        items:
+          type: string
+        type: array
+    type: object
+  rest.NSMInfo:
+    properties:
+      trade_account:
+        description: 交易账号
+        type: string
+      trade_name:
+        description: 交易户名
+        type: string
+      trade_period:
+        description: 交易时间段
+        type: string
+      transfer_in:
+        description: 向同名账户转入 单位元
+        type: integer
+      transfer_in_times:
+        description: 向同名账户转入次数
+        type: integer
+      transfer_out:
+        description: 向同名账户转出 单位元
+        type: integer
+      transfer_out_times:
+        description: 向同名账户转出次数
+        type: integer
+    type: object
+  rest.Result1:
+    properties:
       data: {}
-      msg: {}
-    type: object
-  rest.UserInfo:
-    properties:
-      id:
-        type: string
-      nickName:
-        type: string
-      registerTime:
-        type: string
-      updateTime:
-        type: string
-      userStatus:
+      err: {}
+      ret:
         type: integer
+    type: object
+  rest.ThemeAccountInfo:
+    properties:
+      associate_info:
+        description: 主题账户涉及的银行账户
+        items:
+          $ref: '#/definitions/rest.AssociateInfoI'
+        type: array
+      theme_name:
+        description: 主体账户名
+        type: string
     type: object
 info:
   contact: {}
 paths:
-  /api/v1/:id/user:
+  /edapi/bankbills/analyse/lsyz/authenticity:
     get:
-      description: 用户详情
+      description: 流水验证-数据真实性
       parameters:
-      - description: 用户id
-        in: path
-        name: id
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束时间 时间戳
+        in: query
+        name: end_time
+        type: integer
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 时间戳
+        in: query
+        name: start_time
+        type: integer
+      - description: 用户token
+        in: query
+        name: token
         required: true
         type: string
       responses:
@@ -75,71 +227,137 @@ paths:
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/rest.Result'
+            - $ref: '#/definitions/rest.Result1'
             - properties:
                 data:
-                  $ref: '#/definitions/rest.UserInfo'
+                  $ref: '#/definitions/rest.LsyzAResp'
               type: object
-  /api/v1/user/register:
-    post:
-      consumes:
-      - application/json
-      description: 用户注册
+  /edapi/bankbills/analyse/lsyz/completeness/account:
+    get:
+      description: 流水验证-数据完整性-账号信息
       parameters:
-      - description: 用户注册基本信息
-        in: body
-        name: registerInfo
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束时间 时间戳
+        in: query
+        name: end_time
+        type: integer
+      - description: 项目id
+        in: query
+        name: project_id
         required: true
-        schema:
-          $ref: '#/definitions/rest.RegisterInfo'
-      produces:
-      - application/json
+        type: string
+      - description: 起始时间 时间戳
+        in: query
+        name: start_time
+        type: integer
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
       responses:
         "200":
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/rest.Result'
+            - $ref: '#/definitions/rest.Result1'
             - properties:
                 data:
-                  type: string
+                  $ref: '#/definitions/rest.LsyzCAccountResp'
               type: object
-  /api/v1/users:
+  /edapi/bankbills/analyse/lsyz/completeness/balance:
     get:
-      description: 用户列表
+      description: 流水验证-数据完整性-余额完整
       parameters:
-      - description: 分页数量(默认15)
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
         in: query
-        maximum: 100
+        name: doc_ids
+        type: string
+      - description: 结束时间 时间戳
+        in: query
+        name: end_time
+        type: integer
+      - description: 存在异常项 默认5条/页
+        in: query
+        minimum: 5
+        name: limit
+        type: integer
+      - description: 存在异常项 第一页开始
+        in: query
         minimum: 1
-        name: count
+        name: page
         type: integer
-      - description: 非必传 但是传了之后需要满足tag对应的规则
+      - description: 项目id
         in: query
-        maxLength: 30
-        minLength: 1
-        name: filterName
-        type: string
-      - description: 分页起始位置(默认0)
-        in: query
-        minimum: 0
-        name: index
-        type: integer
-      - enum:
-        - 1
-        - 2
-        in: query
-        name: userStatus
+        name: project_id
         required: true
+        type: string
+      - description: 起始时间 时间戳
+        in: query
+        name: start_time
         type: integer
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
       responses:
         "200":
           description: OK
           schema:
             allOf:
-            - $ref: '#/definitions/rest.Result'
+            - $ref: '#/definitions/rest.Result1'
             - properties:
                 data:
-                  $ref: '#/definitions/rest.Paging'
+                  $ref: '#/definitions/rest.LsyzBalanceResp'
+              type: object
+  /edapi/bankbills/analyse/lsyz/completeness/summary:
+    get:
+      description: 流水验证-数据完整性-摘要完整
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束时间 时间戳
+        in: query
+        name: end_time
+        type: integer
+      - description: 存在异常项 默认5条/页
+        in: query
+        minimum: 5
+        name: limit
+        type: integer
+      - description: 存在异常项 第一页开始
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 时间戳
+        in: query
+        name: start_time
+        type: integer
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.LsyzSummaryResp'
               type: object
 swagger: "2.0"
