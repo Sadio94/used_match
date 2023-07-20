@@ -185,7 +185,7 @@ definitions:
   rest.ThemeAccountInfo:
     properties:
       associate_info:
-        description: 主题账户涉及的银行账户
+        description: 主体账户涉及的银行账户
         items:
           $ref: '#/definitions/rest.AssociateInfoI'
         type: array
@@ -200,23 +200,23 @@ paths:
     get:
       description: 流水验证-数据真实性
       parameters:
-      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
         type: string
-      - description: 结束时间 时间戳
+      - description: 结束日期 2022-07-24
         in: query
-        name: end_time
-        type: integer
+        name: end_date
+        type: string
       - description: 项目id
         in: query
         name: project_id
         required: true
         type: string
-      - description: 起始时间 时间戳
+      - description: 起始时间 2022-07-23
         in: query
-        name: start_time
-        type: integer
+        name: start_date
+        type: string
       - description: 用户token
         in: query
         name: token
@@ -236,23 +236,23 @@ paths:
     get:
       description: 流水验证-数据完整性-账号信息
       parameters:
-      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
         type: string
-      - description: 结束时间 时间戳
+      - description: 结束日期 2022-07-24
         in: query
-        name: end_time
-        type: integer
+        name: end_date
+        type: string
       - description: 项目id
         in: query
         name: project_id
         required: true
         type: string
-      - description: 起始时间 时间戳
+      - description: 起始时间 2022-07-23
         in: query
-        name: start_time
-        type: integer
+        name: start_date
+        type: string
       - description: 用户token
         in: query
         name: token
@@ -272,14 +272,14 @@ paths:
     get:
       description: 流水验证-数据完整性-余额完整
       parameters:
-      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
         type: string
-      - description: 结束时间 时间戳
+      - description: 结束日期 2022-07-24
         in: query
-        name: end_time
-        type: integer
+        name: end_date
+        type: string
       - description: 存在异常项 默认5条/页
         in: query
         minimum: 5
@@ -295,10 +295,10 @@ paths:
         name: project_id
         required: true
         type: string
-      - description: 起始时间 时间戳
+      - description: 起始时间 2022-07-23
         in: query
-        name: start_time
-        type: integer
+        name: start_date
+        type: string
       - description: 用户token
         in: query
         name: token
@@ -318,14 +318,14 @@ paths:
     get:
       description: 流水验证-数据完整性-摘要完整
       parameters:
-      - description: 当前项目下筛选的文档 多个以英文逗号','拼接
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
         type: string
-      - description: 结束时间 时间戳
+      - description: 结束日期 2022-07-24
         in: query
-        name: end_time
-        type: integer
+        name: end_date
+        type: string
       - description: 存在异常项 默认5条/页
         in: query
         minimum: 5
@@ -341,10 +341,10 @@ paths:
         name: project_id
         required: true
         type: string
-      - description: 起始时间 时间戳
+      - description: 起始时间 2022-07-23
         in: query
-        name: start_time
-        type: integer
+        name: start_date
+        type: string
       - description: 用户token
         in: query
         name: token

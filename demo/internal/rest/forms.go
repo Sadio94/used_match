@@ -208,9 +208,9 @@ type IdRequest struct {
 }
 
 type Lsyz struct {
-	StartTime int64  `uri:"start_time" json:"start_time" binding:"omitempty" validate:"omitempty"` // 起始时间 时间戳
-	EndTime   int64  `uri:"end_time" json:"end_time" binding:"omitempty" validate:"omitempty"`     // 结束时间 时间戳
-	DocIds    string `uri:"doc_ids" json:"doc_ids" binding:"omitempty" validate:"omitempty"`       // 当前项目下筛选的文档 多个以英文逗号','拼接
+	StartDate string `uri:"start_time" json:"start_date" binding:"omitempty" validate:"omitempty"` // 起始时间 2022-07-23
+	EndDate   string `uri:"end_time" json:"end_date" binding:"omitempty" validate:"omitempty"`     // 结束日期 2022-07-24
+	DocIds    string `uri:"doc_ids" json:"doc_ids" binding:"omitempty" validate:"omitempty"`       // 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
 	ProjectId string `uri:"project_id" json:"project_id" binding:"required" validate:"required"`   // 项目id
 	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`             // 用户token
 }

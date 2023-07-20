@@ -22,14 +22,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
                         "name": "doc_ids",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "结束时间 时间戳",
-                        "name": "end_time",
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
                         "in": "query"
                     },
                     {
@@ -40,9 +40,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
-                        "description": "起始时间 时间戳",
-                        "name": "start_time",
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
                         "in": "query"
                     },
                     {
@@ -81,14 +81,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
                         "name": "doc_ids",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "结束时间 时间戳",
-                        "name": "end_time",
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
                         "in": "query"
                     },
                     {
@@ -99,9 +99,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
-                        "description": "起始时间 时间戳",
-                        "name": "start_time",
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
                         "in": "query"
                     },
                     {
@@ -140,14 +140,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
                         "name": "doc_ids",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "结束时间 时间戳",
-                        "name": "end_time",
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
                         "in": "query"
                     },
                     {
@@ -172,9 +172,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
-                        "description": "起始时间 时间戳",
-                        "name": "start_time",
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
                         "in": "query"
                     },
                     {
@@ -213,14 +213,14 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
                         "name": "doc_ids",
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "结束时间 时间戳",
-                        "name": "end_time",
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
                         "in": "query"
                     },
                     {
@@ -245,9 +245,9 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "integer",
-                        "description": "起始时间 时间戳",
-                        "name": "start_time",
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
                         "in": "query"
                     },
                     {
@@ -543,7 +543,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "associate_info": {
-                    "description": "主题账户涉及的银行账户",
+                    "description": "主体账户涉及的银行账户",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/rest.AssociateInfoI"
