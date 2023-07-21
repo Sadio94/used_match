@@ -357,6 +357,19 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.BalanceTypeI": {
+            "type": "object",
+            "properties": {
+                "timer": {
+                    "description": "2023-01",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "1 缺失 2 错误 3 正确",
+                    "type": "integer"
+                }
+            }
+        },
         "rest.InterestReportI": {
             "type": "object",
             "properties": {
@@ -420,30 +433,24 @@ const docTemplate = `{
                         "$ref": "#/definitions/rest.AbnormalTradeI"
                     }
                 },
-                "has_balance_e": {
-                    "description": "哪几个月有余额字段但余额错误 [\"2022/3\", \"2022/4\"]",
+                "balance_type": {
+                    "description": "月余额类型",
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/rest.BalanceTypeI"
                     }
                 },
-                "has_balance_r": {
-                    "description": "哪几个月有余额字段且余额正确 [\"2022/1\", \"2022/5\"]",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                "error_num": {
+                    "description": "月错误总月数",
+                    "type": "integer"
                 },
                 "interval_type": {
                     "description": "区间类型 0月 1周",
                     "type": "integer"
                 },
-                "none_balance": {
-                    "description": "那几个月无流水[\"2022/2\"]",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                "total_num": {
+                    "description": "余额总月数",
+                    "type": "integer"
                 }
             }
         },
@@ -476,23 +483,24 @@ const docTemplate = `{
                         "$ref": "#/definitions/rest.AbnormalTradeI1"
                     }
                 },
-                "has_summary": {
-                    "description": "哪几个月有摘要 [\"2022/1\", \"2022/5\"]",
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                "error_num": {
+                    "description": "摘要缺失月数",
+                    "type": "integer"
                 },
                 "interval_type": {
                     "description": "区间类型 0月 1周",
                     "type": "integer"
                 },
-                "none_summary": {
-                    "description": "哪几个月没有摘要 [\"2022/2\"]",
+                "summary_type": {
+                    "description": "月摘要类型",
                     "type": "array",
                     "items": {
-                        "type": "string"
+                        "$ref": "#/definitions/rest.SummaryTypeI"
                     }
+                },
+                "total_num": {
+                    "description": "摘要总月数",
+                    "type": "integer"
                 }
             }
         },
@@ -535,6 +543,19 @@ const docTemplate = `{
                 "data": {},
                 "err": {},
                 "ret": {
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.SummaryTypeI": {
+            "type": "object",
+            "properties": {
+                "timer": {
+                    "description": "2023-01",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "1 摘要完整 2 摘要缺失",
                     "type": "integer"
                 }
             }

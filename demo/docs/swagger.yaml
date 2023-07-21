@@ -53,6 +53,15 @@ definitions:
         description: 隶属银行
         type: string
     type: object
+  rest.BalanceTypeI:
+    properties:
+      timer:
+        description: 2023-01
+        type: string
+      type:
+        description: 1 缺失 2 错误 3 正确
+        type: integer
+    type: object
   rest.InterestReportI:
     properties:
       estimate_interest:
@@ -98,24 +107,20 @@ definitions:
         items:
           $ref: '#/definitions/rest.AbnormalTradeI'
         type: array
-      has_balance_e:
-        description: 哪几个月有余额字段但余额错误 ["2022/3", "2022/4"]
+      balance_type:
+        description: 月余额类型
         items:
-          type: string
+          $ref: '#/definitions/rest.BalanceTypeI'
         type: array
-      has_balance_r:
-        description: 哪几个月有余额字段且余额正确 ["2022/1", "2022/5"]
-        items:
-          type: string
-        type: array
+      error_num:
+        description: 月错误总月数
+        type: integer
       interval_type:
         description: 区间类型 0月 1周
         type: integer
-      none_balance:
-        description: 那几个月无流水["2022/2"]
-        items:
-          type: string
-        type: array
+      total_num:
+        description: 余额总月数
+        type: integer
     type: object
   rest.LsyzCAccountResp:
     properties:
@@ -137,19 +142,20 @@ definitions:
         items:
           $ref: '#/definitions/rest.AbnormalTradeI1'
         type: array
-      has_summary:
-        description: 哪几个月有摘要 ["2022/1", "2022/5"]
-        items:
-          type: string
-        type: array
+      error_num:
+        description: 摘要缺失月数
+        type: integer
       interval_type:
         description: 区间类型 0月 1周
         type: integer
-      none_summary:
-        description: 哪几个月没有摘要 ["2022/2"]
+      summary_type:
+        description: 月摘要类型
         items:
-          type: string
+          $ref: '#/definitions/rest.SummaryTypeI'
         type: array
+      total_num:
+        description: 摘要总月数
+        type: integer
     type: object
   rest.NSMInfo:
     properties:
@@ -180,6 +186,15 @@ definitions:
       data: {}
       err: {}
       ret:
+        type: integer
+    type: object
+  rest.SummaryTypeI:
+    properties:
+      timer:
+        description: 2023-01
+        type: string
+      type:
+        description: 1 摘要完整 2 摘要缺失
         type: integer
     type: object
   rest.ThemeAccountInfo:

@@ -80,11 +80,15 @@ type NSMInfo struct {
 // LsyzBalanceResp 流水验证-余额完整
 type LsyzBalanceResp struct {
 	IntervalType  int64            `json:"interval_type"`  // 区间类型 0月 1周
-	HasBalanceR   []string         `json:"has_balance_r"`  // 哪几个月有余额字段且余额正确 ["2022/1", "2022/5"]
-	HasBalanceE   []string         `json:"has_balance_e"`  // 哪几个月有余额字段但余额错误 ["2022/3", "2022/4"]
-	NoneBalance   []string         `json:"none_balance"`   // 那几个月无流水["2022/2"]
+	BalanceType   []BalanceTypeI   `json:"balance_type"`   // 月余额类型
+	TotalNum      int64            `json:"total_num"`      // 余额总月数
+	ErrorNum      int64            `json:"error_num"`      // 月错误总月数
 	AbnormalTrade []AbnormalTradeI `json:"abnormal_trade"` // 异常记录
+}
 
+type BalanceTypeI struct {
+	Timer string `json:"timer"` // 2023-01
+	TType int64  `json:"type"`  // 1 缺失 2 错误 3 正确
 }
 
 type AbnormalTradeI struct {
@@ -100,9 +104,15 @@ type AbnormalTradeI struct {
 // LsyzSummaryResp 流水验证-摘要完整
 type LsyzSummaryResp struct {
 	IntervalType  int64             `json:"interval_type"`  // 区间类型 0月 1周
-	HasSummary    []string          `json:"has_summary"`    // 哪几个月有摘要 ["2022/1", "2022/5"]
-	NoneSummary   []string          `json:"none_summary"`   // 哪几个月没有摘要 ["2022/2"]
+	SummaryType   []SummaryTypeI    `json:"summary_type"`   // 月摘要类型
+	TotalNum      int64             `json:"total_num"`      // 摘要总月数
+	ErrorNum      int64             `json:"error_num"`      // 摘要缺失月数
 	AbnormalTrade []AbnormalTradeI1 `json:"abnormal_trade"` // 异常记录
+}
+
+type SummaryTypeI struct {
+	Timer string `json:"timer"` // 2023-01
+	TType int64  `json:"type"`  // 1 摘要完整 2 摘要缺失
 }
 
 type AbnormalTradeI1 struct {
