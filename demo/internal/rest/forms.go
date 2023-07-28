@@ -224,3 +224,28 @@ type LsyzC struct {
 	PageRequest
 	Lsyz
 }
+
+type AddProjectRequest struct {
+	Token string `uri:"token" json:"token" binding:"required" validate:"required"`                       // 用户token
+	Name  string `uri:"name" json:"name" binding:"required" validate:"required"`                         // 项目名称
+	Type  int64  `uri:"type" json:"type" binding:"required,oneof=1 2 3" validate:"required,oneof=1 2 3"` // 项目类型 1:企业 2:个人 3:其他
+	Note  string `uri:"note" json:"note" binding:"omitempty" validate:"omitempty"`                       // 项目备注
+}
+
+type ProjectListRequest struct {
+	PageRequest
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`                               // 用户token
+	DateDesc  int64  `uri:"date_desc" json:"date_desc" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 项目创建时间排序搜索项 0:默认倒序 1:正序
+	Type      int64  `uri:"type" json:"type" binding:"omitempty,oneof=1 2 3" validate:"omitempty,oneof=1 2 3"`       // 项目类型搜索项 1:企业 2:个人 3:其他
+	KeyWord   string `uri:"keyword" json:"keyword" binding:"omitempty" validate:"omitempty"`                         // 关键字搜索 包含项目名称和备注的模糊匹配
+	StartTime int64  `uri:"start_time" json:"start_time" binding:"omitempty" validate:"omitempty"`                   // 开始时间 秒级时间戳
+	EndTime   int64  `uri:"end_time" json:"end_time" binding:"omitempty" validate:"omitempty"`                       // 结束时间 秒级时间戳
+}
+
+type UpdateProjectRequest struct {
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`                         // 用户token
+	ProjectId string `uri:"project_id" json:"project_id" binding:"required" validate:"required"`               // 项目id
+	Name      string `uri:"name" json:"name" binding:"omitempty" validate:"omitempty"`                         // 项目名称
+	Type      int64  `uri:"type" json:"type" binding:"omitempty,oneof=1 2 3" validate:"omitempty,oneof=1 2 3"` // 项目类型 1:企业 2:个人 3:其他
+	Note      string `uri:"note" json:"note" binding:"omitempty" validate:"omitempty"`                         // 项目备注
+}

@@ -123,3 +123,26 @@ type AbnormalTradeI1 struct {
 	Name          string `json:"name"`           // 交易户名
 	Account       string `json:"account"`        // 交易账号
 }
+
+// AddProjectResp 新建项目
+type AddProjectResp struct {
+	ProjectId int64 `json:"project_id"` // 新建成功之后的项目id
+}
+
+// ProjectListResp 项目列表
+type ProjectListResp struct {
+	Count       int64          `json:"count"`        // 项目总数
+	DocCount    int64          `json:"doc_count"`    // 文档总数
+	ReportCount int64          `json:"report_count"` // 报告总数
+	AmountCount int64          `json:"amount_count"` // 金额总数
+	ProjectList []ProjectListI `json:"project_list"` // 项目详情
+}
+
+type ProjectListI struct {
+	Note       string `json:"note"`        // 项目备注
+	ProjectId  int64  `json:"project_id"`  // 项目id
+	CreateTime int64  `json:"create_time"` // 项目创建时间
+	Name       string `json:"name"`        // 项目名称
+	DocCount   int64  `json:"doc_count"`   // 当前项目下文件总数
+	Type       int64  `json:"type"`        // 项目类型
+}

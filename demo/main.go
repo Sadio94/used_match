@@ -34,9 +34,11 @@ func main() {
 		panic(err)
 	}
 
-	docs.SwaggerInfo.BasePath = "/edapi/bankbills/analyse"
+	docs.SwaggerInfo.BasePath = "/edapi/bankbills/"
 	v1 := r.Group("/edapi/bankbills/analyse")
 	addLsyzRoutes(v1)
+	v2 := r.Group("/edapi/bankbills/project")
+	addProjectRoute(v2)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	//r.Run(":8080")
 	type tcpKeepAliveListener struct {
@@ -56,4 +58,14 @@ func addLsyzRoutes(v1 *gin.RouterGroup) {
 	v1.GET("/lsyz/completeness/account", http_server.LsyzCompletenessAccount)
 	v1.GET("/lsyz/completeness/balance", http_server.LsyzCompletenessBalance)
 	v1.GET("/lsyz/completeness/summary", http_server.LsyzCompletenessSummary)
+}
+
+//func addJyfxRoute(v *gin.RouterGroup) {
+//
+//}
+
+func addProjectRoute(v *gin.RouterGroup) {
+	v.GET("/add", http_server.AddProject)
+	v.GET("/query", http_server.AddProject)
+	v.GET("/update", http_server.AddProject)
 }

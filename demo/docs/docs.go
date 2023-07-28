@@ -279,6 +279,204 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/edapi/bankbills/project/add": {
+            "get": {
+                "description": "项目管理-新建项目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "项目名称",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目备注",
+                        "name": "note",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "type": "integer",
+                        "description": "项目类型 1:企业 2:个人 3:其他",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.AddProjectResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/project/query": {
+            "get": {
+                "description": "项目管理-项目列表",
+                "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "项目创建时间排序搜索项 0:默认倒序 1:正序",
+                        "name": "date_desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "结束时间 秒级时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "关键字搜索 包含项目名称和备注的模糊匹配",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "存在异常项 默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "存在异常项 第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "开始时间 秒级时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "type": "integer",
+                        "description": "项目类型搜索项 1:企业 2:个人 3:其他",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.ProjectListResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/project/update": {
+            "get": {
+                "description": "项目管理-更新项目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "项目名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目备注",
+                        "name": "note",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "type": "integer",
+                        "description": "项目类型 1:企业 2:个人 3:其他",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -341,6 +539,15 @@ const docTemplate = `{
                 "trade_time": {
                     "description": "交易时间",
                     "type": "string"
+                }
+            }
+        },
+        "rest.AddProjectResp": {
+            "type": "object",
+            "properties": {
+                "project_id": {
+                    "description": "新建成功之后的项目id",
+                    "type": "integer"
                 }
             }
         },
@@ -533,6 +740,63 @@ const docTemplate = `{
                 },
                 "transfer_out_times": {
                     "description": "向同名账户转出次数",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.ProjectListI": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "description": "项目创建时间",
+                    "type": "integer"
+                },
+                "doc_count": {
+                    "description": "当前项目下文件总数",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "项目名称",
+                    "type": "string"
+                },
+                "note": {
+                    "description": "项目备注",
+                    "type": "string"
+                },
+                "project_id": {
+                    "description": "项目id",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "项目类型",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.ProjectListResp": {
+            "type": "object",
+            "properties": {
+                "amount_count": {
+                    "description": "金额总数",
+                    "type": "integer"
+                },
+                "count": {
+                    "description": "项目总数",
+                    "type": "integer"
+                },
+                "doc_count": {
+                    "description": "文档总数",
+                    "type": "integer"
+                },
+                "project_list": {
+                    "description": "项目详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.ProjectListI"
+                    }
+                },
+                "report_count": {
+                    "description": "报告总数",
                     "type": "integer"
                 }
             }
