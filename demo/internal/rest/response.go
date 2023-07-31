@@ -246,3 +246,64 @@ type MonitorTradeInfo struct {
 	TradeTime   string `json:"trade_time"`   // 交易时间
 	TradeNumber int64  `json:"trade_number"` // 交易笔数
 }
+
+// BalanceFluctuationResp 交易汇总-余额波动
+type BalanceFluctuationResp struct {
+	BalanceFluctuation []BalanceInfo `json:"balance_fluctuation"` // 余额波动
+}
+
+type BalanceInfo struct {
+	Timer      string `json:"timer"`       // 月 2022-01
+	AvgBalance int    `json:"avg_balance"` // 月均余额
+	Volatility string `json:"volatility"`  // 波动率 20%
+}
+
+// TransactionDistribution 交易汇总-交易分布
+type TransactionDistribution struct {
+	TradeAmount []TradeAmountI `json:"trade_amount"` // 交易金额
+	TradeNumber []TradeNumberI `json:"trade_number"` // 交易笔数
+}
+
+type TradeAmountI struct {
+	Timer  string `json:"timer"`  // 月 2022-01
+	Income int64  `json:"income"` // 当月收入
+	Pay    int64  `json:"pay"`    // 当月支出
+}
+
+type TradeNumberI struct {
+	Timer     string `json:"timer"`      // 月 2022-01
+	IncomeNum int64  `json:"income_num"` // 当月收入笔数
+	PayNum    int64  `json:"pay_num"`    // 当月支出笔数
+}
+
+// AbnormalTransactionResp 交易汇总-异常交易
+type AbnormalTransactionResp struct {
+	HighFrequencyTrading  HighFrequencyTradingI    `json:"high_frequency_trading"` // 高频交易
+	SuspiciousTransaction []SuspiciousTransactionI `json:"suspicious_transaction"` // 可疑交易
+	SuspiciousNum         int64                    `json:"suspicious_num"`         // 可以交易流水总数
+	LargeTransaction      []LargeTransactionI      `json:"large_transaction"`      // 大额交易
+	LargeNum              int64                    `json:"large_num"`              // 大额交易流水总数
+}
+
+type HighFrequencyTradingI struct {
+	Name      string `json:"name"`       // 对手方
+	Income    int64  `json:"income"`     // 收入
+	Pay       int64  `json:"pay"`        // 支出
+	IncomeNum int64  `json:"income_num"` // 收入笔数
+	PayNum    int64  `json:"pay_num"`    // 支出笔数
+}
+
+type SuspiciousTransactionI struct {
+	Time    string `json:"time"`    // 时间
+	Amount  int64  `json:"amount"`  // 金额
+	Name    string `json:"name"`    // 交易户名
+	Account string `json:"account"` // 交易账号
+}
+
+type LargeTransactionI struct {
+	Time       string `json:"time"`       // 时间
+	Amount     int64  `json:"amount"`     // 金额
+	Name       string `json:"name"`       // 交易户名
+	Account    string `json:"account"`    // 交易账号
+	Proportion string `json:"proportion"` // 当月占比
+}

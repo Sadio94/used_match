@@ -262,3 +262,16 @@ type JydsMonitorObjectRequest struct {
 	PageRequest
 	Lsyz
 }
+
+type JyhzBalanceFluctuationRequest struct {
+	Lsyz
+}
+
+type JyhzTransactionDistributionRequest struct {
+	Lsyz
+}
+
+type JydsAbnormalTransactionRequest struct {
+	PageRequest
+	Lsyz
+}

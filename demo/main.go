@@ -38,6 +38,7 @@ func main() {
 	v1 := r.Group("/edapi/bankbills/analyse")
 	addLsyzRoutes(v1)
 	addJydsRoutes(v1)
+	addJyhzRoute(v1)
 	v2 := r.Group("/edapi/bankbills/project")
 	addProjectRoute(v2)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
@@ -75,4 +76,10 @@ func addJydsRoutes(v1 *gin.RouterGroup) {
 	v1.GET("/jyds/counterparty/overview", http_server.JydsCounterpartyOverview)
 	v1.GET("/jyds/counterparty/class", http_server.JydsCounterpartyClass)
 	v1.GET("/jyds/monitor_object", http_server.JydsMonitorObject)
+}
+
+func addJyhzRoute(v1 *gin.RouterGroup) {
+	v1.GET("/jyhz/balance/fluctuation", http_server.JyhzBalanceFluctuation)
+	v1.GET("/jyhz/transaction/distribution", http_server.JydsCounterpartyClass)
+	v1.GET("/jyhz/abnormal/transaction", http_server.JydsMonitorObject)
 }

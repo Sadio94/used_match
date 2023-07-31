@@ -209,6 +209,197 @@
                 }
             }
         },
+        "/edapi/bankbills/analyse/jyhz/abnormal/transaction": {
+            "get": {
+                "description": "交易汇总-异常交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.AbnormalTransactionResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyhz/balance/fluctuation": {
+            "get": {
+                "description": "交易汇总-余额波动",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.BalanceFluctuationResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyhz/transaction/distribution": {
+            "get": {
+                "description": "交易汇总-交易分布",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.TransactionDistribution"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/edapi/bankbills/analyse/lsyz/authenticity": {
             "get": {
                 "description": "流水验证-数据真实性",
@@ -735,6 +926,41 @@
                 }
             }
         },
+        "rest.AbnormalTransactionResp": {
+            "type": "object",
+            "properties": {
+                "high_frequency_trading": {
+                    "description": "高频交易",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/rest.HighFrequencyTradingI"
+                        }
+                    ]
+                },
+                "large_num": {
+                    "description": "大额交易流水总数",
+                    "type": "integer"
+                },
+                "large_transaction": {
+                    "description": "大额交易",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.LargeTransactionI"
+                    }
+                },
+                "suspicious_num": {
+                    "description": "可以交易流水总数",
+                    "type": "integer"
+                },
+                "suspicious_transaction": {
+                    "description": "可疑交易",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.SuspiciousTransactionI"
+                    }
+                }
+            }
+        },
         "rest.AddProjectResp": {
             "type": "object",
             "properties": {
@@ -753,6 +979,35 @@
                 },
                 "name": {
                     "description": "隶属银行",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.BalanceFluctuationResp": {
+            "type": "object",
+            "properties": {
+                "balance_fluctuation": {
+                    "description": "余额波动",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.BalanceInfo"
+                    }
+                }
+            }
+        },
+        "rest.BalanceInfo": {
+            "type": "object",
+            "properties": {
+                "avg_balance": {
+                    "description": "月均余额",
+                    "type": "integer"
+                },
+                "timer": {
+                    "description": "月 2022-01",
+                    "type": "string"
+                },
+                "volatility": {
+                    "description": "波动率 20%",
                     "type": "string"
                 }
             }
@@ -797,6 +1052,31 @@
                 "name": {
                     "description": "对手方名称",
                     "type": "string"
+                }
+            }
+        },
+        "rest.HighFrequencyTradingI": {
+            "type": "object",
+            "properties": {
+                "income": {
+                    "description": "收入",
+                    "type": "integer"
+                },
+                "income_num": {
+                    "description": "收入笔数",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "对手方",
+                    "type": "string"
+                },
+                "pay": {
+                    "description": "支出",
+                    "type": "integer"
+                },
+                "pay_num": {
+                    "description": "支出笔数",
+                    "type": "integer"
                 }
             }
         },
@@ -1110,6 +1390,31 @@
                 }
             }
         },
+        "rest.LargeTransactionI": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "金额",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "proportion": {
+                    "description": "当月占比",
+                    "type": "string"
+                },
+                "time": {
+                    "description": "时间",
+                    "type": "string"
+                }
+            }
+        },
         "rest.LsyzAResp": {
             "type": "object",
             "properties": {
@@ -1357,6 +1662,27 @@
                 }
             }
         },
+        "rest.SuspiciousTransactionI": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "金额",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "time": {
+                    "description": "时间",
+                    "type": "string"
+                }
+            }
+        },
         "rest.ThemeAccountInfo": {
             "type": "object",
             "properties": {
@@ -1370,6 +1696,59 @@
                 "theme_name": {
                     "description": "主体账户名",
                     "type": "string"
+                }
+            }
+        },
+        "rest.TradeAmountI": {
+            "type": "object",
+            "properties": {
+                "income": {
+                    "description": "当月收入",
+                    "type": "integer"
+                },
+                "pay": {
+                    "description": "当月支出",
+                    "type": "integer"
+                },
+                "timer": {
+                    "description": "月 2022-01",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TradeNumberI": {
+            "type": "object",
+            "properties": {
+                "income_num": {
+                    "description": "当月收入笔数",
+                    "type": "integer"
+                },
+                "pay_num": {
+                    "description": "当月支出笔数",
+                    "type": "integer"
+                },
+                "timer": {
+                    "description": "月 2022-01",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TransactionDistribution": {
+            "type": "object",
+            "properties": {
+                "trade_amount": {
+                    "description": "交易金额",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TradeAmountI"
+                    }
+                },
+                "trade_number": {
+                    "description": "交易笔数",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TradeNumberI"
+                    }
                 }
             }
         }

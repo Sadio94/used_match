@@ -44,6 +44,29 @@ definitions:
         description: 交易时间
         type: string
     type: object
+  rest.AbnormalTransactionResp:
+    properties:
+      high_frequency_trading:
+        allOf:
+        - $ref: '#/definitions/rest.HighFrequencyTradingI'
+        description: 高频交易
+      large_num:
+        description: 大额交易流水总数
+        type: integer
+      large_transaction:
+        description: 大额交易
+        items:
+          $ref: '#/definitions/rest.LargeTransactionI'
+        type: array
+      suspicious_num:
+        description: 可以交易流水总数
+        type: integer
+      suspicious_transaction:
+        description: 可疑交易
+        items:
+          $ref: '#/definitions/rest.SuspiciousTransactionI'
+        type: array
+    type: object
   rest.AddProjectResp:
     properties:
       project_id:
@@ -57,6 +80,26 @@ definitions:
         type: string
       name:
         description: 隶属银行
+        type: string
+    type: object
+  rest.BalanceFluctuationResp:
+    properties:
+      balance_fluctuation:
+        description: 余额波动
+        items:
+          $ref: '#/definitions/rest.BalanceInfo'
+        type: array
+    type: object
+  rest.BalanceInfo:
+    properties:
+      avg_balance:
+        description: 月均余额
+        type: integer
+      timer:
+        description: 月 2022-01
+        type: string
+      volatility:
+        description: 波动率 20%
         type: string
     type: object
   rest.BalanceTypeI:
@@ -88,6 +131,24 @@ definitions:
       name:
         description: 对手方名称
         type: string
+    type: object
+  rest.HighFrequencyTradingI:
+    properties:
+      income:
+        description: 收入
+        type: integer
+      income_num:
+        description: 收入笔数
+        type: integer
+      name:
+        description: 对手方
+        type: string
+      pay:
+        description: 支出
+        type: integer
+      pay_num:
+        description: 支出笔数
+        type: integer
     type: object
   rest.InterestReportI:
     properties:
@@ -301,6 +362,24 @@ definitions:
         description: 交易时间段
         type: string
     type: object
+  rest.LargeTransactionI:
+    properties:
+      account:
+        description: 交易账号
+        type: string
+      amount:
+        description: 金额
+        type: integer
+      name:
+        description: 交易户名
+        type: string
+      proportion:
+        description: 当月占比
+        type: string
+      time:
+        description: 时间
+        type: string
+    type: object
   rest.LsyzAResp:
     properties:
       abnormal_times:
@@ -477,6 +556,21 @@ definitions:
         description: 1 摘要完整 2 摘要缺失
         type: integer
     type: object
+  rest.SuspiciousTransactionI:
+    properties:
+      account:
+        description: 交易账号
+        type: string
+      amount:
+        description: 金额
+        type: integer
+      name:
+        description: 交易户名
+        type: string
+      time:
+        description: 时间
+        type: string
+    type: object
   rest.ThemeAccountInfo:
     properties:
       associate_info:
@@ -487,6 +581,43 @@ definitions:
       theme_name:
         description: 主体账户名
         type: string
+    type: object
+  rest.TradeAmountI:
+    properties:
+      income:
+        description: 当月收入
+        type: integer
+      pay:
+        description: 当月支出
+        type: integer
+      timer:
+        description: 月 2022-01
+        type: string
+    type: object
+  rest.TradeNumberI:
+    properties:
+      income_num:
+        description: 当月收入笔数
+        type: integer
+      pay_num:
+        description: 当月支出笔数
+        type: integer
+      timer:
+        description: 月 2022-01
+        type: string
+    type: object
+  rest.TransactionDistribution:
+    properties:
+      trade_amount:
+        description: 交易金额
+        items:
+          $ref: '#/definitions/rest.TradeAmountI'
+        type: array
+      trade_number:
+        description: 交易笔数
+        items:
+          $ref: '#/definitions/rest.TradeNumberI'
+        type: array
     type: object
 info:
   contact: {}
@@ -618,6 +749,124 @@ paths:
             - properties:
                 data:
                   $ref: '#/definitions/rest.JydsMonitorObjectResp'
+              type: object
+  /edapi/bankbills/analyse/jyhz/abnormal/transaction:
+    get:
+      description: 交易汇总-异常交易
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 默认5条/页
+        in: query
+        minimum: 5
+        name: limit
+        type: integer
+      - description: 第一页开始
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.AbnormalTransactionResp'
+              type: object
+  /edapi/bankbills/analyse/jyhz/balance/fluctuation:
+    get:
+      description: 交易汇总-余额波动
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.BalanceFluctuationResp'
+              type: object
+  /edapi/bankbills/analyse/jyhz/transaction/distribution:
+    get:
+      description: 交易汇总-交易分布
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.TransactionDistribution'
               type: object
   /edapi/bankbills/analyse/lsyz/authenticity:
     get:
