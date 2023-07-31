@@ -37,6 +37,7 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/edapi/bankbills/"
 	v1 := r.Group("/edapi/bankbills/analyse")
 	addLsyzRoutes(v1)
+	addJydsRoutes(v1)
 	v2 := r.Group("/edapi/bankbills/project")
 	addProjectRoute(v2)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
@@ -68,4 +69,10 @@ func addProjectRoute(v *gin.RouterGroup) {
 	v.GET("/add", http_server.AddProject)
 	v.GET("/query", http_server.AddProject)
 	v.GET("/update", http_server.AddProject)
+}
+
+func addJydsRoutes(v1 *gin.RouterGroup) {
+	v1.GET("/jyds/counterparty/overview", http_server.JydsCounterpartyOverview)
+	v1.GET("/jyds/counterparty/class", http_server.JydsCounterpartyClass)
+	v1.GET("/jyds/monitor_object", http_server.JydsMonitorObject)
 }

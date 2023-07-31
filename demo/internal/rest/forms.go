@@ -216,8 +216,8 @@ type Lsyz struct {
 }
 
 type PageRequest struct {
-	Page  int `form:"page" json:"page" binding:"omitempty,min=1"`   // 存在异常项 第一页开始
-	Limit int `form:"limit" json:"limit" binding:"omitempty,min=5"` // 存在异常项 默认5条/页
+	Page  int `form:"page" json:"page" binding:"omitempty,min=1"`   // 第一页开始
+	Limit int `form:"limit" json:"limit" binding:"omitempty,min=5"` // 默认5条/页
 }
 
 type LsyzC struct {
@@ -248,4 +248,17 @@ type UpdateProjectRequest struct {
 	Name      string `uri:"name" json:"name" binding:"omitempty" validate:"omitempty"`                         // 项目名称
 	Type      int64  `uri:"type" json:"type" binding:"omitempty,oneof=1 2 3" validate:"omitempty,oneof=1 2 3"` // 项目类型 1:企业 2:个人 3:其他
 	Note      string `uri:"note" json:"note" binding:"omitempty" validate:"omitempty"`                         // 项目备注
+}
+
+type JydsOverviewRequest struct {
+	PageRequest
+	Lsyz
+}
+type JydsClassRequest struct {
+	Lsyz
+}
+
+type JydsMonitorObjectRequest struct {
+	PageRequest
+	Lsyz
 }
