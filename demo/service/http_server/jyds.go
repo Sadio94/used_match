@@ -45,6 +45,6 @@ func JydsCounterpartyClass(context *gin.Context) {
 func JydsMonitorObject(context *gin.Context) {
 
 	context.JSON(http.StatusOK, rest.Result{
-		Data: rest.LsyzCAccountResp{},
+		Data: rest.JydsMonitorObjectResp{},
 	})
 }

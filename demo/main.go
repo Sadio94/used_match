@@ -80,6 +80,8 @@ func addJydsRoutes(v1 *gin.RouterGroup) {
 
 func addJyhzRoute(v1 *gin.RouterGroup) {
 	v1.GET("/jyhz/balance/fluctuation", http_server.JyhzBalanceFluctuation)
-	v1.GET("/jyhz/transaction/distribution", http_server.JydsCounterpartyClass)
-	v1.GET("/jyhz/abnormal/transaction", http_server.JydsMonitorObject)
+	v1.GET("/jyhz/transaction/distribution", http_server.JyhzTransactionDistribution)
+	v1.GET("/jyhz/abnormal/transaction/high_frequency", http_server.JyhzAbnormalTransactionHighFrequency)
+	v1.GET("/jyhz/abnormal/transaction/suspicious", http_server.JyhzAbnormalTransactionSuspicious)
+	v1.GET("/jyhz/abnormal/transaction/large", http_server.JyhzAbnormalTransactionLarge)
 }

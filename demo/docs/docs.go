@@ -21,6 +21,17 @@ const docTemplate = `{
                 "description": "交易对手-对手方分类",
                 "parameters": [
                     {
+                        "enum": [
+                            0,
+                            1,
+                            2
+                        ],
+                        "type": "integer",
+                        "description": "对手方分类展示 0:汇总 1:收入 2:支出 默认展示汇总页",
+                        "name": "disp_type",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
                         "name": "doc_ids",
@@ -80,6 +91,17 @@ const docTemplate = `{
                 "description": "交易对手-对手方概览",
                 "parameters": [
                     {
+                        "enum": [
+                            0,
+                            1,
+                            2
+                        ],
+                        "type": "integer",
+                        "description": "对手方概览展示 0:汇总 1:收入 2:支出 默认展示汇总页",
+                        "name": "disp_type",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
                         "name": "doc_ids",
@@ -89,20 +111,6 @@ const docTemplate = `{
                         "type": "string",
                         "description": "结束日期 2022-07-24",
                         "name": "end_date",
-                        "in": "query"
-                    },
-                    {
-                        "minimum": 5,
-                        "type": "integer",
-                        "description": "默认5条/页",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "minimum": 1,
-                        "type": "integer",
-                        "description": "第一页开始",
-                        "name": "page",
                         "in": "query"
                     },
                     {
@@ -152,6 +160,17 @@ const docTemplate = `{
             "get": {
                 "description": "交易对手-重点监测对象",
                 "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1,
+                            2
+                        ],
+                        "type": "integer",
+                        "description": "对手方分类展示 0:汇总 1:收入 2:支出 默认展示汇总页",
+                        "name": "disp_type",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
@@ -221,9 +240,68 @@ const docTemplate = `{
                 }
             }
         },
-        "/edapi/bankbills/analyse/jyhz/abnormal/transaction": {
+        "/edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency": {
             "get": {
-                "description": "交易汇总-异常交易",
+                "description": "交易汇总-异常交易-高频交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.AbnormalTransactionHighFrequencyResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyhz/abnormal/transaction/large": {
+            "get": {
+                "description": "交易汇总-异常交易-大额交易",
                 "parameters": [
                     {
                         "type": "string",
@@ -284,7 +362,80 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/rest.AbnormalTransactionResp"
+                                            "$ref": "#/definitions/rest.AbnormalTransactionLargeResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyhz/abnormal/transaction/suspicious": {
+            "get": {
+                "description": "交易汇总-异常交易-可疑交易",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.AbnormalTransactionSuspiciousResp"
                                         }
                                     }
                                 }
@@ -357,6 +508,16 @@ const docTemplate = `{
             "get": {
                 "description": "交易汇总-交易分布",
                 "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "交易分布展示 0:交易金额 1:交易笔数 默认展示交易金额页",
+                        "name": "disp_type",
+                        "in": "query"
+                    },
                     {
                         "type": "string",
                         "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
@@ -938,17 +1099,21 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.AbnormalTransactionResp": {
+        "rest.AbnormalTransactionHighFrequencyResp": {
             "type": "object",
             "properties": {
                 "high_frequency_trading": {
                     "description": "高频交易",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/rest.HighFrequencyTradingI"
-                        }
-                    ]
-                },
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.HighFrequencyTradingI"
+                    }
+                }
+            }
+        },
+        "rest.AbnormalTransactionLargeResp": {
+            "type": "object",
+            "properties": {
                 "large_num": {
                     "description": "大额交易流水总数",
                     "type": "integer"
@@ -959,7 +1124,12 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/rest.LargeTransactionI"
                     }
-                },
+                }
+            }
+        },
+        "rest.AbnormalTransactionSuspiciousResp": {
+            "type": "object",
+            "properties": {
                 "suspicious_num": {
                     "description": "可以交易流水总数",
                     "type": "integer"
@@ -1054,19 +1224,6 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.ClassTradeInfo1": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "description": "交易金额",
-                    "type": "integer"
-                },
-                "name": {
-                    "description": "对手方名称",
-                    "type": "string"
-                }
-            }
-        },
         "rest.HighFrequencyTradingI": {
             "type": "object",
             "properties": {
@@ -1120,24 +1277,8 @@ const docTemplate = `{
         "rest.JydsClassResp": {
             "type": "object",
             "properties": {
-                "income": {
-                    "description": "收入",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/rest.JydsClassSummaryI"
-                        }
-                    ]
-                },
-                "pay": {
-                    "description": "支持",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/rest.JydsClassSummaryP"
-                        }
-                    ]
-                },
-                "summary": {
-                    "description": "汇总",
+                "class": {
+                    "description": "分类",
                     "allOf": [
                         {
                             "$ref": "#/definitions/rest.JydsClassSummary"
@@ -1174,83 +1315,11 @@ const docTemplate = `{
                 }
             }
         },
-        "rest.JydsClassSummaryI": {
-            "type": "object",
-            "properties": {
-                "institutional_clients": {
-                    "description": "机构客户数量",
-                    "type": "integer"
-                },
-                "natural_person": {
-                    "description": "自然人数量",
-                    "type": "integer"
-                },
-                "other": {
-                    "description": "其他数量",
-                    "type": "integer"
-                },
-                "own": {
-                    "description": "自己数量",
-                    "type": "integer"
-                },
-                "trade_info": {
-                    "description": "对手方收入明细 top8",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/rest.ClassTradeInfo1"
-                    }
-                }
-            }
-        },
-        "rest.JydsClassSummaryP": {
-            "type": "object",
-            "properties": {
-                "institutional_clients": {
-                    "description": "机构客户数量",
-                    "type": "integer"
-                },
-                "natural_person": {
-                    "description": "自然人数量",
-                    "type": "integer"
-                },
-                "other": {
-                    "description": "其他数量",
-                    "type": "integer"
-                },
-                "own": {
-                    "description": "自己数量",
-                    "type": "integer"
-                },
-                "trade_info": {
-                    "description": "对手方支出明细 top8",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/rest.ClassTradeInfo1"
-                    }
-                }
-            }
-        },
         "rest.JydsMonitorObjectResp": {
             "type": "object",
             "properties": {
-                "income": {
-                    "description": "收入",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/rest.JydsMonitorObjectSummary"
-                        }
-                    ]
-                },
-                "pay": {
-                    "description": "支出",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/rest.JydsMonitorObjectSummary"
-                        }
-                    ]
-                },
-                "summary": {
-                    "description": "汇总",
+                "monitor": {
+                    "description": "监测",
                     "allOf": [
                         {
                             "$ref": "#/definitions/rest.JydsMonitorObjectSummary"
@@ -1262,60 +1331,24 @@ const docTemplate = `{
         "rest.JydsMonitorObjectSummary": {
             "type": "object",
             "properties": {
-                "asset_management": {
-                    "description": "资产管理",
-                    "type": "integer"
-                },
-                "cultural_artistic_items": {
-                    "description": "文化艺术品",
-                    "type": "integer"
-                },
-                "finance": {
-                    "description": "金融",
-                    "type": "integer"
-                },
-                "financial_assets_equities": {
-                    "description": "金融资产权益",
-                    "type": "integer"
-                },
-                "financial_services": {
+                "financial": {
                     "description": "金融服务",
-                    "type": "integer"
-                },
-                "financing": {
-                    "description": "融资",
-                    "type": "integer"
-                },
-                "guarantee": {
-                    "description": "担保",
                     "type": "integer"
                 },
                 "investment": {
                     "description": "投资",
                     "type": "integer"
                 },
-                "lease": {
-                    "description": "租赁",
+                "loan": {
+                    "description": "贷款",
                     "type": "integer"
                 },
-                "pawn": {
-                    "description": "地产",
-                    "type": "integer"
-                },
-                "precious_metals_investment": {
-                    "description": "贵金属投资",
-                    "type": "integer"
-                },
-                "property_purchase": {
-                    "description": "置业",
+                "other": {
+                    "description": "其他",
                     "type": "integer"
                 },
                 "real_estate": {
                     "description": "房地产",
-                    "type": "integer"
-                },
-                "small_loan": {
-                    "description": "小贷",
                     "type": "integer"
                 },
                 "total_num": {
@@ -1328,48 +1361,18 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/rest.MonitorTradeInfo"
                     }
-                },
-                "wealth_management": {
-                    "description": "财富管理",
-                    "type": "integer"
                 }
             }
         },
         "rest.JydsOverviewResp": {
             "type": "object",
             "properties": {
-                "income": {
-                    "description": "收入",
+                "trade_info": {
+                    "description": "交易信息 top15+其他 数组最大长度16",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/rest.JydsOverviewTradeInfo"
                     }
-                },
-                "income_number": {
-                    "description": "收入流水笔数 这里默认15条 如果少于15 例如只有9条那组件中第三页就不需要了",
-                    "type": "integer"
-                },
-                "pay": {
-                    "description": "支出",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/rest.JydsOverviewTradeInfo"
-                    }
-                },
-                "pay_number": {
-                    "description": "支出流水笔数 这里默认15条 如果少于15 例如只有9条那组件中第三页就不需要了",
-                    "type": "integer"
-                },
-                "summary": {
-                    "description": "汇总",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/rest.JydsOverviewTradeInfo"
-                    }
-                },
-                "summary_number": {
-                    "description": "流水汇总笔数 这里默认15条 如果少于15 例如只有9条那组件中第三页就不需要了",
-                    "type": "integer"
                 }
             }
         },
@@ -1384,6 +1387,10 @@ const docTemplate = `{
                     "description": "交易金额",
                     "type": "integer"
                 },
+                "end_time": {
+                    "description": "交易时间段结束 2023-02-18",
+                    "type": "string"
+                },
                 "id": {
                     "description": "序号",
                     "type": "integer"
@@ -1392,13 +1399,13 @@ const docTemplate = `{
                     "description": "交易户名",
                     "type": "string"
                 },
+                "start_time": {
+                    "description": "交易时间段开始 2022-08-09",
+                    "type": "string"
+                },
                 "trade_number": {
                     "description": "交易笔数",
                     "type": "integer"
-                },
-                "trade_time": {
-                    "description": "交易时间段",
-                    "type": "string"
                 }
             }
         },
@@ -1543,6 +1550,10 @@ const docTemplate = `{
                     "description": "交易账号",
                     "type": "string"
                 },
+                "end_time": {
+                    "description": "交易时间段结束 2023-02-18",
+                    "type": "string"
+                },
                 "name": {
                     "description": "交易户名",
                     "type": "string"
@@ -1551,13 +1562,13 @@ const docTemplate = `{
                     "description": "预警信号",
                     "type": "string"
                 },
+                "start_time": {
+                    "description": "交易时间段开始 2022-08-09",
+                    "type": "string"
+                },
                 "trade_number": {
                     "description": "交易笔数",
                     "type": "integer"
-                },
-                "trade_time": {
-                    "description": "交易时间",
-                    "type": "string"
                 }
             }
         },
@@ -1725,6 +1736,10 @@ const docTemplate = `{
                 "timer": {
                     "description": "月 2022-01",
                     "type": "string"
+                },
+                "total": {
+                    "description": "当月总流水",
+                    "type": "integer"
                 }
             }
         },
@@ -1742,6 +1757,10 @@ const docTemplate = `{
                 "timer": {
                     "description": "月 2022-01",
                     "type": "string"
+                },
+                "total": {
+                    "description": "当月总交易笔数",
+                    "type": "integer"
                 }
             }
         },

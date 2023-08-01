@@ -44,12 +44,16 @@ definitions:
         description: 交易时间
         type: string
     type: object
-  rest.AbnormalTransactionResp:
+  rest.AbnormalTransactionHighFrequencyResp:
     properties:
       high_frequency_trading:
-        allOf:
-        - $ref: '#/definitions/rest.HighFrequencyTradingI'
         description: 高频交易
+        items:
+          $ref: '#/definitions/rest.HighFrequencyTradingI'
+        type: array
+    type: object
+  rest.AbnormalTransactionLargeResp:
+    properties:
       large_num:
         description: 大额交易流水总数
         type: integer
@@ -58,6 +62,9 @@ definitions:
         items:
           $ref: '#/definitions/rest.LargeTransactionI'
         type: array
+    type: object
+  rest.AbnormalTransactionSuspiciousResp:
+    properties:
       suspicious_num:
         description: 可以交易流水总数
         type: integer
@@ -123,15 +130,6 @@ definitions:
         description: 支出金额
         type: integer
     type: object
-  rest.ClassTradeInfo1:
-    properties:
-      amount:
-        description: 交易金额
-        type: integer
-      name:
-        description: 对手方名称
-        type: string
-    type: object
   rest.HighFrequencyTradingI:
     properties:
       income:
@@ -170,18 +168,10 @@ definitions:
     type: object
   rest.JydsClassResp:
     properties:
-      income:
-        allOf:
-        - $ref: '#/definitions/rest.JydsClassSummaryI'
-        description: 收入
-      pay:
-        allOf:
-        - $ref: '#/definitions/rest.JydsClassSummaryP'
-        description: 支持
-      summary:
+      class:
         allOf:
         - $ref: '#/definitions/rest.JydsClassSummary'
-        description: 汇总
+        description: 分类
     type: object
   rest.JydsClassSummary:
     properties:
@@ -203,104 +193,29 @@ definitions:
           $ref: '#/definitions/rest.ClassTradeInfo'
         type: array
     type: object
-  rest.JydsClassSummaryI:
-    properties:
-      institutional_clients:
-        description: 机构客户数量
-        type: integer
-      natural_person:
-        description: 自然人数量
-        type: integer
-      other:
-        description: 其他数量
-        type: integer
-      own:
-        description: 自己数量
-        type: integer
-      trade_info:
-        description: 对手方收入明细 top8
-        items:
-          $ref: '#/definitions/rest.ClassTradeInfo1'
-        type: array
-    type: object
-  rest.JydsClassSummaryP:
-    properties:
-      institutional_clients:
-        description: 机构客户数量
-        type: integer
-      natural_person:
-        description: 自然人数量
-        type: integer
-      other:
-        description: 其他数量
-        type: integer
-      own:
-        description: 自己数量
-        type: integer
-      trade_info:
-        description: 对手方支出明细 top8
-        items:
-          $ref: '#/definitions/rest.ClassTradeInfo1'
-        type: array
-    type: object
   rest.JydsMonitorObjectResp:
     properties:
-      income:
+      monitor:
         allOf:
         - $ref: '#/definitions/rest.JydsMonitorObjectSummary'
-        description: 收入
-      pay:
-        allOf:
-        - $ref: '#/definitions/rest.JydsMonitorObjectSummary'
-        description: 支出
-      summary:
-        allOf:
-        - $ref: '#/definitions/rest.JydsMonitorObjectSummary'
-        description: 汇总
+        description: 监测
     type: object
   rest.JydsMonitorObjectSummary:
     properties:
-      asset_management:
-        description: 资产管理
-        type: integer
-      cultural_artistic_items:
-        description: 文化艺术品
-        type: integer
-      finance:
-        description: 金融
-        type: integer
-      financial_assets_equities:
-        description: 金融资产权益
-        type: integer
-      financial_services:
+      financial:
         description: 金融服务
-        type: integer
-      financing:
-        description: 融资
-        type: integer
-      guarantee:
-        description: 担保
         type: integer
       investment:
         description: 投资
         type: integer
-      lease:
-        description: 租赁
+      loan:
+        description: 贷款
         type: integer
-      pawn:
-        description: 地产
-        type: integer
-      precious_metals_investment:
-        description: 贵金属投资
-        type: integer
-      property_purchase:
-        description: 置业
+      other:
+        description: 其他
         type: integer
       real_estate:
         description: 房地产
-        type: integer
-      small_loan:
-        description: 小贷
         type: integer
       total_num:
         description: 所有流水的条数
@@ -310,36 +225,14 @@ definitions:
         items:
           $ref: '#/definitions/rest.MonitorTradeInfo'
         type: array
-      wealth_management:
-        description: 财富管理
-        type: integer
     type: object
   rest.JydsOverviewResp:
     properties:
-      income:
-        description: 收入
+      trade_info:
+        description: 交易信息 top15+其他 数组最大长度16
         items:
           $ref: '#/definitions/rest.JydsOverviewTradeInfo'
         type: array
-      income_number:
-        description: 收入流水笔数 这里默认15条 如果少于15 例如只有9条那组件中第三页就不需要了
-        type: integer
-      pay:
-        description: 支出
-        items:
-          $ref: '#/definitions/rest.JydsOverviewTradeInfo'
-        type: array
-      pay_number:
-        description: 支出流水笔数 这里默认15条 如果少于15 例如只有9条那组件中第三页就不需要了
-        type: integer
-      summary:
-        description: 汇总
-        items:
-          $ref: '#/definitions/rest.JydsOverviewTradeInfo'
-        type: array
-      summary_number:
-        description: 流水汇总笔数 这里默认15条 如果少于15 例如只有9条那组件中第三页就不需要了
-        type: integer
     type: object
   rest.JydsOverviewTradeInfo:
     properties:
@@ -349,18 +242,21 @@ definitions:
       amount:
         description: 交易金额
         type: integer
+      end_time:
+        description: 交易时间段结束 2023-02-18
+        type: string
       id:
         description: 序号
         type: integer
       name:
         description: 交易户名
         type: string
+      start_time:
+        description: 交易时间段开始 2022-08-09
+        type: string
       trade_number:
         description: 交易笔数
         type: integer
-      trade_time:
-        description: 交易时间段
-        type: string
     type: object
   rest.LargeTransactionI:
     properties:
@@ -462,18 +358,21 @@ definitions:
       account:
         description: 交易账号
         type: string
+      end_time:
+        description: 交易时间段结束 2023-02-18
+        type: string
       name:
         description: 交易户名
         type: string
       signal:
         description: 预警信号
         type: string
+      start_time:
+        description: 交易时间段开始 2022-08-09
+        type: string
       trade_number:
         description: 交易笔数
         type: integer
-      trade_time:
-        description: 交易时间
-        type: string
     type: object
   rest.NSMInfo:
     properties:
@@ -593,6 +492,9 @@ definitions:
       timer:
         description: 月 2022-01
         type: string
+      total:
+        description: 当月总流水
+        type: integer
     type: object
   rest.TradeNumberI:
     properties:
@@ -605,6 +507,9 @@ definitions:
       timer:
         description: 月 2022-01
         type: string
+      total:
+        description: 当月总交易笔数
+        type: integer
     type: object
   rest.TransactionDistribution:
     properties:
@@ -626,6 +531,14 @@ paths:
     get:
       description: 交易对手-对手方分类
       parameters:
+      - description: 对手方分类展示 0:汇总 1:收入 2:支出 默认展示汇总页
+        enum:
+        - 0
+        - 1
+        - 2
+        in: query
+        name: disp_type
+        type: integer
       - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
@@ -662,6 +575,14 @@ paths:
     get:
       description: 交易对手-对手方概览
       parameters:
+      - description: 对手方概览展示 0:汇总 1:收入 2:支出 默认展示汇总页
+        enum:
+        - 0
+        - 1
+        - 2
+        in: query
+        name: disp_type
+        type: integer
       - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
@@ -670,16 +591,6 @@ paths:
         in: query
         name: end_date
         type: string
-      - description: 默认5条/页
-        in: query
-        minimum: 5
-        name: limit
-        type: integer
-      - description: 第一页开始
-        in: query
-        minimum: 1
-        name: page
-        type: integer
       - description: 项目id
         in: query
         name: project_id
@@ -708,6 +619,14 @@ paths:
     get:
       description: 交易对手-重点监测对象
       parameters:
+      - description: 对手方分类展示 0:汇总 1:收入 2:支出 默认展示汇总页
+        enum:
+        - 0
+        - 1
+        - 2
+        in: query
+        name: disp_type
+        type: integer
       - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids
@@ -750,9 +669,45 @@ paths:
                 data:
                   $ref: '#/definitions/rest.JydsMonitorObjectResp'
               type: object
-  /edapi/bankbills/analyse/jyhz/abnormal/transaction:
+  /edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency:
     get:
-      description: 交易汇总-异常交易
+      description: 交易汇总-异常交易-高频交易
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.AbnormalTransactionHighFrequencyResp'
+              type: object
+  /edapi/bankbills/analyse/jyhz/abnormal/transaction/large:
+    get:
+      description: 交易汇总-异常交易-大额交易
       parameters:
       - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
@@ -794,7 +749,53 @@ paths:
             - $ref: '#/definitions/rest.Result1'
             - properties:
                 data:
-                  $ref: '#/definitions/rest.AbnormalTransactionResp'
+                  $ref: '#/definitions/rest.AbnormalTransactionLargeResp'
+              type: object
+  /edapi/bankbills/analyse/jyhz/abnormal/transaction/suspicious:
+    get:
+      description: 交易汇总-异常交易-可疑交易
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 默认5条/页
+        in: query
+        minimum: 5
+        name: limit
+        type: integer
+      - description: 第一页开始
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.AbnormalTransactionSuspiciousResp'
               type: object
   /edapi/bankbills/analyse/jyhz/balance/fluctuation:
     get:
@@ -836,6 +837,13 @@ paths:
     get:
       description: 交易汇总-交易分布
       parameters:
+      - description: 交易分布展示 0:交易金额 1:交易笔数 默认展示交易金额页
+        enum:
+        - 0
+        - 1
+        in: query
+        name: disp_type
+        type: integer
       - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
         in: query
         name: doc_ids

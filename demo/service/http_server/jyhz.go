@@ -30,14 +30,38 @@ func JyhzTransactionDistribution(context *gin.Context) {
 	})
 }
 
-// JyhzAbnormalTransaction  @Summary 交易汇总
-// @Description 交易汇总-异常交易
-// @Param jydsAbnormalTransactionRequest query rest.JydsAbnormalTransactionRequest true "异常交易筛选项目"
-// @Success 200 {object} rest.Result1{data=rest.AbnormalTransactionResp}
-// @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction [get]
-func JyhzAbnormalTransaction(context *gin.Context) {
+// JyhzAbnormalTransactionHighFrequency  @Summary 交易汇总
+// @Description 交易汇总-异常交易-高频交易
+// @Param jydsAbnormalTransactionHighFrequencyRequest query rest.JydsAbnormalTransactionHighFrequencyRequest true "高频交易筛选项目"
+// @Success 200 {object} rest.Result1{data=rest.AbnormalTransactionHighFrequencyResp}
+// @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency [get]
+func JyhzAbnormalTransactionHighFrequency(context *gin.Context) {
 
 	context.JSON(http.StatusOK, rest.Result{
-		Data: rest.AbnormalTransactionResp{},
+		Data: rest.AbnormalTransactionHighFrequencyResp{},
+	})
+}
+
+// JyhzAbnormalTransactionSuspicious  @Summary 交易汇总
+// @Description 交易汇总-异常交易-可疑交易
+// @Param jydsAbnormalTransactionSuspiciousRequest query rest.JydsAbnormalTransactionSuspiciousRequest true "可疑交易筛选项目"
+// @Success 200 {object} rest.Result1{data=rest.AbnormalTransactionSuspiciousResp}
+// @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction/suspicious [get]
+func JyhzAbnormalTransactionSuspicious(context *gin.Context) {
+
+	context.JSON(http.StatusOK, rest.Result{
+		Data: rest.AbnormalTransactionSuspiciousResp{},
+	})
+}
+
+// JyhzAbnormalTransactionLarge  @Summary 交易汇总
+// @Description 交易汇总-异常交易-大额交易
+// @Param jydsAbnormalTransactionLargeRequest query rest.JydsAbnormalTransactionLargeRequest true "大额交易筛选项目"
+// @Success 200 {object} rest.Result1{data=rest.AbnormalTransactionLargeResp}
+// @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction/large [get]
+func JyhzAbnormalTransactionLarge(context *gin.Context) {
+
+	context.JSON(http.StatusOK, rest.Result{
+		Data: rest.AbnormalTransactionLargeResp{},
 	})
 }

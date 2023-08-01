@@ -251,16 +251,18 @@ type UpdateProjectRequest struct {
 }
 
 type JydsOverviewRequest struct {
-	PageRequest
 	Lsyz
+	DispType int64 `uri:"disp_type" json:"disp_type" binding:"omitempty,oneof=0 1 2" validate:"omitempty,oneof=0 1 2"` // 对手方概览展示 0:汇总 1:收入 2:支出 默认展示汇总页
 }
 type JydsClassRequest struct {
 	Lsyz
+	DispType int64 `uri:"disp_type" json:"disp_type" binding:"omitempty,oneof=0 1 2" validate:"omitempty,oneof=0 1 2"` // 对手方分类展示 0:汇总 1:收入 2:支出 默认展示汇总页
 }
 
 type JydsMonitorObjectRequest struct {
 	PageRequest
 	Lsyz
+	DispType int64 `uri:"disp_type" json:"disp_type" binding:"omitempty,oneof=0 1 2" validate:"omitempty,oneof=0 1 2"` // 对手方分类展示 0:汇总 1:收入 2:支出 默认展示汇总页
 }
 
 type JyhzBalanceFluctuationRequest struct {
@@ -269,9 +271,19 @@ type JyhzBalanceFluctuationRequest struct {
 
 type JyhzTransactionDistributionRequest struct {
 	Lsyz
+	DispType int64 `uri:"disp_type" json:"disp_type" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 交易分布展示 0:交易金额 1:交易笔数 默认展示交易金额页
 }
 
-type JydsAbnormalTransactionRequest struct {
+type JydsAbnormalTransactionHighFrequencyRequest struct {
+	Lsyz
+}
+
+type JydsAbnormalTransactionSuspiciousRequest struct {
+	PageRequest
+	Lsyz
+}
+
+type JydsAbnormalTransactionLargeRequest struct {
 	PageRequest
 	Lsyz
 }
