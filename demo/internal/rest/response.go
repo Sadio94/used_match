@@ -41,6 +41,8 @@ type LsyzAResp struct {
 	AbnormalTimes  int64             `json:"abnormal_times"`  // 结息金额异常次数
 	TotalInterest  int64             `json:"total_interest"`  // 总结息金额
 	InterestReport []InterestReportI `json:"interest_report"` // 结息报表
+	StartDate      string            `json:"start_date"`      // 筛选之后显示的流水开始时间
+	EndDate        string            `json:"end_date"`        // 筛选之后显示的流水结束时间
 }
 
 type InterestReportI struct {

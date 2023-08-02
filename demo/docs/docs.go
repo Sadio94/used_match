@@ -1445,6 +1445,10 @@ const docTemplate = `{
                     "description": "实结息",
                     "type": "integer"
                 },
+                "end_date": {
+                    "description": "筛选之后显示的流水结束时间",
+                    "type": "string"
+                },
                 "interest_report": {
                     "description": "结息报表",
                     "type": "array",
@@ -1455,6 +1459,10 @@ const docTemplate = `{
                 "should_interest": {
                     "description": "应结息",
                     "type": "integer"
+                },
+                "start_date": {
+                    "description": "筛选之后显示的流水开始时间",
+                    "type": "string"
                 },
                 "total_interest": {
                     "description": "总结息金额",
