@@ -214,6 +214,7 @@ type MonitorTradeInfo struct {
 	StartTime   string `json:"start_time"`   // 交易时间段开始 2022-08-09
 	EndTime     string `json:"end_time"`     // 交易时间段结束 2023-02-18
 	TradeNumber int64  `json:"trade_number"` // 交易笔数
+	Amount      int64  `json:"amount"`       // 交易金额
 }
 
 // BalanceFluctuationResp 交易汇总-余额波动

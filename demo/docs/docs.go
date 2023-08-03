@@ -1558,6 +1558,10 @@ const docTemplate = `{
                     "description": "交易账号",
                     "type": "string"
                 },
+                "amount": {
+                    "description": "交易金额",
+                    "type": "integer"
+                },
                 "end_time": {
                     "description": "交易时间段结束 2023-02-18",
                     "type": "string"
