@@ -1189,8 +1189,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "volatility": {
-                    "description": "波动率 20%",
-                    "type": "string"
+                    "description": "波动率 标注差 20",
+                    "type": "integer"
                 }
             }
         },
@@ -1738,11 +1738,11 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "income": {
-                    "description": "当月收入",
+                    "description": "当月收入或者收入笔数",
                     "type": "integer"
                 },
                 "pay": {
-                    "description": "当月支出",
+                    "description": "当月支出或者支出笔数",
                     "type": "integer"
                 },
                 "timer": {
@@ -1750,28 +1750,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "total": {
-                    "description": "当月总流水",
-                    "type": "integer"
-                }
-            }
-        },
-        "rest.TradeNumberI": {
-            "type": "object",
-            "properties": {
-                "income_num": {
-                    "description": "当月收入笔数",
-                    "type": "integer"
-                },
-                "pay_num": {
-                    "description": "当月支出笔数",
-                    "type": "integer"
-                },
-                "timer": {
-                    "description": "月 2022-01",
-                    "type": "string"
-                },
-                "total": {
-                    "description": "当月总交易笔数",
+                    "description": "当月总流水或者交易总笔数",
                     "type": "integer"
                 }
             }
@@ -1779,18 +1758,11 @@ const docTemplate = `{
         "rest.TransactionDistribution": {
             "type": "object",
             "properties": {
-                "trade_amount": {
-                    "description": "交易金额",
+                "trade_data": {
+                    "description": "交易金额或者交易笔数信息 根据disp_type来填充返回值",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/rest.TradeAmountI"
-                    }
-                },
-                "trade_number": {
-                    "description": "交易笔数",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/rest.TradeNumberI"
                     }
                 }
             }

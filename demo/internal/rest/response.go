@@ -224,28 +224,20 @@ type BalanceFluctuationResp struct {
 
 type BalanceInfo struct {
 	Timer      string `json:"timer"`       // 月 2022-01
-	AvgBalance int    `json:"avg_balance"` // 月均余额
-	Volatility string `json:"volatility"`  // 波动率 20%
+	AvgBalance int64  `json:"avg_balance"` // 月均余额
+	Volatility int64  `json:"volatility"`  // 波动率 标注差 20
 }
 
 // TransactionDistribution 交易汇总-交易分布
 type TransactionDistribution struct {
-	TradeAmount []TradeAmountI `json:"trade_amount"` // 交易金额
-	TradeNumber []TradeNumberI `json:"trade_number"` // 交易笔数
+	TradeData []TradeAmountI `json:"trade_data"` // 交易金额或者交易笔数信息 根据disp_type来填充返回值
 }
 
 type TradeAmountI struct {
 	Timer  string `json:"timer"`  // 月 2022-01
-	Income int64  `json:"income"` // 当月收入
-	Pay    int64  `json:"pay"`    // 当月支出
-	Total  int64  `json:"total"`  // 当月总流水
-}
-
-type TradeNumberI struct {
-	Timer     string `json:"timer"`      // 月 2022-01
-	IncomeNum int64  `json:"income_num"` // 当月收入笔数
-	PayNum    int64  `json:"pay_num"`    // 当月支出笔数
-	Total     int64  `json:"total"`      // 当月总交易笔数
+	Income int64  `json:"income"` // 当月收入或者收入笔数
+	Pay    int64  `json:"pay"`    // 当月支出或者支出笔数
+	Total  int64  `json:"total"`  // 当月总流水或者交易总笔数
 }
 
 // AbnormalTransactionHighFrequencyResp 交易汇总-异常交易-高频交易
