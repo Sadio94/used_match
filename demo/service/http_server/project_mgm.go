@@ -39,10 +39,20 @@ func ProjectList(context *gin.Context) {
 
 // UpdateProject  @Summary 项目管理
 // @Description 项目管理-更新项目
-// @Param updateProjectRequest query rest.UpdateProjectRequest true "获取项目列表参数"
+// @Param updateProjectRequest query rest.UpdateProjectRequest true "编辑指定项目"
 // @Success 200 {object} rest.Result1{}
 // @Router /edapi/bankbills/project/update [get]
 func UpdateProject(context *gin.Context) {
+
+	context.JSON(http.StatusOK, rest.Result{})
+}
+
+// DeleteProject  @Summary 项目管理
+// @Description 项目管理-删除指定项目
+// @Param deleteProjectRequest query rest.DeleteProjectRequest true "删除指定项目"
+// @Success 200 {object} rest.Result1{}
+// @Router /edapi/bankbills/project/delete [get]
+func DeleteProject(context *gin.Context) {
 
 	context.JSON(http.StatusOK, rest.Result{})
 }

@@ -34,6 +34,13 @@ type Result1 struct {
 	Data interface{} `json:"data"`
 }
 
+type DateInfo []DateI
+
+type DateI struct {
+	Date string `json:"date"` // 具体日期 2022-09-10
+	Type int    `json:"type"` // 当天类型枚举 0：工作日 1：假日 2：节假日
+}
+
 // LsyzAResp 流水验证-数据真实性
 type LsyzAResp struct {
 	ShouldInterest int64             `json:"should_interest"` // 应结息
@@ -133,11 +140,15 @@ type AddProjectResp struct {
 
 // ProjectListResp 项目列表
 type ProjectListResp struct {
-	Count       int64          `json:"count"`        // 项目总数
-	DocCount    int64          `json:"doc_count"`    // 文档总数
-	ReportCount int64          `json:"report_count"` // 报告总数
-	AmountCount int64          `json:"amount_count"` // 金额总数
-	ProjectList []ProjectListI `json:"project_list"` // 项目详情
+	Count           int64          `json:"count"`              // 项目总数
+	DocCount        int64          `json:"doc_count"`          // 文档总数
+	ReportCount     int64          `json:"report_count"`       // 报告总数
+	AmountCount     string         `json:"amount_count"`       // 金额总数 从金额个位开始 三位使用','拼接 例如 123,333,333
+	OverBillion     bool           `json:"over_billion"`       // 金额总数是否超过10亿
+	ProjectList     []ProjectListI `json:"project_list"`       // 项目详情
+	RiskLevel1Count int            `json:"risk_level_1_count"` // 高风险项目数
+	RiskLevel2Count int            `json:"risk_level_2_count"` // 中风险项目数
+	RiskLevel3Count int            `json:"risk_level_3_count"` // 低风险项目数
 }
 
 type ProjectListI struct {

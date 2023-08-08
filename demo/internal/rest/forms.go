@@ -203,6 +203,10 @@ type UserList struct {
 	UserStatus int    `form:"userStatus" json:"userStatus" binding:"required,oneof=1 2"`
 }
 
+type DayTypeRequest struct {
+	Dates string `form:"dates" json:"dates" binding:"required"` // 2006-01-02形式 多个之间以英文逗号','分隔
+}
+
 type IdRequest struct {
 	Id string `uri:"id" json:"id" binding:"required,len=32" validate:"required,len=32"`
 }
@@ -248,6 +252,11 @@ type UpdateProjectRequest struct {
 	Name      string `uri:"name" json:"name" binding:"omitempty" validate:"omitempty"`                         // 项目名称
 	Type      int64  `uri:"type" json:"type" binding:"omitempty,oneof=1 2 3" validate:"omitempty,oneof=1 2 3"` // 项目类型 1:企业 2:个人 3:其他
 	Note      string `uri:"note" json:"note" binding:"omitempty" validate:"omitempty"`                         // 项目备注
+}
+
+type DeleteProjectRequest struct {
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`           // 用户token
+	ProjectId string `uri:"project_id" json:"project_id" binding:"required" validate:"required"` // 待删除项目id
 }
 
 type JydsOverviewRequest struct {

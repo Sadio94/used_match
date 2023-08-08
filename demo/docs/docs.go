@@ -837,6 +837,43 @@ const docTemplate = `{
                 }
             }
         },
+        "/edapi/bankbills/api/day/type": {
+            "get": {
+                "description": "日期类型查询",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "2006-01-02形式 多个之间以英文逗号','分隔",
+                        "name": "dates",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/rest.DateI"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/edapi/bankbills/project/add": {
             "get": {
                 "description": "项目管理-新建项目",
@@ -891,6 +928,35 @@ const docTemplate = `{
                                     }
                                 }
                             ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/project/delete": {
+            "get": {
+                "description": "项目管理-删除指定项目",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "待删除项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
                         }
                     }
                 }
@@ -1220,6 +1286,19 @@ const docTemplate = `{
                 },
                 "out_amount": {
                     "description": "支出金额",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.DateI": {
+            "type": "object",
+            "properties": {
+                "date": {
+                    "description": "具体日期 2022-09-10",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "当天类型枚举 0：工作日 1：假日 2：节假日",
                     "type": "integer"
                 }
             }
@@ -1650,8 +1729,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "amount_count": {
-                    "description": "金额总数",
-                    "type": "integer"
+                    "description": "金额总数 从金额个位开始 三位使用','拼接 例如 123,333,333",
+                    "type": "string"
                 },
                 "count": {
                     "description": "项目总数",
@@ -1660,6 +1739,10 @@ const docTemplate = `{
                 "doc_count": {
                     "description": "文档总数",
                     "type": "integer"
+                },
+                "over_billion": {
+                    "description": "金额总数是否超过10亿",
+                    "type": "boolean"
                 },
                 "project_list": {
                     "description": "项目详情",
@@ -1670,6 +1753,18 @@ const docTemplate = `{
                 },
                 "report_count": {
                     "description": "报告总数",
+                    "type": "integer"
+                },
+                "risk_level_1_count": {
+                    "description": "高风险项目数",
+                    "type": "integer"
+                },
+                "risk_level_2_count": {
+                    "description": "中风险项目数",
+                    "type": "integer"
+                },
+                "risk_level_3_count": {
+                    "description": "低风险项目数",
                     "type": "integer"
                 }
             }

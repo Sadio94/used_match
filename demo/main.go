@@ -41,6 +41,7 @@ func main() {
 	addJyhzRoute(v1)
 	v2 := r.Group("/edapi/bankbills/project")
 	addProjectRoute(v2)
+	r.GET("/edapi/bankbills/api/day/type", http_server.DayType)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	//r.Run(":8080")
 	type tcpKeepAliveListener struct {
@@ -68,8 +69,9 @@ func addLsyzRoutes(v1 *gin.RouterGroup) {
 
 func addProjectRoute(v *gin.RouterGroup) {
 	v.GET("/add", http_server.AddProject)
-	v.GET("/query", http_server.AddProject)
-	v.GET("/update", http_server.AddProject)
+	v.GET("/query", http_server.ProjectList)
+	v.GET("/update", http_server.UpdateProject)
+	v.GET("/delete", http_server.DeleteProject)
 }
 
 func addJydsRoutes(v1 *gin.RouterGroup) {
