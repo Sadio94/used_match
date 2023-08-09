@@ -62,7 +62,6 @@ func formatDates() (resp []map[string][]InnerItem) {
 			return nil
 		}
 
-		fmt.Println(outerItems)
 		resp = append(resp, outerItems...)
 	}
 
@@ -71,6 +70,7 @@ func formatDates() (resp []map[string][]InnerItem) {
 
 // DayType  @Summary 日期类型查询
 // @Description 日期类型查询 用户获取指定日期是否工作日
+// @Tags 日期查询工具
 // @Param dayTypeRequest query rest.DayTypeRequest true "待查询日期参数"
 // @Success 200 {object} rest.Result1{data=rest.DateInfo}
 // @Router /edapi/bankbills/api/day/type [get]

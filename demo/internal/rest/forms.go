@@ -311,3 +311,32 @@ type JyfxTopSummaryRequest struct {
 	Lsyz
 	Type string `uri:"type" json:"type" binding:"omitempty,oneof=income expenses " validate:"omitempty,oneof=income expenses"` // 筛选类型 income:收入 expenses:支出 默认收入
 }
+
+type DocListRequest struct {
+	PageRequest
+	Token             string `uri:"token" json:"token" binding:"required" validate:"required"`                                                   // 用户token
+	DateDesc          int64  `uri:"date_desc" json:"date_desc" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"`                     // 文件上传时间排序搜索项 0:默认倒序 1:正序
+	KeyWord           string `uri:"keyword" json:"keyword" binding:"omitempty" validate:"omitempty"`                                             // 关键字搜索 文件名称或者备注模糊匹配
+	StartTime         int64  `uri:"start_time" json:"start_time" binding:"omitempty" validate:"omitempty"`                                       // 开始时间 秒级时间戳
+	EndTime           int64  `uri:"end_time" json:"end_time" binding:"omitempty" validate:"omitempty"`                                           // 结束时间 秒级时间戳
+	HeaderCheckStatus int64  `uri:"header_check_status" json:"header_check_status" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 表头校验搜索项 0:不通过 1:通过
+	DocIds            string `uri:"doc_ids" json:"doc_ids" binding:"omitempty" validate:"omitempty"`                                             // 当前项目下筛选的文档 多个以英文逗号','拼接
+	OcrStatus         int64  `uri:"ocr_status" json:"ocr_status" binding:"omitempty,oneof=-1 0 1" validate:"omitempty,oneof=-1 0 1"`             // ocr识别状态 -1:识别失败 0:识别中 1:识别成功
+}
+
+type UpdateDocRequest struct {
+	Token string `uri:"token" json:"token" binding:"required" validate:"required"`   // 用户token
+	DocId string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"` // 待编辑文档
+	Note  string `uri:"note" json:"note" binding:"omitempty" validate:"omitempty"`   // 文档备注
+	Title string `uri:"title" json:"title" binding:"omitempty" validate:"omitempty"` // 文档名
+}
+
+type DocDetailRequest struct {
+	Token string `uri:"token" json:"token" binding:"required" validate:"required"`   // 用户token
+	DocId string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"` // 待查看文档id
+}
+
+type DeleteDocRequest struct {
+	Token string `uri:"token" json:"token" binding:"required" validate:"required"`   // 用户token
+	DocId string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"` // 待删除文档id
+}

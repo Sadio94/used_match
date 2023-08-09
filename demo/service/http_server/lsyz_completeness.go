@@ -15,6 +15,7 @@ import (
 
 // LsyzCompletenessAccount  @Summary 流水验证
 // @Description 流水验证-数据完整性-账号信息
+// @Tags 流水验证
 // @Param lsyz query rest.Lsyz true "账号信息筛选项目"
 // @Success 200 {object} rest.Result1{data=rest.LsyzCAccountResp}
 // @Router /edapi/bankbills/analyse/lsyz/completeness/account [get]
@@ -27,6 +28,7 @@ func LsyzCompletenessAccount(context *gin.Context) {
 
 // LsyzCompletenessBalance  @Summary 流水验证
 // @Description 流水验证-数据完整性-余额完整
+// @Tags 流水验证
 // @Param lsyzC query rest.LsyzC true "账号信息筛选项目"
 // @Success 200 {object} rest.Result1{data=rest.LsyzBalanceResp}
 // @Router /edapi/bankbills/analyse/lsyz/completeness/balance [get]
@@ -38,6 +40,7 @@ func LsyzCompletenessBalance(context *gin.Context) {
 
 // LsyzCompletenessSummary  @Summary 流水验证
 // @Description 流水验证-数据完整性-摘要完整
+// @Tags 流水验证
 // @Param lsyzC query rest.LsyzC true "账号信息筛选项目"
 // @Success 200 {object} rest.Result1{data=rest.LsyzSummaryResp}
 // @Router /edapi/bankbills/analyse/lsyz/completeness/summary [get]

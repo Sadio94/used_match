@@ -354,3 +354,45 @@ type TopSummaryI struct {
 	Count   int64   `json:"count"`   // 交易笔数
 	Amount  float64 `json:"amount"`  // 此摘要下金额
 }
+
+// DocListResp 项目下文档列表
+type DocListResp struct {
+	FileNum  int64      `json:"file_num"`  // 文档数
+	FileList []DocListI `json:"file_list"` // 文档详情
+}
+
+type DocListI struct {
+	DocId             int64  `json:"doc_id"`              // 文档id
+	FirstPageId       string `json:"first_page_id"`       // 若该文档包含多页 这是第一页id
+	HeaderCheckStatus int64  `json:"header_check_status"` // 表头校验结果
+	OcrStatus         int64  `json:"ocr_status"`          // ocr识别结果
+	Note              string `json:"note"`                // 项目备注
+	CreateTime        int64  `json:"create_time"`         // 项目创建时间
+	ModifyTime        int64  `json:"modify_time"`         // 文档变更时间
+	UploadTime        int64  `json:"upload_time"`         // 文档上传时间
+	Title             string `json:"title"`               // 文档名
+}
+
+// DocDetailResp 文档详情
+type DocDetailResp struct {
+	NextDocId string   `json:"next_doc_id"` // 按时间顺序的下个文档id
+	LastDocId string   `json:"last_doc_id"` // 按时间顺序的上个文档id
+	DocInfo   DocInfoI `json:"doc_info"`    // 文档详情信息
+}
+
+type DocInfoI struct {
+	DocId      string         `json:"doc_id"`      // 文档id
+	Title      string         `json:"title"`       // 文档名
+	UploadTime int64          `json:"upload_time"` // 文档上传时间
+	CreateTime int64          `json:"create_time"` // 项目创建时间
+	PageList   []DocPageListI `json:"page_list"`   // 文档下页信息 一个文档可能是多页的
+}
+
+type DocPageListI struct {
+	ModifyTime int64  `json:"modify_time"` // 页变更时间
+	Title      string `json:"title"`       // 页标题
+	Note       string `json:"note"`        // 页备注
+	FileName   string `json:"file_name"`   // 页名
+	PageId     string `json:"page_id"`     // 页id
+	Rotate     int64  `json:"rotate"`
+}

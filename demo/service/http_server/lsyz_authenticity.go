@@ -15,6 +15,7 @@ import (
 
 // LsyzAuthenticity  @Summary 流水验证
 // @Description 流水验证-数据真实性
+// @Tags 流水验证
 // @Param lsyz query rest.Lsyz true "数据真实性报表筛选项"
 // @Success 200 {object} rest.Result1{data=rest.LsyzAResp}
 // @Router /edapi/bankbills/analyse/lsyz/authenticity [get]

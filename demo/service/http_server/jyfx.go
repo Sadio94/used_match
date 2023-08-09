@@ -15,6 +15,7 @@ import (
 
 // JyfxSummary  @Summary 经营分析
 // @Description 经营分析-经营概览
+// @Tags 经营分析
 // @Param jyfx query rest.Lsyz true "经营概览筛选项"
 // @Success 200 {object} rest.Result1{data=rest.JyfxSummaryResp}
 // @Router /edapi/bankbills/analyse/jyfx/summary [get]
@@ -27,6 +28,7 @@ func JyfxSummary(context *gin.Context) {
 
 // JyfxTopUser  @Summary 经营分析
 // @Description 经营分析-交易集中度
+// @Tags 经营分析
 // @Param jyfxTopUser query rest.JyfxTopUserRequest true "交易集中度筛选项"
 // @Success 200 {object} rest.Result1{data=rest.JyfxTopUserResp}
 // @Router /edapi/bankbills/analyse/jyfx/top_user [get]
@@ -39,6 +41,7 @@ func JyfxTopUser(context *gin.Context) {
 
 // JyfxTopUserDetail  @Summary 经营分析
 // @Description 经营分析-交易集中度详情
+// @Tags 经营分析
 // @Param jyfxTopUserDetail query rest.JyfxTopUserDetailRequest true "交易集中度详情筛选项"
 // @Success 200 {object} rest.Result1{data=rest.JyfxTopUserDetailResp}
 // @Router /edapi/bankbills/analyse/jyfx/top_user/detail [get]
@@ -51,6 +54,7 @@ func JyfxTopUserDetail(context *gin.Context) {
 
 // JyfxTopSummary  @Summary 经营分析
 // @Description 经营分析-流水构成
+// @Tags 经营分析
 // @Param jyfxTopSummary query rest.JyfxTopSummaryRequest true "流水构成筛选项"
 // @Success 200 {object} rest.Result1{data=rest.JyfxTopSummaryResp}
 // @Router /edapi/bankbills/analyse/jyfx/top_summary [get]

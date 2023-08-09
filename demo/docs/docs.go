@@ -10,7 +10,9 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "contact": {
+            "email": "yinjie_luo@intsig.net"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -19,6 +21,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyds/counterparty/class": {
             "get": {
                 "description": "交易对手-对手方分类",
+                "tags": [
+                    "交易对手"
+                ],
                 "parameters": [
                     {
                         "enum": [
@@ -89,6 +94,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyds/counterparty/overview": {
             "get": {
                 "description": "交易对手-对手方概览",
+                "tags": [
+                    "交易对手"
+                ],
                 "parameters": [
                     {
                         "enum": [
@@ -159,6 +167,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyds/monitor_object": {
             "get": {
                 "description": "交易对手-重点监测对象",
+                "tags": [
+                    "交易对手"
+                ],
                 "parameters": [
                     {
                         "enum": [
@@ -243,6 +254,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyfx/summary": {
             "get": {
                 "description": "经营分析-经营概览",
+                "tags": [
+                    "经营分析"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -302,6 +316,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyfx/top_summary": {
             "get": {
                 "description": "经营分析-流水构成",
+                "tags": [
+                    "经营分析"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -371,6 +388,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyfx/top_user": {
             "get": {
                 "description": "经营分析-交易集中度",
+                "tags": [
+                    "经营分析"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -440,6 +460,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyfx/top_user/detail": {
             "get": {
                 "description": "经营分析-交易集中度详情",
+                "tags": [
+                    "经营分析"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -509,6 +532,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency": {
             "get": {
                 "description": "交易汇总-异常交易-高频交易",
+                "tags": [
+                    "交易汇总"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -568,6 +594,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyhz/abnormal/transaction/large": {
             "get": {
                 "description": "交易汇总-异常交易-大额交易",
+                "tags": [
+                    "交易汇总"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -641,6 +670,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyhz/abnormal/transaction/suspicious": {
             "get": {
                 "description": "交易汇总-异常交易-可疑交易",
+                "tags": [
+                    "交易汇总"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -714,6 +746,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyhz/balance/fluctuation": {
             "get": {
                 "description": "交易汇总-余额波动",
+                "tags": [
+                    "交易汇总"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -773,6 +808,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/jyhz/transaction/distribution": {
             "get": {
                 "description": "交易汇总-交易分布",
+                "tags": [
+                    "交易汇总"
+                ],
                 "parameters": [
                     {
                         "enum": [
@@ -842,6 +880,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/lsyz/authenticity": {
             "get": {
                 "description": "流水验证-数据真实性",
+                "tags": [
+                    "流水验证"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -901,6 +942,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/lsyz/completeness/account": {
             "get": {
                 "description": "流水验证-数据完整性-账号信息",
+                "tags": [
+                    "流水验证"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -960,6 +1004,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/lsyz/completeness/balance": {
             "get": {
                 "description": "流水验证-数据完整性-余额完整",
+                "tags": [
+                    "流水验证"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -1033,6 +1080,9 @@ const docTemplate = `{
         "/edapi/bankbills/analyse/lsyz/completeness/summary": {
             "get": {
                 "description": "流水验证-数据完整性-摘要完整",
+                "tags": [
+                    "流水验证"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -1106,6 +1156,9 @@ const docTemplate = `{
         "/edapi/bankbills/api/day/type": {
             "get": {
                 "description": "日期类型查询 用户获取指定日期是否工作日",
+                "tags": [
+                    "日期查询工具"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -1140,9 +1193,238 @@ const docTemplate = `{
                 }
             }
         },
+        "/edapi/bankbills/doc/delete": {
+            "get": {
+                "description": "文件管理-删除指定文档",
+                "tags": [
+                    "文件管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "待删除文档id",
+                        "name": "doc_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/doc/detail": {
+            "get": {
+                "description": "文件管理-文档详情",
+                "tags": [
+                    "文件管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "待查看文档id",
+                        "name": "doc_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.DocDetailResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/doc/query": {
+            "get": {
+                "description": "文件管理-项目文件列表",
+                "tags": [
+                    "文件管理"
+                ],
+                "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "文件上传时间排序搜索项 0:默认倒序 1:正序",
+                        "name": "date_desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "结束时间 秒级时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "表头校验搜索项 0:不通过 1:通过",
+                        "name": "header_check_status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "关键字搜索 文件名称或者备注模糊匹配",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            -1,
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "ocr识别状态 -1:识别失败 0:识别中 1:识别成功",
+                        "name": "ocr_status",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "开始时间 秒级时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.DocListResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/doc/update": {
+            "get": {
+                "description": "文件管理-修改某个文档",
+                "tags": [
+                    "文件管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "待编辑文档",
+                        "name": "doc_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "文档备注",
+                        "name": "note",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "文档名",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
+        },
         "/edapi/bankbills/project/add": {
             "get": {
                 "description": "项目管理-新建项目",
+                "tags": [
+                    "项目管理"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -1202,6 +1484,9 @@ const docTemplate = `{
         "/edapi/bankbills/project/delete": {
             "get": {
                 "description": "项目管理-删除指定项目",
+                "tags": [
+                    "项目管理"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -1231,6 +1516,9 @@ const docTemplate = `{
         "/edapi/bankbills/project/query": {
             "get": {
                 "description": "项目管理-项目列表",
+                "tags": [
+                    "项目管理"
+                ],
                 "parameters": [
                     {
                         "enum": [
@@ -1318,6 +1606,9 @@ const docTemplate = `{
         "/edapi/bankbills/project/update": {
             "get": {
                 "description": "项目管理-更新项目",
+                "tags": [
+                    "项目管理"
+                ],
                 "parameters": [
                     {
                         "type": "string",
@@ -1587,6 +1878,140 @@ const docTemplate = `{
                 "type": {
                     "description": "当天类型枚举 0：工作日 1：假日 2：节假日",
                     "type": "integer"
+                }
+            }
+        },
+        "rest.DocDetailResp": {
+            "type": "object",
+            "properties": {
+                "doc_info": {
+                    "description": "文档详情信息",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/rest.DocInfoI"
+                        }
+                    ]
+                },
+                "last_doc_id": {
+                    "description": "按时间顺序的上个文档id",
+                    "type": "string"
+                },
+                "next_doc_id": {
+                    "description": "按时间顺序的下个文档id",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.DocInfoI": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "description": "项目创建时间",
+                    "type": "integer"
+                },
+                "doc_id": {
+                    "description": "文档id",
+                    "type": "string"
+                },
+                "page_list": {
+                    "description": "文档下页信息 一个文档可能是多页的",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.DocPageListI"
+                    }
+                },
+                "title": {
+                    "description": "文档名",
+                    "type": "string"
+                },
+                "upload_time": {
+                    "description": "文档上传时间",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.DocListI": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "description": "项目创建时间",
+                    "type": "integer"
+                },
+                "doc_id": {
+                    "description": "文档id",
+                    "type": "integer"
+                },
+                "first_page_id": {
+                    "description": "若该文档包含多页 这是第一页id",
+                    "type": "string"
+                },
+                "header_check_status": {
+                    "description": "表头校验结果",
+                    "type": "integer"
+                },
+                "modify_time": {
+                    "description": "文档变更时间",
+                    "type": "integer"
+                },
+                "note": {
+                    "description": "项目备注",
+                    "type": "string"
+                },
+                "ocr_status": {
+                    "description": "ocr识别结果",
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "文档名",
+                    "type": "string"
+                },
+                "upload_time": {
+                    "description": "文档上传时间",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.DocListResp": {
+            "type": "object",
+            "properties": {
+                "file_list": {
+                    "description": "文档详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.DocListI"
+                    }
+                },
+                "file_num": {
+                    "description": "文档数",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.DocPageListI": {
+            "type": "object",
+            "properties": {
+                "file_name": {
+                    "description": "页名",
+                    "type": "string"
+                },
+                "modify_time": {
+                    "description": "页变更时间",
+                    "type": "integer"
+                },
+                "note": {
+                    "description": "页备注",
+                    "type": "string"
+                },
+                "page_id": {
+                    "description": "页id",
+                    "type": "string"
+                },
+                "rotate": {
+                    "type": "integer"
+                },
+                "title": {
+                    "description": "页标题",
+                    "type": "string"
                 }
             }
         },
@@ -2294,8 +2719,8 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Host:             "http://192.168.6.50:10006",
+	BasePath:         "/edapi/bankbills/",
 	Schemes:          []string{},
 	Title:            "",
 	Description:      "",

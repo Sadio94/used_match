@@ -15,6 +15,7 @@ import (
 
 // AddProject  @Summary 项目管理
 // @Description 项目管理-新建项目
+// @Tags         项目管理
 // @Param addProjectRequest query rest.AddProjectRequest true "新建项目参数"
 // @Success 200 {object} rest.Result1{data=rest.AddProjectResp}
 // @Router /edapi/bankbills/project/add [get]
@@ -27,6 +28,7 @@ func AddProject(context *gin.Context) {
 
 // ProjectList  @Summary 项目管理
 // @Description 项目管理-项目列表
+// @Tags         项目管理
 // @Param projectListRequest query rest.ProjectListRequest true "获取项目列表参数"
 // @Success 200 {object} rest.Result1{data=rest.ProjectListResp}
 // @Router /edapi/bankbills/project/query [get]
@@ -39,6 +41,7 @@ func ProjectList(context *gin.Context) {
 
 // UpdateProject  @Summary 项目管理
 // @Description 项目管理-更新项目
+// @Tags         项目管理
 // @Param updateProjectRequest query rest.UpdateProjectRequest true "编辑指定项目"
 // @Success 200 {object} rest.Result1{}
 // @Router /edapi/bankbills/project/update [get]
@@ -49,6 +52,7 @@ func UpdateProject(context *gin.Context) {
 
 // DeleteProject  @Summary 项目管理
 // @Description 项目管理-删除指定项目
+// @Tags         项目管理
 // @Param deleteProjectRequest query rest.DeleteProjectRequest true "删除指定项目"
 // @Success 200 {object} rest.Result1{}
 // @Router /edapi/bankbills/project/delete [get]

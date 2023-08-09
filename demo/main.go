@@ -19,6 +19,9 @@ import (
 	"net/http"
 )
 
+// @host      http://192.168.6.50:10006
+// @BasePath  /edapi/bankbills/
+// @contact.email  yinjie_luo@intsig.net
 func main() {
 	// param locale by config
 	if err := initialize.TransInitialize("zh"); err != nil {
@@ -34,7 +37,10 @@ func main() {
 		panic(err)
 	}
 
-	docs.SwaggerInfo.BasePath = "/edapi/bankbills/"
+	//docs.SwaggerInfo.Host = "http://192.168.6.50:10006"
+	//docs.SwaggerInfo.BasePath = "/edapi/bankbills/"
+	docs.SwaggerInfo.Title = "Bank Statement API"
+	docs.SwaggerInfo.Description = "API Conversation For Bank Statement."
 	v1 := r.Group("/edapi/bankbills/analyse")
 	addLsyzRoutes(v1)
 	addJyfxRoute(v1)
@@ -42,6 +48,8 @@ func main() {
 	addJyhzRoute(v1)
 	v2 := r.Group("/edapi/bankbills/project")
 	addProjectRoute(v2)
+	v3 := r.Group("/edapi/bankbills/doc")
+	addDocRoute(v3)
 	r.GET("/edapi/bankbills/api/day/type", http_server.DayType)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	//r.Run(":8080")
@@ -90,4 +98,12 @@ func addJyhzRoute(v1 *gin.RouterGroup) {
 	v1.GET("/jyhz/abnormal/transaction/high_frequency", http_server.JyhzAbnormalTransactionHighFrequency)
 	v1.GET("/jyhz/abnormal/transaction/suspicious", http_server.JyhzAbnormalTransactionSuspicious)
 	v1.GET("/jyhz/abnormal/transaction/large", http_server.JyhzAbnormalTransactionLarge)
+}
+
+func addDocRoute(v *gin.RouterGroup) {
+	v.GET("/query", http_server.DocList)
+	v.GET("/update", http_server.UpdateDoc)
+	v.GET("/detail", http_server.DocDetail)
+	v.GET("/delete", http_server.DeleteDoc)
+	//v.GET("/download", http_server.DeleteProject)
 }
