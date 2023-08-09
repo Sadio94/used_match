@@ -37,6 +37,7 @@ func main() {
 	docs.SwaggerInfo.BasePath = "/edapi/bankbills/"
 	v1 := r.Group("/edapi/bankbills/analyse")
 	addLsyzRoutes(v1)
+	addJyfxRoute(v1)
 	addJydsRoutes(v1)
 	addJyhzRoute(v1)
 	v2 := r.Group("/edapi/bankbills/project")
@@ -63,9 +64,12 @@ func addLsyzRoutes(v1 *gin.RouterGroup) {
 	v1.GET("/lsyz/completeness/summary", http_server.LsyzCompletenessSummary)
 }
 
-//func addJyfxRoute(v *gin.RouterGroup) {
-//
-//}
+func addJyfxRoute(v1 *gin.RouterGroup) {
+	v1.GET("/jyfx/summary", http_server.JyfxSummary)
+	v1.GET("/jyfx/top_user", http_server.JyfxTopUser)
+	v1.GET("/jyfx/top_user/detail", http_server.JyfxTopUserDetail)
+	v1.GET("/jyfx/top_summary", http_server.JyfxTopSummary)
+}
 
 func addProjectRoute(v *gin.RouterGroup) {
 	v.GET("/add", http_server.AddProject)

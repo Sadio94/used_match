@@ -20,7 +20,7 @@ import (
 // @Router /edapi/bankbills/analyse/lsyz/authenticity [get]
 func LsyzAuthenticity(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.LsyzAResp{},
 	})
 }

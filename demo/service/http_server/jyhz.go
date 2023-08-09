@@ -13,7 +13,7 @@ import (
 // @Router /edapi/bankbills/analyse/jyhz/balance/fluctuation [get]
 func JyhzBalanceFluctuation(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.BalanceFluctuationResp{},
 	})
 }
@@ -25,7 +25,7 @@ func JyhzBalanceFluctuation(context *gin.Context) {
 // @Router /edapi/bankbills/analyse/jyhz/transaction/distribution [get]
 func JyhzTransactionDistribution(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.TransactionDistribution{},
 	})
 }
@@ -37,7 +37,7 @@ func JyhzTransactionDistribution(context *gin.Context) {
 // @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency [get]
 func JyhzAbnormalTransactionHighFrequency(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.AbnormalTransactionHighFrequencyResp{},
 	})
 }
@@ -49,7 +49,7 @@ func JyhzAbnormalTransactionHighFrequency(context *gin.Context) {
 // @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction/suspicious [get]
 func JyhzAbnormalTransactionSuspicious(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.AbnormalTransactionSuspiciousResp{},
 	})
 }
@@ -61,7 +61,7 @@ func JyhzAbnormalTransactionSuspicious(context *gin.Context) {
 // @Router /edapi/bankbills/analyse/jyhz/abnormal/transaction/large [get]
 func JyhzAbnormalTransactionLarge(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.AbnormalTransactionLargeResp{},
 	})
 }

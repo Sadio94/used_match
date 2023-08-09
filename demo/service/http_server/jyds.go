@@ -20,7 +20,7 @@ import (
 // @Router /edapi/bankbills/analyse/jyds/counterparty/overview [get]
 func JydsCounterpartyOverview(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.JydsOverviewResp{},
 	})
 }
@@ -32,7 +32,7 @@ func JydsCounterpartyOverview(context *gin.Context) {
 // @Router /edapi/bankbills/analyse/jyds/counterparty/class [get]
 func JydsCounterpartyClass(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.JydsClassResp{},
 	})
 }
@@ -44,7 +44,7 @@ func JydsCounterpartyClass(context *gin.Context) {
 // @Router /edapi/bankbills/analyse/jyds/monitor_object [get]
 func JydsMonitorObject(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.JydsMonitorObjectResp{},
 	})
 }

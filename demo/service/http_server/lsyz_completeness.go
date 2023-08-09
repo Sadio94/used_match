@@ -20,7 +20,7 @@ import (
 // @Router /edapi/bankbills/analyse/lsyz/completeness/account [get]
 func LsyzCompletenessAccount(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.LsyzCAccountResp{},
 	})
 }
@@ -31,7 +31,7 @@ func LsyzCompletenessAccount(context *gin.Context) {
 // @Success 200 {object} rest.Result1{data=rest.LsyzBalanceResp}
 // @Router /edapi/bankbills/analyse/lsyz/completeness/balance [get]
 func LsyzCompletenessBalance(context *gin.Context) {
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.LsyzBalanceResp{},
 	})
 }
@@ -42,7 +42,7 @@ func LsyzCompletenessBalance(context *gin.Context) {
 // @Success 200 {object} rest.Result1{data=rest.LsyzSummaryResp}
 // @Router /edapi/bankbills/analyse/lsyz/completeness/summary [get]
 func LsyzCompletenessSummary(context *gin.Context) {
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.LsyzSummaryResp{},
 	})
 }

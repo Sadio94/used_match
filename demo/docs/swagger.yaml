@@ -80,6 +80,21 @@ definitions:
         description: 新建成功之后的项目id
         type: integer
     type: object
+  rest.AmountListI:
+    properties:
+      expenses:
+        description: 支出
+        type: integer
+      income:
+        description: 收入
+        type: integer
+      keys:
+        description: 月份
+        type: string
+      rest_amount:
+        description: 余额
+        type: integer
+    type: object
   rest.AssociateInfoI:
     properties:
       account:
@@ -265,6 +280,80 @@ definitions:
         type: string
       trade_number:
         description: 交易笔数
+        type: integer
+    type: object
+  rest.JyfxSummaryResp:
+    properties:
+      avg_daily_rest_amount:
+        description: 日均余额
+        type: integer
+      end_rest_amount:
+        description: 期末余额
+        type: integer
+      interest_based_rest_amount:
+        description: 利息反推余额
+        type: integer
+      rest_amount_list:
+        description: 月份概览详情
+        items:
+          $ref: '#/definitions/rest.AmountListI'
+        type: array
+      start_rest_amount:
+        description: 期初余额
+        type: integer
+      total_expenses:
+        description: 总支出
+        type: integer
+      total_income:
+        description: 总收入
+        type: integer
+    type: object
+  rest.JyfxTopSummaryResp:
+    properties:
+      amount_top:
+        description: 摘要流水信息
+        items:
+          $ref: '#/definitions/rest.TopSummaryI'
+        type: array
+      total_amount:
+        description: 总计金额
+        type: integer
+    type: object
+  rest.JyfxTopUserDetailResp:
+    properties:
+      all_key:
+        description: 所有月份数组
+        items:
+          type: string
+        type: array
+      amount_top:
+        description: 收入 支出信息
+        items:
+          $ref: '#/definitions/rest.TopInfoI'
+        type: array
+      total_amount:
+        description: 总计金额
+        type: integer
+    type: object
+  rest.JyfxTopUserResp:
+    properties:
+      amount_top:
+        description: 收入之和占总收入
+        items:
+          $ref: '#/definitions/rest.TopInfoI'
+        type: array
+      amount_top_company:
+        description: top5企业客户
+        items:
+          $ref: '#/definitions/rest.TopInfoI'
+        type: array
+      amount_top_person:
+        description: top5个人客户
+        items:
+          $ref: '#/definitions/rest.TopInfoI'
+        type: array
+      total_amount:
+        description: 总计金额
         type: integer
     type: object
   rest.LargeTransactionI:
@@ -511,6 +600,30 @@ definitions:
         description: 主体账户名
         type: string
     type: object
+  rest.TopInfoI:
+    properties:
+      other_name:
+        description: 客户账号
+        type: string
+      total_amount:
+        description: 总计金额
+        type: integer
+      user_type:
+        description: person 个人/company 公司
+        type: string
+    type: object
+  rest.TopSummaryI:
+    properties:
+      amount:
+        description: 此摘要下金额
+        type: number
+      count:
+        description: 交易笔数
+        type: integer
+      summary:
+        description: 流水摘要
+        type: string
+    type: object
   rest.TradeAmountI:
     properties:
       income:
@@ -678,6 +791,171 @@ paths:
             - properties:
                 data:
                   $ref: '#/definitions/rest.JydsMonitorObjectResp'
+              type: object
+  /edapi/bankbills/analyse/jyfx/summary:
+    get:
+      description: 经营分析-经营概览
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.JyfxSummaryResp'
+              type: object
+  /edapi/bankbills/analyse/jyfx/top_summary:
+    get:
+      description: 经营分析-流水构成
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: 筛选类型 income:收入 expenses:支出 默认收入
+        enum:
+        - income
+        - expenses
+        in: query
+        name: type
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.JyfxTopSummaryResp'
+              type: object
+  /edapi/bankbills/analyse/jyfx/top_user:
+    get:
+      description: 经营分析-交易集中度
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: 筛选类型 income:收入 expenses:支出 默认收入
+        enum:
+        - income
+        - expenses
+        in: query
+        name: type
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.JyfxTopUserResp'
+              type: object
+  /edapi/bankbills/analyse/jyfx/top_user/detail:
+    get:
+      description: 经营分析-交易集中度详情
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: 筛选类型 income:收入 expenses:支出 默认收入
+        enum:
+        - income
+        - expenses
+        in: query
+        name: type
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.JyfxTopUserDetailResp'
               type: object
   /edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency:
     get:
@@ -1052,7 +1330,7 @@ paths:
               type: object
   /edapi/bankbills/api/day/type:
     get:
-      description: 日期类型查询
+      description: 日期类型查询 用户获取指定日期是否工作日
       parameters:
       - description: 2006-01-02形式 多个之间以英文逗号','分隔
         in: query

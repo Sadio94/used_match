@@ -290,3 +290,67 @@ type LargeTransactionI struct {
 	Account    string `json:"account"`    // 交易账号
 	Proportion string `json:"proportion"` // 当月占比
 }
+
+// JyfxSummaryResp 经营分析-经营概览
+type JyfxSummaryResp struct {
+	StartRestAmount         int64         `json:"start_rest_amount"`          // 期初余额
+	EndRestAmount           int64         `json:"end_rest_amount"`            // 期末余额
+	TotalIncome             int64         `json:"total_income"`               // 总收入
+	TotalExpenses           int64         `json:"total_expenses"`             // 总支出
+	AvgDailyRestAmount      int64         `json:"avg_daily_rest_amount"`      // 日均余额
+	InterestBasedRestAmount int64         `json:"interest_based_rest_amount"` // 利息反推余额
+	RestAmountList          []AmountListI `json:"rest_amount_list"`           // 月份概览详情
+}
+
+type AmountListI struct {
+	Keys       string `json:"keys"`        // 月份
+	Income     int64  `json:"income"`      // 收入
+	Expenses   int64  `json:"expenses"`    // 支出
+	RestAmount int64  `json:"rest_amount"` // 余额
+}
+
+// JyfxTopUserResp 经营分析-交易集中度
+type JyfxTopUserResp struct {
+	AmountTop        []TopInfoI `json:"amount_top"`         // 收入之和占总收入
+	AmountTopPerson  []TopInfoI `json:"amount_top_person"`  //top5个人客户
+	AmountTopCompany []TopInfoI `json:"amount_top_company"` // top5企业客户
+	TotalAmount      int64      `json:"total_amount"`       // 总计金额
+}
+
+type TopInfoI struct {
+	OtherName   string `json:"other_name"`   // 客户账号
+	UserType    string `json:"user_type"`    // person 个人/company 公司
+	TotalAmount int64  `json:"total_amount"` // 总计金额
+}
+
+// JyfxTopUserDetailResp 经营分析-交易集中度详情
+type JyfxTopUserDetailResp struct {
+	AmountTop   []TopInfoI `json:"amount_top"`   // 收入 支出信息
+	TotalAmount int64      `json:"total_amount"` // 总计金额
+	AllKey      []string   `json:"all_key"`      // 所有月份数组
+}
+
+type TopUserDetailI struct {
+	OtherName   string         `json:"other_name"`   // 客户账号
+	UserType    string         `json:"user_type"`    // person 个人/company 公司
+	TotalAmount int64          `json:"total_amount"` // 总计金额
+	TotalCount  int64          `json:"total_count"`  // 交易笔数
+	AmountList  []AmountListII `json:"amount_list"`  // 月信息
+}
+
+type AmountListII struct {
+	Key    string  `json:"key"`    // 月份
+	Amount float64 `json:"amount"` // 收入
+}
+
+// JyfxTopSummaryResp 经营分析-流水构成
+type JyfxTopSummaryResp struct {
+	AmountTop   []TopSummaryI `json:"amount_top"`   // 摘要流水信息
+	TotalAmount int64         `json:"total_amount"` // 总计金额
+}
+
+type TopSummaryI struct {
+	Summary string  `json:"summary"` // 流水摘要
+	Count   int64   `json:"count"`   // 交易笔数
+	Amount  float64 `json:"amount"`  // 此摘要下金额
+}

@@ -20,7 +20,7 @@ import (
 // @Router /edapi/bankbills/project/add [get]
 func AddProject(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.AddProjectResp{},
 	})
 }
@@ -32,7 +32,7 @@ func AddProject(context *gin.Context) {
 // @Router /edapi/bankbills/project/query [get]
 func ProjectList(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{
+	context.JSON(http.StatusOK, rest.Result1{
 		Data: rest.ProjectListResp{},
 	})
 }
@@ -44,7 +44,7 @@ func ProjectList(context *gin.Context) {
 // @Router /edapi/bankbills/project/update [get]
 func UpdateProject(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{})
+	context.JSON(http.StatusOK, rest.Result1{})
 }
 
 // DeleteProject  @Summary 项目管理
@@ -54,5 +54,5 @@ func UpdateProject(context *gin.Context) {
 // @Router /edapi/bankbills/project/delete [get]
 func DeleteProject(context *gin.Context) {
 
-	context.JSON(http.StatusOK, rest.Result{})
+	context.JSON(http.StatusOK, rest.Result1{})
 }

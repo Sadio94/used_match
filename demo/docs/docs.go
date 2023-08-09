@@ -240,6 +240,272 @@ const docTemplate = `{
                 }
             }
         },
+        "/edapi/bankbills/analyse/jyfx/summary": {
+            "get": {
+                "description": "经营分析-经营概览",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.JyfxSummaryResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyfx/top_summary": {
+            "get": {
+                "description": "经营分析-流水构成",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "income",
+                            "expenses"
+                        ],
+                        "type": "string",
+                        "description": "筛选类型 income:收入 expenses:支出 默认收入",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.JyfxTopSummaryResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyfx/top_user": {
+            "get": {
+                "description": "经营分析-交易集中度",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "income",
+                            "expenses"
+                        ],
+                        "type": "string",
+                        "description": "筛选类型 income:收入 expenses:支出 默认收入",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.JyfxTopUserResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/jyfx/top_user/detail": {
+            "get": {
+                "description": "经营分析-交易集中度详情",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            "income",
+                            "expenses"
+                        ],
+                        "type": "string",
+                        "description": "筛选类型 income:收入 expenses:支出 默认收入",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.JyfxTopUserDetailResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/edapi/bankbills/analyse/jyhz/abnormal/transaction/high_frequency": {
             "get": {
                 "description": "交易汇总-异常交易-高频交易",
@@ -839,7 +1105,7 @@ const docTemplate = `{
         },
         "/edapi/bankbills/api/day/type": {
             "get": {
-                "description": "日期类型查询",
+                "description": "日期类型查询 用户获取指定日期是否工作日",
                 "parameters": [
                     {
                         "type": "string",
@@ -1218,6 +1484,27 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.AmountListI": {
+            "type": "object",
+            "properties": {
+                "expenses": {
+                    "description": "支出",
+                    "type": "integer"
+                },
+                "income": {
+                    "description": "收入",
+                    "type": "integer"
+                },
+                "keys": {
+                    "description": "月份",
+                    "type": "string"
+                },
+                "rest_amount": {
+                    "description": "余额",
+                    "type": "integer"
+                }
+            }
+        },
         "rest.AssociateInfoI": {
             "type": "object",
             "properties": {
@@ -1484,6 +1771,111 @@ const docTemplate = `{
                 },
                 "trade_number": {
                     "description": "交易笔数",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.JyfxSummaryResp": {
+            "type": "object",
+            "properties": {
+                "avg_daily_rest_amount": {
+                    "description": "日均余额",
+                    "type": "integer"
+                },
+                "end_rest_amount": {
+                    "description": "期末余额",
+                    "type": "integer"
+                },
+                "interest_based_rest_amount": {
+                    "description": "利息反推余额",
+                    "type": "integer"
+                },
+                "rest_amount_list": {
+                    "description": "月份概览详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.AmountListI"
+                    }
+                },
+                "start_rest_amount": {
+                    "description": "期初余额",
+                    "type": "integer"
+                },
+                "total_expenses": {
+                    "description": "总支出",
+                    "type": "integer"
+                },
+                "total_income": {
+                    "description": "总收入",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.JyfxTopSummaryResp": {
+            "type": "object",
+            "properties": {
+                "amount_top": {
+                    "description": "摘要流水信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TopSummaryI"
+                    }
+                },
+                "total_amount": {
+                    "description": "总计金额",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.JyfxTopUserDetailResp": {
+            "type": "object",
+            "properties": {
+                "all_key": {
+                    "description": "所有月份数组",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "amount_top": {
+                    "description": "收入 支出信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TopInfoI"
+                    }
+                },
+                "total_amount": {
+                    "description": "总计金额",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.JyfxTopUserResp": {
+            "type": "object",
+            "properties": {
+                "amount_top": {
+                    "description": "收入之和占总收入",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TopInfoI"
+                    }
+                },
+                "amount_top_company": {
+                    "description": "top5企业客户",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TopInfoI"
+                    }
+                },
+                "amount_top_person": {
+                    "description": "top5个人客户",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TopInfoI"
+                    }
+                },
+                "total_amount": {
+                    "description": "总计金额",
                     "type": "integer"
                 }
             }
@@ -1825,6 +2217,40 @@ const docTemplate = `{
                 },
                 "theme_name": {
                     "description": "主体账户名",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TopInfoI": {
+            "type": "object",
+            "properties": {
+                "other_name": {
+                    "description": "客户账号",
+                    "type": "string"
+                },
+                "total_amount": {
+                    "description": "总计金额",
+                    "type": "integer"
+                },
+                "user_type": {
+                    "description": "person 个人/company 公司",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TopSummaryI": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "此摘要下金额",
+                    "type": "number"
+                },
+                "count": {
+                    "description": "交易笔数",
+                    "type": "integer"
+                },
+                "summary": {
+                    "description": "流水摘要",
                     "type": "string"
                 }
             }

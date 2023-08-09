@@ -296,3 +296,18 @@ type JydsAbnormalTransactionLargeRequest struct {
 	PageRequest
 	Lsyz
 }
+
+type JyfxTopUserRequest struct {
+	Lsyz
+	Type string `uri:"type" json:"type" binding:"omitempty,oneof=income expenses " validate:"omitempty,oneof=income expenses"` // 筛选类型 income:收入 expenses:支出 默认收入
+}
+
+type JyfxTopUserDetailRequest struct {
+	Lsyz
+	Type string `uri:"type" json:"type" binding:"omitempty,oneof=income expenses " validate:"omitempty,oneof=income expenses"` // 筛选类型 income:收入 expenses:支出 默认收入
+}
+
+type JyfxTopSummaryRequest struct {
+	Lsyz
+	Type string `uri:"type" json:"type" binding:"omitempty,oneof=income expenses " validate:"omitempty,oneof=income expenses"` // 筛选类型 income:收入 expenses:支出 默认收入
+}
