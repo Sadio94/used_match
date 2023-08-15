@@ -677,6 +677,9 @@ definitions:
       amount:
         description: 金额
         type: integer
+      is_working_day:
+        description: 时间是否工作日
+        type: boolean
       name:
         description: 交易户名
         type: string
@@ -1625,6 +1628,95 @@ paths:
             $ref: '#/definitions/rest.Result1'
       tags:
       - 文件管理
+  /edapi/bankbills/doc/upload:
+    post:
+      description: 文件管理-待识别文件上传
+      parameters:
+      - description: 文档id
+        in: query
+        name: doc_id
+        required: true
+        type: string
+      - description: 上传文档类型 默认.jpg
+        in: query
+        name: file_type
+        required: true
+        type: string
+      - description: 方法名 可能是为了区别业务 银行流水项目默认 'bankbills'
+        in: query
+        name: func
+        required: true
+        type: string
+      - description: 密码
+        in: query
+        name: password
+        type: string
+      - description: 默认 'web'
+        in: query
+        name: platform
+        required: true
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 文档名
+        in: query
+        name: title
+        required: true
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: 文件二进制流
+        in: body
+        name: binaryData
+        required: true
+        schema:
+          items:
+            type: integer
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.Result1'
+      tags:
+      - 文件管理
+  /edapi/bankbills/ocr:
+    get:
+      description: 文件OCR识别
+      parameters:
+      - description: ocr识别文档id
+        in: query
+        name: doc_id
+        required: true
+        type: string
+      - in: query
+        name: more_thread
+        type: integer
+      - description: 文档下的某一页
+        in: query
+        name: page_id
+        type: string
+      - in: query
+        name: position
+        type: boolean
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.Result1'
+      tags:
+      - OCR
   /edapi/bankbills/project/add:
     get:
       description: 项目管理-新建项目

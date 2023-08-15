@@ -340,3 +340,22 @@ type DeleteDocRequest struct {
 	Token string `uri:"token" json:"token" binding:"required" validate:"required"`   // 用户token
 	DocId string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"` // 待删除文档id
 }
+
+type DocUploadRequest struct {
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`           // 用户token
+	FileType  string `uri:"file_type" json:"file_type" binding:"required" validate:"required"`   // 上传文档类型 默认.jpg
+	Func      string `uri:"func" json:"func" binding:"required" validate:"required"`             // 方法名 可能是为了区别业务 银行流水项目默认 'bankbills'
+	Platform  string `uri:"platform" json:"platform" platform:"required" validate:"required"`    // 默认 'web'
+	ProjectId string `uri:"project_id" json:"project_id" binding:"required" validate:"required"` // 项目id
+	DocId     string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"`         // 文档id
+	Title     string `uri:"title" json:"title" binding:"required" validate:"required"`           // 文档名
+	Password  string `uri:"password" json:"password" binding:"omitempty" validate:"omitempty"`   // 密码
+}
+
+type OCRRequest struct {
+	Token      string `uri:"token" json:"token" binding:"required" validate:"required"`       // 用户token
+	DocId      string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"`     // ocr识别文档id
+	PageId     string `uri:"page_id" json:"page_id" binding:"omitempty" validate:"omitempty"` // 文档下的某一页
+	Position   bool   `uri:"position" json:"position" binding:"omitempty" validate:"omitempty"`
+	MoreThread int64  `uri:"more_thread" json:"more_thread" binding:"omitempty" validate:"omitempty"`
+}

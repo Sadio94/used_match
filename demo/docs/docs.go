@@ -1419,6 +1419,139 @@ const docTemplate = `{
                 }
             }
         },
+        "/edapi/bankbills/doc/upload": {
+            "post": {
+                "description": "文件管理-待识别文件上传",
+                "tags": [
+                    "文件管理"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "文档id",
+                        "name": "doc_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "上传文档类型 默认.jpg",
+                        "name": "file_type",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "方法名 可能是为了区别业务 银行流水项目默认 'bankbills'",
+                        "name": "func",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "密码",
+                        "name": "password",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "默认 'web'",
+                        "name": "platform",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "文档名",
+                        "name": "title",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "description": "文件二进制流",
+                        "name": "binaryData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/ocr": {
+            "get": {
+                "description": "文件OCR识别",
+                "tags": [
+                    "OCR"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ocr识别文档id",
+                        "name": "doc_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "name": "more_thread",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "文档下的某一页",
+                        "name": "page_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "name": "position",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
+        },
         "/edapi/bankbills/project/add": {
             "get": {
                 "description": "项目管理-新建项目",
@@ -2619,6 +2752,10 @@ const docTemplate = `{
                 "amount": {
                     "description": "金额",
                     "type": "integer"
+                },
+                "is_working_day": {
+                    "description": "时间是否工作日",
+                    "type": "boolean"
                 },
                 "name": {
                     "description": "交易户名",

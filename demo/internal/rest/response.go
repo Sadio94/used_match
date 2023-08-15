@@ -271,10 +271,11 @@ type AbnormalTransactionSuspiciousResp struct {
 }
 
 type SuspiciousTransactionI struct {
-	Time    string `json:"time"`    // 时间
-	Amount  int64  `json:"amount"`  // 金额
-	Name    string `json:"name"`    // 交易户名
-	Account string `json:"account"` // 交易账号
+	Time         string `json:"time"`           // 时间
+	Amount       int64  `json:"amount"`         // 金额
+	Name         string `json:"name"`           // 交易户名
+	Account      string `json:"account"`        // 交易账号
+	IsWorkingDay bool   `json:"is_working_day"` // 时间是否工作日
 }
 
 // AbnormalTransactionLargeResp 交易汇总-异常交易-大额交易

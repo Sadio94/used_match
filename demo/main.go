@@ -41,6 +41,8 @@ func main() {
 	//docs.SwaggerInfo.BasePath = "/edapi/bankbills/"
 	docs.SwaggerInfo.Title = "Bank Statement API"
 	docs.SwaggerInfo.Description = "API Conversation For Bank Statement."
+
+	// definition API
 	v1 := r.Group("/edapi/bankbills/analyse")
 	addLsyzRoutes(v1)
 	addJyfxRoute(v1)
@@ -50,6 +52,8 @@ func main() {
 	addProjectRoute(v2)
 	v3 := r.Group("/edapi/bankbills/doc")
 	addDocRoute(v3)
+	v4 := r.Group("/edapi/bankbills/ocr")
+	addOcrRoute(v4)
 	r.GET("/edapi/bankbills/api/day/type", http_server.DayType)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	//r.Run(":8080")
@@ -105,5 +109,9 @@ func addDocRoute(v *gin.RouterGroup) {
 	v.GET("/update", http_server.UpdateDoc)
 	v.GET("/detail", http_server.DocDetail)
 	v.GET("/delete", http_server.DeleteDoc)
-	//v.GET("/download", http_server.DeleteProject)
+	v.GET("/upload", http_server.UploadFile)
+}
+
+func addOcrRoute(v *gin.RouterGroup) {
+	v.GET("", http_server.OCR)
 }

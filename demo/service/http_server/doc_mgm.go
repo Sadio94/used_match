@@ -60,3 +60,15 @@ func DeleteDoc(context *gin.Context) {
 
 	context.JSON(http.StatusOK, rest.Result1{})
 }
+
+// UploadFile  @Summary 文件管理
+// @Description 文件管理-待识别文件上传
+// @Tags         文件管理
+// @Param docUploadRequest query rest.DocUploadRequest true "文档上传参数"
+// @Param binaryData body []byte true "文件二进制流"
+// @Success 200 {object} rest.Result1{}
+// @Router /edapi/bankbills/doc/upload [post]
+func UploadFile(context *gin.Context) {
+
+	context.JSON(http.StatusOK, rest.Result1{})
+}
