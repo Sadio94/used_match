@@ -48,12 +48,18 @@ func main() {
 	addJyfxRoute(v1)
 	addJydsRoutes(v1)
 	addJyhzRoute(v1)
+	addLsglRoute(v1)
+	addGljyRoute(v1)
 	v2 := r.Group("/edapi/bankbills/project")
 	addProjectRoute(v2)
 	v3 := r.Group("/edapi/bankbills/doc")
 	addDocRoute(v3)
 	v4 := r.Group("/edapi/bankbills/ocr")
 	addOcrRoute(v4)
+	v5 := r.Group("/edapi/bankbills/report")
+	v6 := r.Group("/edapi/bankbills/result")
+	addOCRResultRoute(v6)
+	addReportRoute(v5)
 	r.GET("/edapi/bankbills/api/day/type", http_server.DayType)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	//r.Run(":8080")
@@ -114,4 +120,29 @@ func addDocRoute(v *gin.RouterGroup) {
 
 func addOcrRoute(v *gin.RouterGroup) {
 	v.GET("", http_server.OCR)
+}
+
+func addOCRResultRoute(v *gin.RouterGroup) {
+	v.GET("/query", http_server.ResultQuery)
+	v.GET("/update_header", http_server.UpdateHeader)
+}
+
+func addLsglRoute(v1 *gin.RouterGroup) {
+	v1.GET("/lsgl/list", http_server.LsglList)
+	v1.GET("/lsgl/export", http_server.LsglExport)
+	// todo 手动添加关联方
+}
+
+func addGljyRoute(v1 *gin.RouterGroup) {
+	v1.GET("/gljy/related_party/overview", http_server.GljyRelatedOverview)
+	v1.GET("/gljy/related_party/information", http_server.GljyRelatedInformation)
+	v1.GET("/gljy/related_party/transaction", http_server.GljyRelatedTransaction)
+	v1.GET("/gljy/related_party/transaction/detail", http_server.GljyRelatedDetail)
+}
+
+func addReportRoute(v1 *gin.RouterGroup) {
+	v1.GET("/query", http_server.ReportList)
+	v1.GET("/detail", http_server.ReportDetail)
+	// todo 查看pdf 下载pdf 下载word
+	v1.GET("/delete", http_server.DeleteReport)
 }

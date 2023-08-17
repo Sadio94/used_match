@@ -168,6 +168,29 @@ definitions:
         description: 按时间顺序的下个文档id
         type: string
     type: object
+  rest.DocHeadersI:
+    properties:
+      expect_kv_items:
+        description: 按需 表格外信息
+        items:
+          $ref: '#/definitions/rest.KVItemsI'
+        type: array
+      expect_table_kv_items:
+        description: 按需 表格内信息抽取
+        items:
+          $ref: '#/definitions/rest.TableKVItemsI'
+        type: array
+      kv_items:
+        description: 表格外信息抽取
+        items:
+          $ref: '#/definitions/rest.KVItemsI'
+        type: array
+      table_kv_items:
+        description: 表格内信息抽取
+        items:
+          $ref: '#/definitions/rest.TableKVItemsI'
+        type: array
+    type: object
   rest.DocInfoI:
     properties:
       create_time:
@@ -249,6 +272,113 @@ definitions:
         description: 页标题
         type: string
     type: object
+  rest.ExceptTableCellAmountItemsI:
+    properties:
+      end_col:
+        type: integer
+      end_row:
+        type: integer
+      expect_amount:
+        description: 建议修改金额
+        type: integer
+      extra_amount:
+        description: 原始识别后的金额
+        type: integer
+      start_col:
+        type: integer
+      start_row:
+        type: integer
+      text:
+        description: 原始识别后的金额
+        type: string
+    type: object
+  rest.ExceptTableCellDateItemsI:
+    properties:
+      end_col:
+        type: integer
+      end_row:
+        type: integer
+      err_type:
+        description: 错误值
+        type: integer
+      except_text:
+        description: 建议修改时间
+        type: string
+      start_col:
+        type: integer
+      start_row:
+        type: integer
+      text:
+        description: 原始识别后的时间
+        type: string
+    type: object
+  rest.GljyRelatedDetailResp:
+    properties:
+      total_num:
+        description: 流水总条数
+        type: integer
+      transaction_detail:
+        description: 流水详情
+        items:
+          $ref: '#/definitions/rest.TransactionDetailI'
+        type: array
+    type: object
+  rest.GljyRelatedInformationResp:
+    properties:
+      information:
+        description: 关联方详细信息
+        items:
+          $ref: '#/definitions/rest.InformationI'
+        type: array
+    type: object
+  rest.GljyRelatedOverviewResp:
+    properties:
+      difference:
+        description: 差额
+        type: integer
+      income_total:
+        description: 关联方收入
+        type: integer
+      pay_total:
+        description: 关联方支出
+        type: integer
+      quantity:
+        description: 关联方数量
+        type: integer
+      related_party:
+        description: 关联方概览
+        items:
+          $ref: '#/definitions/rest.RelatedPartyI'
+        type: array
+      related_transaction:
+        description: 关联交易概览详情
+        items:
+          $ref: '#/definitions/rest.RelatedTransactionI'
+        type: array
+    type: object
+  rest.GljyRelatedTransactionResp:
+    properties:
+      all_related_party:
+        description: 展示在关联交易时间分布下的所有关联方数组
+        items:
+          type: string
+        type: array
+      income_top_5:
+        description: 关联方收入top5
+        items:
+          $ref: '#/definitions/rest.Top5I'
+        type: array
+      pay_top_5:
+        description: 关联方支出top5
+        items:
+          $ref: '#/definitions/rest.Top5I'
+        type: array
+      trade_distribution:
+        description: 关联方交易时间分布
+        items:
+          $ref: '#/definitions/rest.TradeDistributionI'
+        type: array
+    type: object
   rest.HighFrequencyTradingI:
     properties:
       income:
@@ -266,6 +396,30 @@ definitions:
       pay_num:
         description: 支出笔数
         type: integer
+    type: object
+  rest.InformationI:
+    properties:
+      difference:
+        description: 差额
+        type: integer
+      income:
+        description: 总收入
+        type: integer
+      income_num:
+        description: 总收入笔数
+        type: integer
+      name:
+        description: 关联方
+        type: string
+      pay:
+        description: 总支出
+        type: integer
+      pay_num:
+        description: 总支出笔数
+        type: integer
+      reason:
+        description: 关联方原因
+        type: string
     type: object
   rest.InterestReportI:
     properties:
@@ -451,6 +605,18 @@ definitions:
         description: 总计金额
         type: integer
     type: object
+  rest.KVItemsI:
+    properties:
+      key:
+        description: 对应键名
+        type: string
+      text:
+        description: 键对应的值
+        type: string
+      value:
+        description: 键对应的值
+        type: string
+    type: object
   rest.LargeTransactionI:
     properties:
       account:
@@ -468,6 +634,17 @@ definitions:
       time:
         description: 时间
         type: string
+    type: object
+  rest.LsglListResp:
+    properties:
+      total_num:
+        description: 流水总条数
+        type: integer
+      trade_list:
+        description: 流水详情
+        items:
+          $ref: '#/definitions/rest.TradeListI'
+        type: array
     type: object
   rest.LsyzAResp:
     properties:
@@ -600,6 +777,66 @@ definitions:
         description: 向同名账户转出次数
         type: integer
     type: object
+  rest.OCRResultI:
+    properties:
+      doc_headers:
+        allOf:
+        - $ref: '#/definitions/rest.DocHeadersI'
+        description: 表头信息等
+      pages:
+        description: 表格完整信息
+        items:
+          $ref: '#/definitions/rest.PagesI'
+        type: array
+    type: object
+  rest.OCRResultQueryResp:
+    properties:
+      result:
+        allOf:
+        - $ref: '#/definitions/rest.OCRResultI'
+        description: 返回结果
+    type: object
+  rest.PagesI:
+    properties:
+      except_table_cell_amount_items:
+        description: 表格内金额错误校验信息
+        items:
+          $ref: '#/definitions/rest.ExceptTableCellAmountItemsI'
+        type: array
+      except_table_cell_date_items:
+        description: 表格内日期错误校验信息
+        items:
+          $ref: '#/definitions/rest.ExceptTableCellDateItemsI'
+        type: array
+      expect_kv_items:
+        description: 按需 表格外信息
+        items:
+          $ref: '#/definitions/rest.KVItemsI'
+        type: array
+      expect_table_kv_items:
+        description: 按需 表格内信息抽取
+        items:
+          $ref: '#/definitions/rest.TableKVItemsI'
+        type: array
+      header_template:
+        description: 表头模板
+        type: integer
+      kv_items:
+        description: 表格外信息抽取
+        items:
+          $ref: '#/definitions/rest.KVItemsI'
+        type: array
+      table_kv_items:
+        description: 表格内信息抽取
+        items:
+          $ref: '#/definitions/rest.TableKVItemsI'
+        type: array
+      tables:
+        description: 表格内信息
+        items:
+          $ref: '#/definitions/rest.TablesI'
+        type: array
+    type: object
   rest.ProjectListI:
     properties:
       create_time:
@@ -653,6 +890,91 @@ definitions:
         description: 低风险项目数
         type: integer
     type: object
+  rest.RelatedPartyI:
+    properties:
+      account:
+        description: 账号
+        type: string
+      name:
+        description: 户名
+        type: string
+    type: object
+  rest.RelatedTransactionI:
+    properties:
+      difference:
+        description: 差额
+        type: integer
+      income:
+        description: 总收入
+        type: integer
+      income_num:
+        description: 总收入笔数
+        type: integer
+      name:
+        description: 关联方
+        type: string
+      pay:
+        description: 总支出
+        type: integer
+      pay_num:
+        description: 总支出笔数
+        type: integer
+    type: object
+  rest.ReportDetailI:
+    properties:
+      generate_time:
+        description: 报告生成时间 格式化2022-01-10 12:00:00的形式
+        type: string
+      id:
+        description: 报告id 后台生成
+        type: integer
+      name:
+        description: 报告名称
+        type: string
+      status:
+        description: 报告生成状态 0:生成中 1:生成完成
+        type: integer
+    type: object
+  rest.ReportDetailResp:
+    properties:
+      historical_report:
+        description: 项目历史报告
+        items:
+          $ref: '#/definitions/rest.ReportDetailI'
+        type: array
+    type: object
+  rest.ReportListI:
+    properties:
+      belong_project:
+        description: 报告所属项目名
+        type: string
+      generate_time:
+        description: 报告生成时间 格式化2022-01-10 12:00:00的形式
+        type: string
+      id:
+        description: 报告id 后台生成
+        type: integer
+      name:
+        description: 报告名称
+        type: string
+      project_type:
+        description: 项目类型 1:企业 2:个人 3:其他
+        type: integer
+      status:
+        description: 报告生成状态 0:生成中 1:生成完成
+        type: integer
+    type: object
+  rest.ReportListResp:
+    properties:
+      report_info:
+        description: 报告详情
+        items:
+          $ref: '#/definitions/rest.ReportListI'
+        type: array
+      total_num:
+        description: 所有报告的条数
+        type: integer
+    type: object
   rest.Result1:
     properties:
       data: {}
@@ -687,6 +1009,52 @@ definitions:
         description: 时间
         type: string
     type: object
+  rest.TableCells:
+    properties:
+      end_col:
+        type: integer
+      end_row:
+        type: integer
+      start_col:
+        type: integer
+      start_row:
+        type: integer
+      text:
+        description: 当前单元格对应的值
+        type: string
+    type: object
+  rest.TableKVItemsI:
+    properties:
+      key:
+        description: 对应键名
+        type: string
+      start_col:
+        description: 第几列
+        type: integer
+      start_row:
+        description: 第几行
+        type: integer
+      text:
+        description: 键对应的值
+        type: string
+      value:
+        description: 键对应的值
+        type: string
+    type: object
+  rest.TablesI:
+    properties:
+      table_cells:
+        description: 单元格信息
+        items:
+          $ref: '#/definitions/rest.TableCells'
+        type: array
+      table_cols:
+        description: 表格多少列
+        type: integer
+      table_rows:
+        description: 表格多少行
+        type: integer
+    type: object
   rest.ThemeAccountInfo:
     properties:
       associate_info:
@@ -696,6 +1064,15 @@ definitions:
         type: array
       theme_name:
         description: 主体账户名
+        type: string
+    type: object
+  rest.Top5I:
+    properties:
+      amount:
+        description: 交易金额
+        type: integer
+      name:
+        description: 关联方户名
         type: string
     type: object
   rest.TopInfoI:
@@ -737,6 +1114,64 @@ definitions:
         description: 当月总流水或者交易总笔数
         type: integer
     type: object
+  rest.TradeDistributionI:
+    properties:
+      income:
+        description: 存在收入的关联方数组
+        items:
+          $ref: '#/definitions/rest.Top5I'
+        type: array
+      pay:
+        description: 存在支出的关联方数组
+        items:
+          $ref: '#/definitions/rest.Top5I'
+        type: array
+      timer:
+        description: 时间 2022-01
+        type: string
+    type: object
+  rest.TradeListI:
+    properties:
+      account:
+        description: 交易账号
+        type: string
+      amount:
+        description: 交易金额
+        type: integer
+      is_related:
+        description: 是否关联方
+        type: boolean
+      name:
+        description: 交易户名
+        type: string
+      summary:
+        description: 交易摘要
+        type: string
+      trade_time:
+        description: 交易时间
+        type: string
+    type: object
+  rest.TransactionDetailI:
+    properties:
+      account:
+        description: 交易账号
+        type: string
+      amount:
+        description: 交易金额
+        type: integer
+      name:
+        description: 交易户名
+        type: string
+      reason:
+        description: 关联关系
+        type: string
+      summary:
+        description: 交易摘要
+        type: string
+      trade_time:
+        description: 交易时间
+        type: string
+    type: object
   rest.TransactionDistribution:
     properties:
       trade_data:
@@ -745,11 +1180,247 @@ definitions:
           $ref: '#/definitions/rest.TradeAmountI'
         type: array
     type: object
+  rest.UpdateHeaderBody:
+    properties:
+      expect_table_kv_items:
+        description: 更新的表头信息
+        items:
+          $ref: '#/definitions/rest.UpdateTableKVItemsBody'
+        type: array
+      kv_items:
+        description: 更新的账户信息
+        items:
+          $ref: '#/definitions/rest.UpdateKVItemsBody'
+        type: array
+    type: object
+  rest.UpdateHeaderResp:
+    properties:
+      upload_time:
+        description: 更新时间戳
+        type: integer
+    type: object
+  rest.UpdateKVItemsBody:
+    properties:
+      err_type:
+        description: 错误值
+        type: integer
+      key:
+        description: 对应键名
+        type: string
+      text:
+        description: 键对应的值
+        type: string
+      value:
+        description: 键对应的值
+        type: string
+    required:
+    - key
+    - text
+    - value
+    type: object
+  rest.UpdateTableKVItemsBody:
+    properties:
+      err_type:
+        description: 错误值
+        type: integer
+      ignore_err:
+        description: 忽略错误给1
+        type: integer
+      key:
+        description: 对应键名
+        type: string
+      start_col:
+        description: 属于哪一列
+        type: integer
+      text:
+        description: 键对应的值
+        type: string
+      value:
+        description: 键对应的值
+        type: string
+    required:
+    - ignore_err
+    - key
+    - start_col
+    - text
+    - value
+    type: object
 host: http://192.168.6.50:10006
 info:
   contact:
     email: yinjie_luo@intsig.net
 paths:
+  /edapi/bankbills/analyse/gljy/related_party/information:
+    get:
+      description: 关联交易-关联方信息
+      parameters:
+      - description: 交易分布展示 0:与主体企业存在控股股权关系 1:与主体企业存在董监高重合 2:与主体企业存在关联关系 默认与主体企业存在控股股权关系
+        enum:
+        - 0
+        - 1
+        - 2
+        in: query
+        name: disp_type
+        type: integer
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.GljyRelatedInformationResp'
+              type: object
+      tags:
+      - 关联交易
+  /edapi/bankbills/analyse/gljy/related_party/overview:
+    get:
+      description: 关联交易-关联方概览和关联方交易概览
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.GljyRelatedOverviewResp'
+              type: object
+      tags:
+      - 关联交易
+  /edapi/bankbills/analyse/gljy/related_party/transaction:
+    get:
+      description: 关联交易-关联交易
+      parameters:
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.GljyRelatedTransactionResp'
+              type: object
+      tags:
+      - 关联交易
+  /edapi/bankbills/analyse/gljy/related_party/transaction/detail:
+    get:
+      description: 关联交易-关联交易详情
+      parameters:
+      - description: 分页数量(默认15)
+        in: query
+        maximum: 100
+        minimum: 1
+        name: count
+        type: integer
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: 分页起始位置(默认0)
+        in: query
+        minimum: 0
+        name: index
+        type: integer
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.GljyRelatedDetailResp'
+              type: object
+      tags:
+      - 关联交易
   /edapi/bankbills/analyse/jyds/counterparty/class:
     get:
       description: 交易对手-对手方分类
@@ -1288,6 +1959,138 @@ paths:
               type: object
       tags:
       - 交易汇总
+  /edapi/bankbills/analyse/lsgl/export:
+    get:
+      description: 流水管理-导出
+      parameters:
+      - description: 交易金额排序 默认不传 按照交易时间排序 1:金额倒序 2:金额升序
+        enum:
+        - 1
+        - 2
+        in: query
+        name: amount_desc
+        type: integer
+      - description: 交易时间排序 默认不传或0:倒序
+        enum:
+        - 0
+        - 1
+        in: query
+        name: date_desc
+        type: integer
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: '是否勾选剔除关联交易 0:不剔除关联交易  1: 剔除关联交易 默认0:不剔除关联交易'
+        enum:
+        - 0
+        - 1
+        in: query
+        name: exclude_related
+        type: integer
+      - description: 交易户名、摘要等关键字模糊匹配
+        in: query
+        name: key_work
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.Result1'
+      tags:
+      - 流水管理
+  /edapi/bankbills/analyse/lsgl/list:
+    get:
+      description: 流水管理-流水详情列表
+      parameters:
+      - description: 交易金额排序 默认不传 按照交易时间排序 1:金额倒序 2:金额升序
+        enum:
+        - 1
+        - 2
+        in: query
+        name: amount_desc
+        type: integer
+      - description: 分页数量(默认15)
+        in: query
+        maximum: 100
+        minimum: 1
+        name: count
+        type: integer
+      - description: 交易时间排序 默认不传或0:倒序
+        enum:
+        - 0
+        - 1
+        in: query
+        name: date_desc
+        type: integer
+      - description: 当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个
+        in: query
+        name: doc_ids
+        type: string
+      - description: 结束日期 2022-07-24
+        in: query
+        name: end_date
+        type: string
+      - description: '是否勾选剔除关联交易 0:不剔除关联交易  1: 剔除关联交易 默认0:不剔除关联交易'
+        enum:
+        - 0
+        - 1
+        in: query
+        name: exclude_related
+        type: integer
+      - description: 分页起始位置(默认0)
+        in: query
+        minimum: 0
+        name: index
+        type: integer
+      - description: 交易户名、摘要等关键字模糊匹配
+        in: query
+        name: key_work
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 起始时间 2022-07-23
+        in: query
+        name: start_date
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.LsglListResp'
+              type: object
+      tags:
+      - 流水管理
   /edapi/bankbills/analyse/lsyz/authenticity:
     get:
       description: 流水验证-数据真实性
@@ -1872,4 +2675,190 @@ paths:
             $ref: '#/definitions/rest.Result1'
       tags:
       - 项目管理
+  /edapi/bankbills/report/delete:
+    get:
+      description: 分析报告-删除指定报告
+      parameters:
+      - description: 待删除报告id
+        in: query
+        name: report_id
+        required: true
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.Result1'
+      tags:
+      - 分析报告
+  /edapi/bankbills/report/detail:
+    get:
+      description: 分析报告-项目报告详情
+      parameters:
+      - description: 报告生成时间排序搜索项 0:默认倒序 1:正序
+        enum:
+        - 0
+        - 1
+        in: query
+        name: date_desc
+        type: integer
+      - description: 过滤报告生成的结束时间 秒级时间戳
+        in: query
+        name: end_time
+        type: integer
+      - description: 报告名称的模糊匹配
+        in: query
+        name: keyword
+        type: string
+      - description: 项目id
+        in: query
+        name: project_id
+        required: true
+        type: string
+      - description: 过滤报告生成的开始时间 秒级时间戳
+        in: query
+        name: start_time
+        type: integer
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.ReportDetailResp'
+              type: object
+      tags:
+      - 分析报告
+  /edapi/bankbills/report/query:
+    get:
+      description: 分析报告-报告列表主页
+      parameters:
+      - description: 报告生成时间排序搜索项 0:默认倒序 1:正序
+        enum:
+        - 0
+        - 1
+        in: query
+        name: date_desc
+        type: integer
+      - description: 过滤报告生成的结束时间 秒级时间戳
+        in: query
+        name: end_time
+        type: integer
+      - description: 报告名称的模糊匹配
+        in: query
+        name: keyword
+        type: string
+      - description: 默认5条/页
+        in: query
+        minimum: 5
+        name: limit
+        type: integer
+      - description: 第一页开始
+        in: query
+        minimum: 1
+        name: page
+        type: integer
+      - description: 过滤报告生成的开始时间 秒级时间戳
+        in: query
+        name: start_time
+        type: integer
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: 项目类型搜索项 1:企业 2:个人 3:其他
+        enum:
+        - 1
+        - 2
+        - 3
+        in: query
+        name: type
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.ReportListResp'
+              type: object
+      tags:
+      - 分析报告
+  /edapi/bankbills/result/query:
+    get:
+      description: 文件OCR识别结果
+      parameters:
+      - description: 查询当前文档的识别结果
+        in: query
+        name: doc_id
+        required: true
+        type: string
+      - description: 文档下的某一页
+        in: query
+        name: page_id
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.OCRResultQueryResp'
+              type: object
+      tags:
+      - OCR识别结果
+  /edapi/bankbills/result/update_header:
+    post:
+      description: 表头错误处理更新
+      parameters:
+      - description: 表头修改文档id
+        in: query
+        name: doc_ids
+        required: true
+        type: string
+      - description: 用户token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: 表头错误处理更新请求参数
+        in: body
+        name: updateHeaderBody
+        required: true
+        schema:
+          $ref: '#/definitions/rest.UpdateHeaderBody'
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/rest.Result1'
+            - properties:
+                data:
+                  $ref: '#/definitions/rest.UpdateHeaderResp'
+              type: object
+      tags:
+      - OCR识别结果
 swagger: "2.0"

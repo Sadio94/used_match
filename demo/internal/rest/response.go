@@ -397,3 +397,194 @@ type DocPageListI struct {
 	PageId     string `json:"page_id"`     // 页id
 	Rotate     int64  `json:"rotate"`
 }
+
+// LsglListResp 流水管理-流水详情
+type LsglListResp struct {
+	TotalNum  int64        `json:"total_num"`  // 流水总条数
+	TradeList []TradeListI `json:"trade_list"` // 流水详情
+}
+
+type TradeListI struct {
+	TradeTime string `json:"trade_time"` // 交易时间
+	Amount    int64  `json:"amount"`     // 交易金额
+	Summary   string `json:"summary"`    // 交易摘要
+	Name      string `json:"name"`       // 交易户名
+	Account   string `json:"account"`    // 交易账号
+	IsRelated bool   `json:"is_related"` // 是否关联方
+}
+
+// GljyRelatedOverviewResp 关联交易-关联方概览/关联方交易概览
+type GljyRelatedOverviewResp struct {
+	RelatedParty       []RelatedPartyI       `json:"related_party"`       // 关联方概览
+	Quantity           int64                 `json:"quantity"`            // 关联方数量
+	IncomeTotal        int64                 `json:"income_total"`        // 关联方收入
+	PayTotal           int64                 `json:"pay_total"`           // 关联方支出
+	Difference         int64                 `json:"difference"`          // 差额
+	RelatedTransaction []RelatedTransactionI `json:"related_transaction"` // 关联交易概览详情
+}
+
+type RelatedPartyI struct {
+	Name    string `json:"name"`    // 户名
+	Account string `json:"account"` // 账号
+}
+
+type RelatedTransactionI struct {
+	Name       string `json:"name"`       // 关联方
+	Income     int64  `json:"income"`     // 总收入
+	Pay        int64  `json:"pay"`        // 总支出
+	IncomeNum  int64  `json:"income_num"` // 总收入笔数
+	PayNum     int64  `json:"pay_num"`    // 总支出笔数
+	Difference int64  `json:"difference"` // 差额
+}
+
+// GljyRelatedInformationResp 关联交易-关联方信息
+type GljyRelatedInformationResp struct {
+	Information []InformationI `json:"information"` // 关联方详细信息
+}
+
+type InformationI struct {
+	RelatedTransactionI
+	Reason string `json:"reason"` // 关联方原因
+}
+
+// GljyRelatedDetailResp 关联交易-关联交易详情
+type GljyRelatedDetailResp struct {
+	TotalNum          int64                `json:"total_num"`          // 流水总条数
+	TransactionDetail []TransactionDetailI `json:"transaction_detail"` // 流水详情
+}
+
+type TransactionDetailI struct {
+	TradeTime string `json:"trade_time"` // 交易时间
+	Amount    int64  `json:"amount"`     // 交易金额
+	Summary   string `json:"summary"`    // 交易摘要
+	Name      string `json:"name"`       // 交易户名
+	Account   string `json:"account"`    // 交易账号
+	Reason    string `json:"reason"`     // 关联关系
+}
+
+// GljyRelatedTransactionResp 关联交易-关联交易
+type GljyRelatedTransactionResp struct {
+	IncomeTop5        []Top5I              `json:"income_top_5"`       // 关联方收入top5
+	PayTop5           []Top5I              `json:"pay_top_5"`          // 关联方支出top5
+	TradeDistribution []TradeDistributionI `json:"trade_distribution"` // 关联方交易时间分布
+	AllRelatedParty   []string             `json:"all_related_party"`  // 展示在关联交易时间分布下的所有关联方数组
+}
+
+type Top5I struct {
+	Name   string `json:"name"`   // 关联方户名
+	Amount int64  `json:"amount"` // 交易金额
+}
+
+type TradeDistributionI struct {
+	Timer  string  `json:"timer"`  // 时间 2022-01
+	Income []Top5I `json:"income"` // 存在收入的关联方数组
+	Pay    []Top5I `json:"pay"`    // 存在支出的关联方数组
+}
+
+// ReportListResp 分析报告-主页列表
+type ReportListResp struct {
+	TotalNum   int64         `json:"total_num"`   // 所有报告的条数
+	ReportInfo []ReportListI `json:"report_info"` // 报告详情
+}
+
+type ReportListI struct {
+	Id            int64  `json:"id"`             // 报告id 后台生成
+	Name          string `json:"name"`           // 报告名称
+	GenerateTime  string `json:"generate_time"`  // 报告生成时间 格式化2022-01-10 12:00:00的形式
+	BelongProject string `json:"belong_project"` // 报告所属项目名
+	ProjectType   int64  `json:"project_type"`   // 项目类型 1:企业 2:个人 3:其他
+	Status        int64  `json:"status"`         // 报告生成状态 0:生成中 1:生成完成
+}
+
+// ReportDetailResp 分析报告-项目报告详情-项目历史报告
+type ReportDetailResp struct {
+	HistoricalReport []ReportDetailI `json:"historical_report"` // 项目历史报告
+}
+
+type ReportDetailI struct {
+	Id           int64  `json:"id"`            // 报告id 后台生成
+	Name         string `json:"name"`          // 报告名称
+	GenerateTime string `json:"generate_time"` // 报告生成时间 格式化2022-01-10 12:00:00的形式
+	Status       int64  `json:"status"`        // 报告生成状态 0:生成中 1:生成完成
+}
+
+// OCRResultQueryResp 文档ocr识别结果
+type OCRResultQueryResp struct {
+	Result OCRResultI `json:"result"` // 返回结果
+}
+
+type OCRResultI struct {
+	DocHeaders DocHeadersI `json:"doc_headers"` // 表头信息等
+	Pages      []PagesI    `json:"pages"`       // 表格完整信息
+}
+
+type DocHeadersI struct {
+	ALLKVItemsI
+}
+
+type PagesI struct {
+	ALLKVItemsI
+	ExceptTableCellAmountItems []ExceptTableCellAmountItemsI `json:"except_table_cell_amount_items"` // 表格内金额错误校验信息
+	ExceptTableCellDateItems   []ExceptTableCellDateItemsI   `json:"except_table_cell_date_items"`   // 表格内日期错误校验信息
+	HeaderTemplate             int64                         `json:"header_template"`                // 表头模板
+	Tables                     []TablesI                     `json:"tables"`                         // 表格内信息
+}
+
+type ExceptTableCellAmountItemsI struct {
+	StartRow     int64  `json:"start_row"`
+	EndRow       int64  `json:"end_row"`
+	StartCol     int64  `json:"start_col"`
+	EndCol       int64  `json:"end_col"`
+	ExtraAmount  int64  `json:"extra_amount"`  // 原始识别后的金额
+	ExpectAmount int64  `json:"expect_amount"` // 建议修改金额
+	Text         string `json:"text"`          // 原始识别后的金额
+}
+
+type ExceptTableCellDateItemsI struct {
+	StartRow   int64  `json:"start_row"`
+	EndRow     int64  `json:"end_row"`
+	StartCol   int64  `json:"start_col"`
+	EndCol     int64  `json:"end_col"`
+	ErrType    int64  `json:"err_type"`    // 错误值
+	ExceptText string `json:"except_text"` // 建议修改时间
+	Text       string `json:"text"`        // 原始识别后的时间
+}
+
+type ALLKVItemsI struct {
+	KVItems            []KVItemsI      `json:"kv_items"`              // 表格外信息抽取
+	ExpectKVItems      []KVItemsI      `json:"expect_kv_items"`       // 按需 表格外信息
+	TableKVItems       []TableKVItemsI `json:"table_kv_items"`        // 表格内信息抽取
+	ExpectTableKVItems []TableKVItemsI `json:"expect_table_kv_items"` // 按需 表格内信息抽取
+}
+
+type KVItemsI struct {
+	Key   string `json:"key"`   // 对应键名
+	Value string `json:"value"` // 键对应的值
+	Text  string `json:"text"`  // 键对应的值
+}
+
+type TableKVItemsI struct {
+	Key      string `json:"key"`       // 对应键名
+	Value    string `json:"value"`     // 键对应的值
+	Text     string `json:"text"`      // 键对应的值
+	StartCol int64  `json:"start_col"` // 第几列
+	StartRow int64  `json:"start_row"` // 第几行
+}
+
+type TablesI struct {
+	TableCols  int64        `json:"table_cols"`  // 表格多少列
+	TableRows  int64        `json:"table_rows"`  // 表格多少行
+	TableCells []TableCells `json:"table_cells"` // 单元格信息
+}
+
+type TableCells struct {
+	StartRow int64  `json:"start_row"`
+	EndRow   int64  `json:"end_row"`
+	StartCol int64  `json:"start_col"`
+	EndCol   int64  `json:"end_col"`
+	Text     string `json:"text"` // 当前单元格对应的值
+}
+
+type UpdateHeaderResp struct {
+	UploadTime int64 `json:"upload_time"` // 更新时间戳
+}

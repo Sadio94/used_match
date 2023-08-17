@@ -18,6 +18,280 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/edapi/bankbills/analyse/gljy/related_party/information": {
+            "get": {
+                "description": "关联交易-关联方信息",
+                "tags": [
+                    "关联交易"
+                ],
+                "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1,
+                            2
+                        ],
+                        "type": "integer",
+                        "description": "交易分布展示 0:与主体企业存在控股股权关系 1:与主体企业存在董监高重合 2:与主体企业存在关联关系 默认与主体企业存在控股股权关系",
+                        "name": "disp_type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.GljyRelatedInformationResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/gljy/related_party/overview": {
+            "get": {
+                "description": "关联交易-关联方概览和关联方交易概览",
+                "tags": [
+                    "关联交易"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.GljyRelatedOverviewResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/gljy/related_party/transaction": {
+            "get": {
+                "description": "关联交易-关联交易",
+                "tags": [
+                    "关联交易"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.GljyRelatedTransactionResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/gljy/related_party/transaction/detail": {
+            "get": {
+                "description": "关联交易-关联交易详情",
+                "tags": [
+                    "关联交易"
+                ],
+                "parameters": [
+                    {
+                        "maximum": 100,
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "分页数量(默认15)",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 0,
+                        "type": "integer",
+                        "description": "分页起始位置(默认0)",
+                        "name": "index",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.GljyRelatedDetailResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/edapi/bankbills/analyse/jyds/counterparty/class": {
             "get": {
                 "description": "交易对手-对手方分类",
@@ -868,6 +1142,205 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/rest.TransactionDistribution"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/lsgl/export": {
+            "get": {
+                "description": "流水管理-导出",
+                "tags": [
+                    "流水管理"
+                ],
+                "parameters": [
+                    {
+                        "enum": [
+                            1,
+                            2
+                        ],
+                        "type": "integer",
+                        "description": "交易金额排序 默认不传 按照交易时间排序 1:金额倒序 2:金额升序",
+                        "name": "amount_desc",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "交易时间排序 默认不传或0:倒序",
+                        "name": "date_desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "是否勾选剔除关联交易 0:不剔除关联交易  1: 剔除关联交易 默认0:不剔除关联交易",
+                        "name": "exclude_related",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "交易户名、摘要等关键字模糊匹配",
+                        "name": "key_work",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/analyse/lsgl/list": {
+            "get": {
+                "description": "流水管理-流水详情列表",
+                "tags": [
+                    "流水管理"
+                ],
+                "parameters": [
+                    {
+                        "enum": [
+                            1,
+                            2
+                        ],
+                        "type": "integer",
+                        "description": "交易金额排序 默认不传 按照交易时间排序 1:金额倒序 2:金额升序",
+                        "name": "amount_desc",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "分页数量(默认15)",
+                        "name": "count",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "交易时间排序 默认不传或0:倒序",
+                        "name": "date_desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "当前项目下筛选的文档 多个以英文逗号','拼接 不超过30个",
+                        "name": "doc_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "结束日期 2022-07-24",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "是否勾选剔除关联交易 0:不剔除关联交易  1: 剔除关联交易 默认0:不剔除关联交易",
+                        "name": "exclude_related",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 0,
+                        "type": "integer",
+                        "description": "分页起始位置(默认0)",
+                        "name": "index",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "交易户名、摘要等关键字模糊匹配",
+                        "name": "key_work",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "起始时间 2022-07-23",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.LsglListResp"
                                         }
                                     }
                                 }
@@ -1790,6 +2263,303 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/edapi/bankbills/report/delete": {
+            "get": {
+                "description": "分析报告-删除指定报告",
+                "tags": [
+                    "分析报告"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "待删除报告id",
+                        "name": "report_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rest.Result1"
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/report/detail": {
+            "get": {
+                "description": "分析报告-项目报告详情",
+                "tags": [
+                    "分析报告"
+                ],
+                "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "报告生成时间排序搜索项 0:默认倒序 1:正序",
+                        "name": "date_desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "过滤报告生成的结束时间 秒级时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "报告名称的模糊匹配",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "项目id",
+                        "name": "project_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "过滤报告生成的开始时间 秒级时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.ReportDetailResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/report/query": {
+            "get": {
+                "description": "分析报告-报告列表主页",
+                "tags": [
+                    "分析报告"
+                ],
+                "parameters": [
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "description": "报告生成时间排序搜索项 0:默认倒序 1:正序",
+                        "name": "date_desc",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "过滤报告生成的结束时间 秒级时间戳",
+                        "name": "end_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "报告名称的模糊匹配",
+                        "name": "keyword",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "默认5条/页",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "第一页开始",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "过滤报告生成的开始时间 秒级时间戳",
+                        "name": "start_time",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "enum": [
+                            1,
+                            2,
+                            3
+                        ],
+                        "type": "integer",
+                        "description": "项目类型搜索项 1:企业 2:个人 3:其他",
+                        "name": "type",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.ReportListResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/result/query": {
+            "get": {
+                "description": "文件OCR识别结果",
+                "tags": [
+                    "OCR识别结果"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "查询当前文档的识别结果",
+                        "name": "doc_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "文档下的某一页",
+                        "name": "page_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.OCRResultQueryResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/edapi/bankbills/result/update_header": {
+            "post": {
+                "description": "表头错误处理更新",
+                "tags": [
+                    "OCR识别结果"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "表头修改文档id",
+                        "name": "doc_ids",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "description": "表头错误处理更新请求参数",
+                        "name": "updateHeaderBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rest.UpdateHeaderBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/rest.Result1"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/rest.UpdateHeaderResp"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -2035,6 +2805,39 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.DocHeadersI": {
+            "type": "object",
+            "properties": {
+                "expect_kv_items": {
+                    "description": "按需 表格外信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.KVItemsI"
+                    }
+                },
+                "expect_table_kv_items": {
+                    "description": "按需 表格内信息抽取",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TableKVItemsI"
+                    }
+                },
+                "kv_items": {
+                    "description": "表格外信息抽取",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.KVItemsI"
+                    }
+                },
+                "table_kv_items": {
+                    "description": "表格内信息抽取",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TableKVItemsI"
+                    }
+                }
+            }
+        },
         "rest.DocInfoI": {
             "type": "object",
             "properties": {
@@ -2148,6 +2951,160 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.ExceptTableCellAmountItemsI": {
+            "type": "object",
+            "properties": {
+                "end_col": {
+                    "type": "integer"
+                },
+                "end_row": {
+                    "type": "integer"
+                },
+                "expect_amount": {
+                    "description": "建议修改金额",
+                    "type": "integer"
+                },
+                "extra_amount": {
+                    "description": "原始识别后的金额",
+                    "type": "integer"
+                },
+                "start_col": {
+                    "type": "integer"
+                },
+                "start_row": {
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "原始识别后的金额",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.ExceptTableCellDateItemsI": {
+            "type": "object",
+            "properties": {
+                "end_col": {
+                    "type": "integer"
+                },
+                "end_row": {
+                    "type": "integer"
+                },
+                "err_type": {
+                    "description": "错误值",
+                    "type": "integer"
+                },
+                "except_text": {
+                    "description": "建议修改时间",
+                    "type": "string"
+                },
+                "start_col": {
+                    "type": "integer"
+                },
+                "start_row": {
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "原始识别后的时间",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.GljyRelatedDetailResp": {
+            "type": "object",
+            "properties": {
+                "total_num": {
+                    "description": "流水总条数",
+                    "type": "integer"
+                },
+                "transaction_detail": {
+                    "description": "流水详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TransactionDetailI"
+                    }
+                }
+            }
+        },
+        "rest.GljyRelatedInformationResp": {
+            "type": "object",
+            "properties": {
+                "information": {
+                    "description": "关联方详细信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.InformationI"
+                    }
+                }
+            }
+        },
+        "rest.GljyRelatedOverviewResp": {
+            "type": "object",
+            "properties": {
+                "difference": {
+                    "description": "差额",
+                    "type": "integer"
+                },
+                "income_total": {
+                    "description": "关联方收入",
+                    "type": "integer"
+                },
+                "pay_total": {
+                    "description": "关联方支出",
+                    "type": "integer"
+                },
+                "quantity": {
+                    "description": "关联方数量",
+                    "type": "integer"
+                },
+                "related_party": {
+                    "description": "关联方概览",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.RelatedPartyI"
+                    }
+                },
+                "related_transaction": {
+                    "description": "关联交易概览详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.RelatedTransactionI"
+                    }
+                }
+            }
+        },
+        "rest.GljyRelatedTransactionResp": {
+            "type": "object",
+            "properties": {
+                "all_related_party": {
+                    "description": "展示在关联交易时间分布下的所有关联方数组",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "income_top_5": {
+                    "description": "关联方收入top5",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.Top5I"
+                    }
+                },
+                "pay_top_5": {
+                    "description": "关联方支出top5",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.Top5I"
+                    }
+                },
+                "trade_distribution": {
+                    "description": "关联方交易时间分布",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TradeDistributionI"
+                    }
+                }
+            }
+        },
         "rest.HighFrequencyTradingI": {
             "type": "object",
             "properties": {
@@ -2170,6 +3127,39 @@ const docTemplate = `{
                 "pay_num": {
                     "description": "支出笔数",
                     "type": "integer"
+                }
+            }
+        },
+        "rest.InformationI": {
+            "type": "object",
+            "properties": {
+                "difference": {
+                    "description": "差额",
+                    "type": "integer"
+                },
+                "income": {
+                    "description": "总收入",
+                    "type": "integer"
+                },
+                "income_num": {
+                    "description": "总收入笔数",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "关联方",
+                    "type": "string"
+                },
+                "pay": {
+                    "description": "总支出",
+                    "type": "integer"
+                },
+                "pay_num": {
+                    "description": "总支出笔数",
+                    "type": "integer"
+                },
+                "reason": {
+                    "description": "关联方原因",
+                    "type": "string"
                 }
             }
         },
@@ -2438,6 +3428,23 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.KVItemsI": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "对应键名",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "键对应的值",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "键对应的值",
+                    "type": "string"
+                }
+            }
+        },
         "rest.LargeTransactionI": {
             "type": "object",
             "properties": {
@@ -2460,6 +3467,22 @@ const docTemplate = `{
                 "time": {
                     "description": "时间",
                     "type": "string"
+                }
+            }
+        },
+        "rest.LsglListResp": {
+            "type": "object",
+            "properties": {
+                "total_num": {
+                    "description": "流水总条数",
+                    "type": "integer"
+                },
+                "trade_list": {
+                    "description": "流水详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TradeListI"
+                    }
                 }
             }
         },
@@ -2646,6 +3669,97 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.OCRResultI": {
+            "type": "object",
+            "properties": {
+                "doc_headers": {
+                    "description": "表头信息等",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/rest.DocHeadersI"
+                        }
+                    ]
+                },
+                "pages": {
+                    "description": "表格完整信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.PagesI"
+                    }
+                }
+            }
+        },
+        "rest.OCRResultQueryResp": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "description": "返回结果",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/rest.OCRResultI"
+                        }
+                    ]
+                }
+            }
+        },
+        "rest.PagesI": {
+            "type": "object",
+            "properties": {
+                "except_table_cell_amount_items": {
+                    "description": "表格内金额错误校验信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.ExceptTableCellAmountItemsI"
+                    }
+                },
+                "except_table_cell_date_items": {
+                    "description": "表格内日期错误校验信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.ExceptTableCellDateItemsI"
+                    }
+                },
+                "expect_kv_items": {
+                    "description": "按需 表格外信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.KVItemsI"
+                    }
+                },
+                "expect_table_kv_items": {
+                    "description": "按需 表格内信息抽取",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TableKVItemsI"
+                    }
+                },
+                "header_template": {
+                    "description": "表头模板",
+                    "type": "integer"
+                },
+                "kv_items": {
+                    "description": "表格外信息抽取",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.KVItemsI"
+                    }
+                },
+                "table_kv_items": {
+                    "description": "表格内信息抽取",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TableKVItemsI"
+                    }
+                },
+                "tables": {
+                    "description": "表格内信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TablesI"
+                    }
+                }
+            }
+        },
         "rest.ProjectListI": {
             "type": "object",
             "properties": {
@@ -2719,6 +3833,126 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.RelatedPartyI": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "账号",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "户名",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.RelatedTransactionI": {
+            "type": "object",
+            "properties": {
+                "difference": {
+                    "description": "差额",
+                    "type": "integer"
+                },
+                "income": {
+                    "description": "总收入",
+                    "type": "integer"
+                },
+                "income_num": {
+                    "description": "总收入笔数",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "关联方",
+                    "type": "string"
+                },
+                "pay": {
+                    "description": "总支出",
+                    "type": "integer"
+                },
+                "pay_num": {
+                    "description": "总支出笔数",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.ReportDetailI": {
+            "type": "object",
+            "properties": {
+                "generate_time": {
+                    "description": "报告生成时间 格式化2022-01-10 12:00:00的形式",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "报告id 后台生成",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "报告名称",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "报告生成状态 0:生成中 1:生成完成",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.ReportDetailResp": {
+            "type": "object",
+            "properties": {
+                "historical_report": {
+                    "description": "项目历史报告",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.ReportDetailI"
+                    }
+                }
+            }
+        },
+        "rest.ReportListI": {
+            "type": "object",
+            "properties": {
+                "belong_project": {
+                    "description": "报告所属项目名",
+                    "type": "string"
+                },
+                "generate_time": {
+                    "description": "报告生成时间 格式化2022-01-10 12:00:00的形式",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "报告id 后台生成",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "报告名称",
+                    "type": "string"
+                },
+                "project_type": {
+                    "description": "项目类型 1:企业 2:个人 3:其他",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "报告生成状态 0:生成中 1:生成完成",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.ReportListResp": {
+            "type": "object",
+            "properties": {
+                "report_info": {
+                    "description": "报告详情",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.ReportListI"
+                    }
+                },
+                "total_num": {
+                    "description": "所有报告的条数",
+                    "type": "integer"
+                }
+            }
+        },
         "rest.Result1": {
             "type": "object",
             "properties": {
@@ -2767,6 +4001,72 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.TableCells": {
+            "type": "object",
+            "properties": {
+                "end_col": {
+                    "type": "integer"
+                },
+                "end_row": {
+                    "type": "integer"
+                },
+                "start_col": {
+                    "type": "integer"
+                },
+                "start_row": {
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "当前单元格对应的值",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TableKVItemsI": {
+            "type": "object",
+            "properties": {
+                "key": {
+                    "description": "对应键名",
+                    "type": "string"
+                },
+                "start_col": {
+                    "description": "第几列",
+                    "type": "integer"
+                },
+                "start_row": {
+                    "description": "第几行",
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "键对应的值",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "键对应的值",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TablesI": {
+            "type": "object",
+            "properties": {
+                "table_cells": {
+                    "description": "单元格信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.TableCells"
+                    }
+                },
+                "table_cols": {
+                    "description": "表格多少列",
+                    "type": "integer"
+                },
+                "table_rows": {
+                    "description": "表格多少行",
+                    "type": "integer"
+                }
+            }
+        },
         "rest.ThemeAccountInfo": {
             "type": "object",
             "properties": {
@@ -2779,6 +4079,19 @@ const docTemplate = `{
                 },
                 "theme_name": {
                     "description": "主体账户名",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.Top5I": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "交易金额",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "关联方户名",
                     "type": "string"
                 }
             }
@@ -2838,6 +4151,87 @@ const docTemplate = `{
                 }
             }
         },
+        "rest.TradeDistributionI": {
+            "type": "object",
+            "properties": {
+                "income": {
+                    "description": "存在收入的关联方数组",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.Top5I"
+                    }
+                },
+                "pay": {
+                    "description": "存在支出的关联方数组",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.Top5I"
+                    }
+                },
+                "timer": {
+                    "description": "时间 2022-01",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TradeListI": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "交易金额",
+                    "type": "integer"
+                },
+                "is_related": {
+                    "description": "是否关联方",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "交易摘要",
+                    "type": "string"
+                },
+                "trade_time": {
+                    "description": "交易时间",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.TransactionDetailI": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "description": "交易账号",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "交易金额",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "交易户名",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "关联关系",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "交易摘要",
+                    "type": "string"
+                },
+                "trade_time": {
+                    "description": "交易时间",
+                    "type": "string"
+                }
+            }
+        },
         "rest.TransactionDistribution": {
             "type": "object",
             "properties": {
@@ -2847,6 +4241,96 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/rest.TradeAmountI"
                     }
+                }
+            }
+        },
+        "rest.UpdateHeaderBody": {
+            "type": "object",
+            "properties": {
+                "expect_table_kv_items": {
+                    "description": "更新的表头信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.UpdateTableKVItemsBody"
+                    }
+                },
+                "kv_items": {
+                    "description": "更新的账户信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/rest.UpdateKVItemsBody"
+                    }
+                }
+            }
+        },
+        "rest.UpdateHeaderResp": {
+            "type": "object",
+            "properties": {
+                "upload_time": {
+                    "description": "更新时间戳",
+                    "type": "integer"
+                }
+            }
+        },
+        "rest.UpdateKVItemsBody": {
+            "type": "object",
+            "required": [
+                "key",
+                "text",
+                "value"
+            ],
+            "properties": {
+                "err_type": {
+                    "description": "错误值",
+                    "type": "integer"
+                },
+                "key": {
+                    "description": "对应键名",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "键对应的值",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "键对应的值",
+                    "type": "string"
+                }
+            }
+        },
+        "rest.UpdateTableKVItemsBody": {
+            "type": "object",
+            "required": [
+                "ignore_err",
+                "key",
+                "start_col",
+                "text",
+                "value"
+            ],
+            "properties": {
+                "err_type": {
+                    "description": "错误值",
+                    "type": "integer"
+                },
+                "ignore_err": {
+                    "description": "忽略错误给1",
+                    "type": "integer"
+                },
+                "key": {
+                    "description": "对应键名",
+                    "type": "string"
+                },
+                "start_col": {
+                    "description": "属于哪一列",
+                    "type": "integer"
+                },
+                "text": {
+                    "description": "键对应的值",
+                    "type": "string"
+                },
+                "value": {
+                    "description": "键对应的值",
+                    "type": "string"
                 }
             }
         }

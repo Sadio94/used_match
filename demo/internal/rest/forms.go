@@ -1,6 +1,8 @@
 package rest
 
-import "time"
+import (
+	"time"
+)
 
 //type IdRequest struct {
 //	Id string `uri:"id" json:"id" binding:"required,len=32" validate:"required,len=32"`
@@ -358,4 +360,95 @@ type OCRRequest struct {
 	PageId     string `uri:"page_id" json:"page_id" binding:"omitempty" validate:"omitempty"` // 文档下的某一页
 	Position   bool   `uri:"position" json:"position" binding:"omitempty" validate:"omitempty"`
 	MoreThread int64  `uri:"more_thread" json:"more_thread" binding:"omitempty" validate:"omitempty"`
+}
+
+type LsglListRequest struct {
+	QueryRequest
+	Lsyz
+	KeyWork        string `uri:"key_work" json:"key_work" binding:"omitempty" validate:"omitempty"`                                   // 交易户名、摘要等关键字模糊匹配
+	DateDesc       int64  `uri:"date_desc" json:"date_desc" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"`             // 交易时间排序 默认不传或0:倒序
+	Amount         int64  `uri:"amount_desc" json:"amount_desc" binding:"omitempty,oneof=1 2" validate:"omitempty,oneof=1 2"`         // 交易金额排序 默认不传 按照交易时间排序 1:金额倒序 2:金额升序
+	ExcludeRelated int64  `uri:"exclude_related" json:"exclude_related" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 是否勾选剔除关联交易 0:不剔除关联交易  1: 剔除关联交易 默认0:不剔除关联交易
+}
+
+type LsglExportRequest struct {
+	Lsyz
+	KeyWork        string `uri:"key_work" json:"key_work" binding:"omitempty" validate:"omitempty"`                                   // 交易户名、摘要等关键字模糊匹配
+	DateDesc       int64  `uri:"date_desc" json:"date_desc" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"`             // 交易时间排序 默认不传或0:倒序
+	Amount         int64  `uri:"amount_desc" json:"amount_desc" binding:"omitempty,oneof=1 2" validate:"omitempty,oneof=1 2"`         // 交易金额排序 默认不传 按照交易时间排序 1:金额倒序 2:金额升序
+	ExcludeRelated int64  `uri:"exclude_related" json:"exclude_related" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 是否勾选剔除关联交易 0:不剔除关联交易  1: 剔除关联交易 默认0:不剔除关联交易
+}
+
+type GljyRelatedOverviewRequest struct {
+	Lsyz
+}
+
+type GljyRelatedInformationRequest struct {
+	Lsyz
+	DispType int64 `uri:"disp_type" json:"disp_type" binding:"omitempty,oneof=0 1 2" validate:"omitempty,oneof=0 1 2"` // 交易分布展示 0:与主体企业存在控股股权关系 1:与主体企业存在董监高重合 2:与主体企业存在关联关系 默认与主体企业存在控股股权关系
+}
+
+type GljyRelatedDetailRequest struct {
+	Lsyz
+	QueryRequest
+}
+
+type GljyRelatedTransactionRequest struct {
+	Lsyz
+}
+
+type ReportListRequest struct {
+	PageRequest
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`                               // 用户token
+	DateDesc  int64  `uri:"date_desc" json:"date_desc" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 报告生成时间排序搜索项 0:默认倒序 1:正序
+	Type      int64  `uri:"type" json:"type" binding:"omitempty,oneof=1 2 3" validate:"omitempty,oneof=1 2 3"`       // 项目类型搜索项 1:企业 2:个人 3:其他
+	KeyWord   string `uri:"keyword" json:"keyword" binding:"omitempty" validate:"omitempty"`                         // 报告名称的模糊匹配
+	StartTime int64  `uri:"start_time" json:"start_time" binding:"omitempty" validate:"omitempty"`                   // 过滤报告生成的开始时间 秒级时间戳
+	EndTime   int64  `uri:"end_time" json:"end_time" binding:"omitempty" validate:"omitempty"`                       // 过滤报告生成的结束时间 秒级时间戳
+}
+
+type ReportDetailRequest struct {
+	Token     string `uri:"token" json:"token" binding:"required" validate:"required"`                               // 用户token
+	ProjectId string `uri:"project_id" json:"project_id" binding:"required" validate:"required"`                     // 项目id
+	KeyWord   string `uri:"keyword" json:"keyword" binding:"omitempty" validate:"omitempty"`                         // 报告名称的模糊匹配
+	StartTime int64  `uri:"start_time" json:"start_time" binding:"omitempty" validate:"omitempty"`                   // 过滤报告生成的开始时间 秒级时间戳
+	EndTime   int64  `uri:"end_time" json:"end_time" binding:"omitempty" validate:"omitempty"`                       // 过滤报告生成的结束时间 秒级时间戳
+	DateDesc  int64  `uri:"date_desc" json:"date_desc" binding:"omitempty,oneof=0 1" validate:"omitempty,oneof=0 1"` // 报告生成时间排序搜索项 0:默认倒序 1:正序
+}
+
+type DeleteReportRequest struct {
+	Token    string `uri:"token" json:"token" binding:"required" validate:"required"`         // 用户token
+	ReportId string `uri:"report_id" json:"report_id" binding:"required" validate:"required"` // 待删除报告id
+}
+
+type OCRResultQueryRequest struct {
+	Token  string `uri:"token" json:"token" binding:"required" validate:"required"`       // 用户token
+	DocId  string `uri:"doc_id" json:"doc_id" binding:"required" validate:"required"`     // 查询当前文档的识别结果
+	PageId string `uri:"page_id" json:"page_id" binding:"omitempty" validate:"omitempty"` // 文档下的某一页
+}
+
+type UpdateHeaderQuery struct {
+	Token string `uri:"token" json:"token" binding:"required" validate:"required"`    // 用户token
+	DocId string `uri:"doc_id" json:"doc_ids" binding:"required" validate:"required"` // 表头修改文档id
+}
+
+type UpdateHeaderBody struct {
+	KVItems            []UpdateKVItemsBody      `json:"kv_items"`              // 更新的账户信息
+	ExpectTableKVItems []UpdateTableKVItemsBody `json:"expect_table_kv_items"` // 更新的表头信息
+}
+
+type UpdateKVItemsBody struct {
+	Key     string `uri:"key" json:"key" binding:"required" validate:"required"`             // 对应键名
+	Value   string `uri:"value" json:"value" binding:"required" validate:"required"`         // 键对应的值
+	Text    string `uri:"text" json:"text" binding:"required" validate:"required"`           // 键对应的值
+	ErrType int64  `uri:"err_type" json:"err_type" binding:"omitempty" validate:"omitempty"` // 错误值
+}
+
+type UpdateTableKVItemsBody struct {
+	Key       string `uri:"key" json:"key" binding:"required" validate:"required"`               // 对应键名
+	Value     string `uri:"value" json:"value" binding:"required" validate:"required"`           // 键对应的值
+	Text      string `uri:"text" json:"text" binding:"required" validate:"required"`             // 键对应的值
+	ErrType   int64  `uri:"err_type" json:"err_type" binding:"omitempty" validate:"omitempty"`   // 错误值
+	StartCol  int64  `uri:"start_col" json:"start_col" binding:"required" validate:"required"`   // 属于哪一列
+	IgnoreErr int64  `uri:"ignore_err" json:"ignore_err" binding:"required" validate:"required"` // 忽略错误给1
 }
